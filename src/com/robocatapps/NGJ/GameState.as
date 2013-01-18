@@ -2,10 +2,12 @@ package com.robocatapps.NGJ {
 	import org.flixel.*;
 	
 	public class GameState extends FlxState {
+		[Embed(source="tile.png")] private var tileSprite : Class;
+		
 		private var player1 : Player;
 		private var player2 : Player;
 		
-		[Embed(source="tile.png")] private var tileSprite : Class;
+		public var pickups : Array;
 		
 		public function GameState() : void {
 			for (var i : uint = 0; i < FlxG.width / 64; i++) {
@@ -16,10 +18,13 @@ package com.robocatapps.NGJ {
 				}
 			}
 			
-			add(new Pickup(200, 200, "hitlerkage"));
+			pickups = new Array();
+			var hitlerkage : Pickup = new Pickup(200, 200, "hitlerkage");
+			add(hitlerkage);
+			pickups.push(hitlerkage);
 			
-			player1 = new Player(1, 100, 100);
-			player2 = new Player(0, 600, 300);
+			player1 = new Player(1, 100, 100, this);
+			player2 = new Player(0, 600, 300, this);
 			
 			add(player1);
 			add(player2);

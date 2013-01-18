@@ -13,7 +13,7 @@ package com.robocatapps.NGJ {
 				loadGraphic(hitlerkageSprite, false, false, 22, 22, false);
 				addAnimation("spin", [0, 1, 2, 3], 10, true);
 				play("spin");
-				scale = new FlxPoint(5, 5);
+				scale = new FlxPoint(2, 2);
 			} else if (type == "") {
 				
 			}
