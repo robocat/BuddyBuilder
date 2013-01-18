@@ -8,6 +8,7 @@ package com.robocatapps.NGJ {
 		private var player2 : Player;
 		
 		public var pickups : Array;
+		public var obstacles : Array;
 		
 		public function GameState() : void {
 			for (var i : uint = 0; i < FlxG.width / 64; i++) {
