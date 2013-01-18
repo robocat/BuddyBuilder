@@ -44,6 +44,11 @@ package com.robocatapps.NGJ {
 		override public function update() : void {
 			super.update();
 			
+			if (FlxG.keys.justPressed("ESCAPE"))
+			{
+				FlxG.switchState(new MenuState());
+			}
+			
 			if (Math.random() < 0.01) {
 				var hitlerkage : Pickup = new Pickup(Math.random() * (FlxG.width - 100) + 50, Math.random() * (FlxG.height - 100) + 50, "hitlerkage");
 				add(hitlerkage);
