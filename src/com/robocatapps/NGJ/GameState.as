@@ -19,15 +19,22 @@ package com.robocatapps.NGJ {
 			}
 			
 			pickups = new Array();
-			var hitlerkage : Pickup = new Pickup(200, 200, "hitlerkage");
-			add(hitlerkage);
-			pickups.push(hitlerkage);
 			
 			player1 = new Player(1, 100, 100, this);
 			player2 = new Player(0, 600, 300, this);
 			
 			add(player1);
 			add(player2);
+		}
+		
+		override public function update() : void {
+			super.update();
+			
+			if (Math.random() < 0.01) {
+				var hitlerkage : Pickup = new Pickup(Math.random() * (FlxG.width - 100) + 50, Math.random() * (FlxG.height - 100) + 50, "hitlerkage");
+				add(hitlerkage);
+				pickups.push(hitlerkage);
+			}
 		}
 	}
 }
