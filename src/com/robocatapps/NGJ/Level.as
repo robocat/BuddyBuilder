@@ -1,4 +1,5 @@
 package com.robocatapps.NGJ {
+	import org.flixel.FlxRect;
 	import flash.trace.Trace;
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxG;
@@ -21,20 +22,23 @@ package com.robocatapps.NGJ {
 		public var origin : FlxPoint;
 		
 		public function Level(player: Player, origin : FlxPoint):void {
+			this.pickups = new Array();
+			this.obstacles = new Array();
+			this.npcs = new Array();
+			
 			this.origin = origin;
 			
 			// Add the floor first since it needs 
 			// to beneath the player
 			this.addFloor();
-			trace("test");
+			
+			// Add obstacles to the level
+			this.addObstacles();
 			
 			// Add the player for the level
 			this.player = player;
+
 			add(this.player);
-			
-			this.pickups = new Array();
-			this.obstacles = new Array();
-			this.npcs = new Array();
 		}
 		
 		private function addFloor():void {
@@ -47,6 +51,12 @@ package com.robocatapps.NGJ {
 			}
 		}
 		
-		
+		private function addObstacles():void {
+			this.obstacles.push(new Obstacle(this.origin.x + 40, this.origin.y + 40, "bed"));
+			
+			for each (var obstacle : Obstacle in this.obstacles) {
+				add(obstacle);
+			}
+		}
 	}
 }
