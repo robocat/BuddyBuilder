@@ -8,15 +8,22 @@ package com.robocatapps.NGJ {
 		private var playernumber : uint;
 		private var scene : GameState;
 		
-		private var player1area : FlxRect = new FlxRect(200, 40, 500, 820);
-		private var player2area : FlxRect = new FlxRect(740, 40, 500, 820);
+		private var area : FlxRect;
 		
-		public function Player(playernumber:uint, x:uint, y:uint, scene:GameState) : void {
+		public function Player(playernumber:uint, scene:GameState) : void {
 			this.playernumber = playernumber;
 			loadGraphic(sprite, false, false, 128, 128, false);
-			this.x = x;
-			this.y = y;
 			this.scene = scene;
+			
+			if (playernumber == 1) {
+				area = new FlxRect(200, 40, 500, 820);
+				x = 300;
+				y = 700;
+			} else {
+				area = new FlxRect(740, 40, 500, 820);
+				x = 840;
+				y = 700;
+			}
 		}
 		
 		override public function update() : void {
@@ -46,8 +53,8 @@ package com.robocatapps.NGJ {
 				}
 			}
 			
-			x = (x < 0? 0: x > FlxG.width - width? FlxG.width - width: x);
-			y = (y < 0? 0: y > FlxG.height - height? FlxG.height - height: y);
+			x = (x < area.x? area.x: x > area.x + area.width - width? area.x + area.width - width: x);
+			y = (y < area.y? area.y: y > area.y + area.height - height? area.y + area.height - height: y);
 			
 			for each (var pickup : Pickup in scene.pickups) {
 				if (FlxCollision.pixelPerfectCheck(this, pickup)) {

@@ -27,8 +27,8 @@ package com.robocatapps.NGJ {
 			pickups = new Array();
 			obstacles = new Array();
 			
-			player1 = new Player(1, 100, 100, this);
-			player2 = new Player(0, 600, 300, this);
+			player1 = new Player(1, this);
+			player2 = new Player(0, this);
 			
 			add(player1);
 			add(player2);
