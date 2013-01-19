@@ -2,9 +2,9 @@ package com.robocatapps.NGJ {
 	import org.flixel.*;
 	
 	public class GameState extends FlxState {
-		[Embed(source="tile.png")] private var tileSprite : Class;
 		[Embed(source="bed.png")] private var bedSprite : Class;
 		[Embed(source="light.png")] private var lightSprite : Class;
+		[Embed(source="level_grid.png")] private var gridSprite : Class;
 		
 		private var player1 : Player;
 		private var player2 : Player;
@@ -16,7 +16,10 @@ package com.robocatapps.NGJ {
 		private var light_counter : uint = 0;
 		
 		public function GameState() : void {
-			
+			var grid : FlxSprite = new FlxSprite(0, 0);
+			grid.loadGraphic(gridSprite);
+			add(grid);
+
 			this.player1 = new Player(1);
 			this.player2 = new Player(0);
 			
