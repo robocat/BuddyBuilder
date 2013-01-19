@@ -5,6 +5,7 @@
 	public class Player extends FlxSprite {
 		[Embed(source="doctor.png")] private var sprite : Class;
 		[Embed(source="foot_steps.mp3")] private var soundEffect:Class;
+		[Embed(source="scream0.mp3")] private var scream0Sound:Class;
 		
 		public var level : Level;
 		
@@ -47,6 +48,7 @@
 			colrect.x += Math.sin(angle) * 32;
 			colrect.y -= Math.cos(angle) * 32;
 			
+			var didHit : Boolean = false;
 			for each (var npc : Patient in level.npcs) {
 				if (colCheck(colrect, new FlxRect(npc.x, npc.y, npc.width, npc.height))) {
 					for (var i : int = 0; i < Math.random() * 5; i++) {
@@ -55,7 +57,12 @@
 					delete level.npcs[level.npcs.indexOf(npc)];
 					level.enemyLayer.remove(npc);
 					level.addDrop();
+					didHit = true;
 				}
+			}
+			
+			if(didHit) {
+				FlxG.play(scream0Sound) ;
 			}
 		}
 		
