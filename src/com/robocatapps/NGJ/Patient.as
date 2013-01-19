@@ -5,17 +5,16 @@ package com.robocatapps.NGJ {
 	 * @author willi
 	 */
 	public class Patient extends FlxSprite {
-		
-		[Embed(source="mario.png")] private var sprite : Class;
-		
+		[Embed(source="patient.png")] private var sprite : Class;
 		
 		public function Patient(X : Number = 0, Y : Number = 0, SimpleGraphic : Class = null) {
 			super(X, Y, SimpleGraphic);
 			
-			loadGraphic(sprite, false, false, 25, 28, false);
+			loadGraphic(sprite, false, false, 64, 64, false);
 			
 			addAnimation("stand", [0]);
-			play("stand");
+			addAnimation("run", [0, 1, 2, 3, 4, 5], 10, true);
+			play("run");
 		}
 		
 		
