@@ -6,6 +6,7 @@ package com.robocatapps.NGJ {
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxGroup;
+	import org.flixel.*;
 	/**
 	 * @author ksma
 	 */
@@ -15,6 +16,7 @@ package com.robocatapps.NGJ {
 		[Embed(source="floor.png")] private var floorSprite : Class;
 		[Embed(source="light_mask.png")] private var lightSprite : Class;
 		[Embed(source="dark.png")] private var darkSprite : Class;
+		[Embed(source="light0.mp3")] private var light0Sound:Class;
 		
 		public static const MAXPATIENTS :uint = 10; 
 		
@@ -117,6 +119,8 @@ package com.robocatapps.NGJ {
 			this.dark.alpha = 1;
 			this.darkCounter = 0;
 			this.darkOn = true;
+			
+			FlxG.play(light0Sound);
 		}
 		
 		public function turnOnLights():void {
