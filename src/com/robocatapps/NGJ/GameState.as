@@ -22,15 +22,15 @@ package com.robocatapps.NGJ {
 			var grid : FlxSprite = new FlxSprite(0, 0);
 			grid.loadGraphic(gridSprite);
 			add(grid);
-
+			
 			this.player0 = new Player(0);
 			this.player1 = new Player(1);
 			
-			this.level0 = new Level(this.player1, new FlxPoint(200, 40));
-			this.level1 = new Level(this.player0, new FlxPoint(740, 40));
+			this.level0 = new Level(this.player0, new FlxPoint(200, 40), this);
+			this.level1 = new Level(this.player1, new FlxPoint(740, 40), this);
 			
-			player0.level = level1;
-			player1.level = level0;
+			player0.level = level0;
+			player1.level = level1;
 			
 			add(this.level0);
 			add(this.level1);
@@ -60,6 +60,14 @@ package com.robocatapps.NGJ {
 			//	light_counter = 0;
 			//	light.alpha = Math.random() * 0.25 + 0.25;
 			//}
+		}
+		
+		public function getOpponnent(player : Player):Player {
+			if (player == this.player0){
+				return this.player1;
+			} else {
+				return this.player0;
+			}
 		}
 	}
 }
