@@ -12,6 +12,11 @@ package com.robocatapps.NGJ {
 		private var level0 : Level;
 		private var level1 : Level;
 		
+		private var patient1 : Patient;
+		
+		private var flock_group:FlxGroup;
+		private var flock:Flock;
+		
 		private var operation_table0 : OperationTable;
 		private var operation_table1 : OperationTable;
 		
@@ -42,10 +47,26 @@ package com.robocatapps.NGJ {
 			
 			add(this.operation_table0);
 			add(this.operation_table1);
+			
+			// Patients
+//			flock_group = new FlxGroup;
+//			add(flock_group);
+//			
+//			flock = new Flock(flock_group, player0);
+//			
+//			
+//			
+//			for (var i : int = 0; i < 20; i++) {
+//				var patient1 : Patient;
+//				patient1 = new Patient(Math.random()*700, Math.random()*800);
+//				flock.add_patient(patient1);
+//			}
 		}
 		
 		override public function update() : void {
 			super.update();
+			
+//			flock.update();
 			
 			if (FlxG.keys.justPressed("ESCAPE"))
 			{

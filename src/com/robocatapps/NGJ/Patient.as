@@ -1,10 +1,14 @@
 package com.robocatapps.NGJ {
+	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
 
 	/**
 	 * @author willi
 	 */
 	public class Patient extends FlxSprite {
+		
+		public var destination : FlxPoint;
+		
 		
 		[Embed(source="mario.png")] private var sprite : Class;
 		
@@ -16,6 +20,9 @@ package com.robocatapps.NGJ {
 			
 			addAnimation("stand", [0]);
 			play("stand");
+			
+			destination = new FlxPoint();
+			new_distination();
 		}
 		
 		
@@ -23,6 +30,11 @@ package com.robocatapps.NGJ {
             super.update();
 			
         }
+		
+		public function new_distination():void {
+			destination.x = 10 + Math.random() * 300;
+			destination.y = 10 + Math.random() * 500;
+		}
 		
 	}
 }
