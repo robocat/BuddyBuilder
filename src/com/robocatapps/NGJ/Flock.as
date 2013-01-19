@@ -75,15 +75,35 @@ package com.robocatapps.NGJ {
                             Math.sqrt( Math.pow(patient.destination.x - patient.x, 2) + Math.pow(patient.destination.y - patient.y, 2) )
                         )
 						
-				if (distance < 10) {
+				if (distance < 1) {
 					patient.new_distination();
 				}
-				else if (patient.velocity.x < 1 && patient.velocity.x < 1) {
-					patient.new_distination();
+//				else if (patient.velocity.x < 1 && patient.velocity.x < 1) {
+//					patient.new_distination();
+//				}
+//				
+//				patient.velocity.x += ((patient.destination.x - patient.x) / 20) * FlxG.elapsed;
+//				patient.velocity.y += ((patient.destination.y - patient.y) / 20) * FlxG.elapsed;
+
+				var vel_x : Number = patient.velocity.x + ((patient.destination.x - patient.x) / 20) * FlxG.elapsed;
+				var vel_y : Number = patient.velocity.y + ((patient.destination.y - patient.y) / 20) * FlxG.elapsed;
+				
+				if (Math.abs(vel_x) > Patient.STAND_VELOCITY && Math.abs(vel_y) > Patient.STAND_VELOCITY
+					&& Math.abs(vel_x) < Patient.RUN_VELOCITY && Math.abs(vel_y) < Patient.RUN_VELOCITY)
+				{
+					 patient.velocity.x = (vel_x > 0.0) ? Patient.WALK_VELOCITY : -Patient.WALK_VELOCITY;
+					 patient.velocity.y = (vel_y > 0.0) ? Patient.WALK_VELOCITY : -Patient.WALK_VELOCITY;
+				}
+				else if (Math.abs(vel_x) > Patient.RUN_VELOCITY && Math.abs(vel_y) > Patient.RUN_VELOCITY)
+				{
+					 patient.velocity.x = (vel_x > 0.0) ? Patient.RUN_VELOCITY : -Patient.RUN_VELOCITY;
+					 patient.velocity.y = (vel_y > 0.0) ? Patient.RUN_VELOCITY : -Patient.RUN_VELOCITY;
+				}
+				else {
+					 patient.velocity.x = Patient.STAND_VELOCITY;
+					 patient.velocity.y = Patient.STAND_VELOCITY;
 				}
 				
-				patient.velocity.x += ((patient.destination.x - patient.x) / 20) * FlxG.elapsed;
-				patient.velocity.y += ((patient.destination.y - patient.y) / 20) * FlxG.elapsed;
 			}
 			
         }
