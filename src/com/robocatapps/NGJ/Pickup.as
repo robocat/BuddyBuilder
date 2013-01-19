@@ -21,6 +21,8 @@ package com.robocatapps.NGJ {
 		public static const DROP_HEAD : String = "head";
 		public static const DROP_TORSO : String = "torso";
 		
+		public static const DROP_TYPES : Array = [DROP_LIGHT, DROP_LEFTLEG, DROP_LEFTLEG, DROP_LEFTARM, DROP_RIGHTARM, DROP_HEAD, DROP_TORSO];
+		
 		public var type : String;
 		
 		public var timeoutCount : uint = 0;
@@ -46,17 +48,17 @@ package com.robocatapps.NGJ {
 				play("spin");
 				scale = new FlxPoint(2, 2);
 			} else if (type == DROP_LEFTLEG) {
-				loadGraphic(leftLegSprite, false, false, 26, 57, false);
+				loadGraphic(leftLegSprite, false, false, 52, 114, false);
 			} else if (type == DROP_RIGHTLEG) {
-				loadGraphic(rightLegSprite, false, false, 26, 58, false);
+				loadGraphic(rightLegSprite, false, false, 52, 116, false);
 			} else if (type == DROP_LEFTARM) {
-				loadGraphic(leftArmSprite, false, false, 22, 40, false);
+				loadGraphic(leftArmSprite, false, false, 44, 80, false);
 			} else if (type == DROP_RIGHTARM) {
-				loadGraphic(rightArmSprite, false, false, 23, 41, false);
+				loadGraphic(rightArmSprite, false, false, 46, 82, false);
 			} else if (type == DROP_HEAD) {
 				loadGraphic(headSprite, false, false, 40, 44, false);
 			} else if (type == DROP_TORSO) {
-				loadGraphic(torsoSprite, false, false, 36, 55, false);
+				loadGraphic(torsoSprite, false, false, 72, 110, false);
 			}
 			
 		}
