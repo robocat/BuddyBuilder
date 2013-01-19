@@ -13,8 +13,9 @@ package com.robocatapps.NGJ {
 			loadGraphic(sprite, false, false, 64, 64, false);
 			
 			addAnimation("stand", [0]);
-			addAnimation("run", [0, 1, 2, 3, 4, 5], 10, true);
-			play("run");
+			addAnimation("walk", [0, 1, 2, 3, 4, 5], 10, true);
+			addAnimation("run", [6, 7, 8, 9], 10, true);
+			play("walk");
 		}
 		
 		
