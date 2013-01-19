@@ -13,6 +13,5 @@ Setup
 Docs
 ====
 
-Flixel documentation: http://flixel.org/docs/
-Flixel powertools: http://www.photonstorm.com/flixel-power-tools
-
+* Flixel documentation: http://flixel.org/docs/
+* Flixel powertools: http://www.photonstorm.com/flixel-power-tools
