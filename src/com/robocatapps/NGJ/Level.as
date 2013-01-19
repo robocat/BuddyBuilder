@@ -176,7 +176,7 @@ package com.robocatapps.NGJ {
 			var x : uint = this.origin.x + Math.random() * (500 - 40);
 			var y : uint = this.origin.y + Math.random() * (820 - 40);
 			
-			var hitlerkage : Pickup = new Pickup(x, y, "hitlerkage");
+			var hitlerkage : Pickup = new Pickup(x, y, Pickup.DROP_TORSO);
 			
 			var collision : Boolean = false;
 			for each (var obstacle : Obstacle in this.obstacles) {
