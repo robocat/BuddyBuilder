@@ -5,6 +5,7 @@ package com.robocatapps.NGJ {
 		[Embed(source="tile.png")] private var tileSprite : Class;
 		[Embed(source="bed.png")] private var bedSprite : Class;
 		[Embed(source="light.png")] private var lightSprite : Class;
+		[Embed(source="level_grid.png")] private var gridSprite : Class;
 		
 		private var player1 : Player;
 		private var player2 : Player;
@@ -16,11 +17,21 @@ package com.robocatapps.NGJ {
 		private var light_counter : uint = 0;
 		
 		public function GameState() : void {
-			for (var i : uint = 0; i < FlxG.width / 64; i++) {
-				for (var j : uint = 0; j < FlxG.height / 64; j++) {
-					var tile : FlxSprite = new FlxSprite(i * 64, j * 64);
-					tile.loadGraphic(tileSprite);
-					add(tile);
+			var grid : FlxSprite = new FlxSprite(0, 0);
+			grid.loadGraphic(gridSprite);
+			add(grid);
+
+			create_floor(0);
+			create_floor(1);
+			if(0){
+				var width : uint = 500;
+				for (var i : uint = 0; i < width / 64; i++) {
+					for (var j : uint = 0; j < FlxG.height / 64; j++) {
+						var tile : FlxSprite = new FlxSprite(i * 64, j * 64);
+						tile.loadGraphic(tileSprite);
+						add(tile);
+						tile.x += 200;
+					}
 				}
 			}
 			
@@ -39,6 +50,19 @@ package com.robocatapps.NGJ {
 			
 			light = new FlxSprite(0, 0, lightSprite);
 			add(light);
+		}
+		
+		public function create_floor(side : uint) : void {
+			var tile_x : uint = (side == 0) ? 200 : 740; 
+			var width : uint = 500;
+			for (var i : uint = 0; i < width / 64; i++) {
+				for (var j : uint = 0; j < FlxG.height / 64; j++) {
+					var tile : FlxSprite = new FlxSprite(i * 64, j * 64);
+					tile.loadGraphic(tileSprite);
+					add(tile);
+					tile.x += tile_x;
+				}
+			}
 		}
 		
 		override public function update() : void {

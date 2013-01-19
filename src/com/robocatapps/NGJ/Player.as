@@ -1,4 +1,4 @@
-package com.robocatapps.NGJ {
+ package com.robocatapps.NGJ {
 	import org.flixel.plugin.photonstorm.FlxCollision;
 	import org.flixel.*;
 	
