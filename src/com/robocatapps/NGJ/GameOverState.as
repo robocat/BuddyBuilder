@@ -1,6 +1,7 @@
 package com.robocatapps.NGJ {
-	import flash.text.TextField;
-	import flash.text.Font;
+	import org.flixel.FlxG;
+	import org.flixel.FlxText;
+	import org.flixel.FlxState;
 	import org.flixel.FlxState;
 
 	import flash.display.Shape;
@@ -22,6 +23,10 @@ package com.robocatapps.NGJ {
 		//	var text :TextField = new TextField();
 		//	text.text ="Game Fucking Over!";
 		//	text.textColor = 0xFFFF00;
+						
+			var title:FlxText = new FlxText(0, 16, FlxG.width -500, "GAME OVER SUCKER");
+			title.setFormat(null, 160, 0xFFF00FFF, "center");
+			add(title);
 						
 		}
 	}

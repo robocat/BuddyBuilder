@@ -1,8 +1,9 @@
 package com.robocatapps.NGJ {
-	import org.flixel.FlxRect;
-	import flash.trace.Trace;
-	import org.flixel.FlxPoint;
+	import org.flixel.plugin.photonstorm.FlxGradient;
+	import org.flixel.plugin.photonstorm.FlxCollision;
 	import org.flixel.FlxG;
+	import flash.display.Graphics;
+	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxGroup;
 	/**
@@ -15,6 +16,8 @@ package com.robocatapps.NGJ {
 		[Embed(source="light_mask.png")] private var lightSprite : Class;
 		[Embed(source="dark.png")] private var darkSprite : Class;
 		
+		public static const MAXPATIENTS :uint = 10; 
+		
 		// Instance vars
 		public var player:Player;
 		public var pickups : Array;
@@ -24,10 +27,19 @@ package com.robocatapps.NGJ {
 		private var state : GameState;
 
 		public var operation_table : OperationTable;
+		
+		// Layers
+		public var backgroundLayer : FlxGroup;
+		public var enemyLayer : FlxGroup;
+		public var itemLayer : FlxGroup;
+		public var playerLayer : FlxGroup;
+		public var lightLayer : FlxGroup;
 
 		
 		// Layout
 		public var origin : FlxPoint;
+		public var width : uint = 510;
+		public var height: uint = 820;
 		
 		// Effects
 		private var light : FlxSprite;
@@ -49,7 +61,21 @@ package com.robocatapps.NGJ {
 			
 			// Add the floor first since it needs 
 			// to beneath the player
-			this.addFloor();
+			//this.addFloor();
+			
+			
+			backgroundLayer = new FlxGroup();
+			enemyLayer  = new FlxGroup();
+			itemLayer  = new FlxGroup();
+			lightLayer  = new FlxGroup();
+			playerLayer  = new FlxGroup();
+			
+			
+			add(backgroundLayer);
+			add(itemLayer);
+			add(enemyLayer);
+			add(lightLayer);
+			add(playerLayer);
 			
 			// Add obstacles to the level
 			this.addObstacles();
@@ -57,30 +83,33 @@ package com.robocatapps.NGJ {
 			
 			// Add the light sprite for flickering
 			this.light = new FlxSprite(this.origin.x, this.origin.y, lightSprite);
-			add(this.light);
+			this.light.alpha = 0;
+			this.lightLayer.add(this.light);
 			
 			// Add sprite for turning off the lights
+			
+			
 			this.dark = new FlxSprite(this.origin.x, this.origin.y, darkSprite);
 			this.dark.alpha = 0;
-			add(this.dark);
+			this.lightLayer.add(this.dark);
+ 
 			
 			// Add the player for the level
 			this.player = player;
-
-			add(this.player);
+			this.playerLayer.add(this.player);
 		}
 		
 		private function addFloor():void {
 			var floor : FlxSprite = new FlxSprite(this.origin.x, this.origin.y, floorSprite);
 			floor.loadGraphic(floorSprite);
-			add(floor);
+			this.backgroundLayer.add(floor);
 		}
 		
 		private function addObstacles():void {
-			this.obstacles.push(new Obstacle(this.origin.x + 40, this.origin.y + 40, "bed"));
+			this.obstacles.push(new Obstacle(this.origin.x + this.width/2 - 128/2, this.origin.y + height/2 - 64/2, "bed"));
 			
 			for each (var obstacle : Obstacle in this.obstacles) {
-				add(obstacle);
+				this.itemLayer.add(obstacle);
 			}
 		}
 		
@@ -107,14 +136,21 @@ package com.robocatapps.NGJ {
 				}
 			}
 			
-			if (Math.random() < 0.001) {
+			if (Math.random() < 0.001 && npcs.length <= MAXPATIENTS) {
 				addPatient();
 			}
 			
-			if ((light_counter++) > Math.random() * 100) {
-				light_counter = 0;
-				light.alpha = Math.random() * 0.25 + 0.25;
+			for each (var pickup : Pickup in pickups) {
+				if (pickup.timedOut) {
+					this.itemLayer.remove(pickup);
+					delete this.pickups[this.pickups.indexOf(pickup)];
+				}
 			}
+			
+			//if ((light_counter++) > Math.random() * 100) {
+			//	light_counter = 0;
+			//	light.alpha = Math.random() * 0.25 + 0.25;
+			//}
 		}
 		
 		public function getOpponent() : Player {
@@ -125,14 +161,27 @@ package com.robocatapps.NGJ {
 			var p : Patient = new Patient();
 			p.x = origin.x + 10 + Math.random() * 480;
 			p.y = origin.y + 10 + Math.random() * 800;
-			add(p);
+			this.enemyLayer.add(p);
 			npcs.push(p);
 		}
 		
 		public function addDrop() : void {
-			var hitlerkage : Pickup = new Pickup(this.origin.x + Math.random() * (500 - 40), this.origin.y + Math.random() * (820 - 40), "hitlerkage");
-			add(hitlerkage);
-			pickups.push(hitlerkage);
+			var x : uint = this.origin.x + Math.random() * (500 - 40);
+			var y : uint = this.origin.y + Math.random() * (820 - 40);
+			
+			var hitlerkage : Pickup = new Pickup(x, y, "hitlerkage");
+			
+			var collision : Boolean = false;
+			for each (var obstacle : Obstacle in this.obstacles) {
+				if (FlxCollision.pixelPerfectCheck(hitlerkage, obstacle)) {
+					collision = true;
+				}
+			}
+			
+			if (!collision) {
+				this.itemLayer.add(hitlerkage);
+				pickups.push(hitlerkage);
+			}
 		}
 	}
 }
