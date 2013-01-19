@@ -30,19 +30,33 @@ package com.robocatapps.NGJ {
 			var xchange : int = 0;
 			var ychange : int = 0;
 			
-			if ((playernumber == 0 && FlxG.keys.pressed("LEFT")) || (playernumber == 1 && FlxG.keys.pressed("A"))) {
-				x += (xchange = -5);
-				frame = 1;
-			} else if ((playernumber == 0 && FlxG.keys.pressed("RIGHT")) || (playernumber == 1 && FlxG.keys.pressed("D"))) {
-				x += (xchange = 5);
-				frame = 0;
-			}
+			var go_left : Boolean = false;
+			var go_right : Boolean = false;
+			var go_up : Boolean = false;
+			var go_down : Boolean = false;
 			
+			if ((playernumber == 0 && FlxG.keys.pressed("LEFT")) || (playernumber == 1 && FlxG.keys.pressed("A"))) {
+				go_left = true;
+			}
+			if ((playernumber == 0 && FlxG.keys.pressed("RIGHT")) || (playernumber == 1 && FlxG.keys.pressed("D"))) {
+				go_right = true;
+			}
 			if ((playernumber == 0 && FlxG.keys.pressed("UP")) || (playernumber == 1 && FlxG.keys.pressed("W"))) {
+				go_up = true;
 				y += (ychange = -5);
-			} else if ((playernumber == 0 && FlxG.keys.pressed("DOWN")) || (playernumber == 1 && FlxG.keys.pressed("S"))) {
+			}
+			if ((playernumber == 0 && FlxG.keys.pressed("DOWN")) || (playernumber == 1 && FlxG.keys.pressed("S"))) {
+				go_down = true;
 				y += (ychange = 5);
 			}
+			
+			if (go_left) { x += (xchange = -5); } else if (go_right) { x += (xchange = 5); }
+			if (go_up) { y += (ychange = -5); } else if (go_down) { y += (ychange = 5); }
+			
+			if (go_left) { angle = (go_up? -45: go_down? 45: 0); }
+			else if (go_right) { angle = (go_up? 180+45: go_down? 180-45: 180); }
+			else if (go_up) { angle = 270; }
+			else if (go_down) { angle = 90; }
 			
 			for each (var obstacle : FlxSprite in scene.obstacles) {
 				if (x + width > obstacle.x && x < obstacle.x + obstacle.width
