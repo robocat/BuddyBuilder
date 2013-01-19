@@ -5,10 +5,11 @@
 	public class Player extends FlxSprite {
 		[Embed(source="doctor.png")] private var sprite : Class;
 		[Embed(source="foot_steps.mp3")] private var soundEffect:Class;
+		[Embed(source="scream0.mp3")] private var scream0Sound:Class;
 		
 		public var level : Level;
 		
-		private var playernumber : uint;
+		public var playernumber : uint;
 		private var area : FlxRect;
 		private var slashing : Boolean = false;
 		private var slash_down : Boolean = false;
@@ -18,7 +19,7 @@
 			loadGraphic(sprite, false, false, 96, 96, false);
 			addAnimation("walk", [0, 1, 2, 3, 4, 5, 6, 7], 15, true);
 			addAnimation("stand", [0]);
-			addAnimation("slash", [2, 3, 4, 4], 20, false);
+			addAnimation("slash", [8, 9, 10, 11, 12, 13, 14, 15, 15], 20, false);
 			addAnimationCallback(animationCallback);
 			play("stand");
 			this.level = level;
@@ -32,17 +33,12 @@
 				x = 942;
 				y = 655;
 			}
-			
-	
-	
-			
-			
 		}
 		
 		private function animationCallback(name:String, frame:uint, findex:uint) : void {
 			trace(name);
 			trace(frame);
-			if (name == "slash" && frame == 3) {
+			if (name == "slash" && frame == 8) {
 				slashing = false;
 			}
 		}
@@ -52,16 +48,30 @@
 			colrect.x += Math.sin(angle) * 32;
 			colrect.y -= Math.cos(angle) * 32;
 			
+			var didHit : Boolean = false;
 			for each (var npc : Patient in level.npcs) {
 				if (colCheck(colrect, new FlxRect(npc.x, npc.y, npc.width, npc.height))) {
+					for (var i : int = 0; i < Math.random() * 5; i++) {
+						level.backgroundLayer.add(new Blood(npc.x, npc.y));
+					}
 					delete level.npcs[level.npcs.indexOf(npc)];
 					level.enemyLayer.remove(npc);
 					level.addDrop();
+					didHit = true;
 				}
+			}
+			
+			if(didHit) {
+				FlxG.play(scream0Sound) ;
 			}
 		}
 		
 		override public function update() : void {
+			super.update();
+			
+			if (this.level.gameState.state != GameState.STATE_PLAYING)
+				return;
+			
 			var xchange : int = 0;
 			var ychange : int = 0;
 			
