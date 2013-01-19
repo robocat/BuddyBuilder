@@ -10,7 +10,9 @@ Setup
 * install FDT (http://fdt.powerflasher.com/buy-download/)
 * install Flash debug version (http://fpdownload.macromedia.com/pub/flashplayer/updaters/11/flashplayer_11_plugin_debug.dmg)
 
-Flixel docs
-===========
+Docs
+====
 
-http://flixel.org/docs/
+Flixel documentation: http://flixel.org/docs/
+Flixel powertools: http://www.photonstorm.com/flixel-power-tools
+
