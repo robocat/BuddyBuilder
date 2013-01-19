@@ -26,11 +26,11 @@ package com.robocatapps.NGJ {
 			this.player0 = new Player(0);
 			this.player1 = new Player(1);
 			
-			this.level0 = new Level(this.player1, new FlxPoint(200, 40), this);
-			this.level1 = new Level(this.player0, new FlxPoint(740, 40), this);
+			this.level0 = new Level(this.player0, new FlxPoint(200, 40), this);
+			this.level1 = new Level(this.player1, new FlxPoint(740, 40), this);
 			
-			player0.level = level1;
-			player1.level = level0;
+			player0.level = level0;
+			player1.level = level1;
 			
 			add(this.level0);
 			add(this.level1);
