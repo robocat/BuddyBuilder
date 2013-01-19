@@ -66,7 +66,8 @@
 						level.backgroundLayer.add(new Blood(npc.x, npc.y));
 					}
 					
-					level.flock.patients[level.flock.patients.indexOf(npc)].kill();
+					delete level.flock.patients[level.flock.patients.indexOf(npc)];
+//					level.flock.patients[level.flock.patients.indexOf(npc)].kill();
 					level.enemyLayer.remove(npc);
 					level.addDrop();
 					didHit = true;
