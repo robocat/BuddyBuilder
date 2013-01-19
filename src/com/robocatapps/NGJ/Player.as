@@ -15,8 +15,8 @@
 		
 		public function Player(playernumber:uint) : void {
 			this.playernumber = playernumber;
-			loadGraphic(sprite, false, false, 92, 92, false);
-			addAnimation("walk", [0, 1], 10, true);
+			loadGraphic(sprite, false, false, 96, 96, false);
+			addAnimation("walk", [0, 1, 2, 3, 4, 5, 6, 7], 15, true);
 			addAnimation("stand", [0]);
 			addAnimation("slash", [2, 3, 4, 4], 20, false);
 			addAnimationCallback(animationCallback);
