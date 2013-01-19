@@ -22,6 +22,9 @@ package com.robocatapps.NGJ {
 		public var npcs : Array;
 		
 		private var state : GameState;
+
+		private var operation_table : OperationTable;
+
 		
 		// Layout
 		public var origin : FlxPoint;
@@ -35,13 +38,14 @@ package com.robocatapps.NGJ {
 		private var darkMaxCounter : uint = 400;
 		private var darkOn : Boolean = false;
 		
-		public function Level(player: Player, origin : FlxPoint, state : GameState):void {
+		public function Level(player: Player, origin : FlxPoint, operation_table : OperationTable, state : GameState):void {
 			this.pickups = new Array();
 			this.obstacles = new Array();
 			this.npcs = new Array();
 			
 			this.origin = origin;
 			this.state = state;
+			this.operation_table = operation_table;
 			
 			// Add the floor first since it needs 
 			// to beneath the player

@@ -23,22 +23,22 @@ package com.robocatapps.NGJ {
 			grid.loadGraphic(gridSprite);
 			add(grid);
 			
+			this.operation_table0 = new OperationTable(0, new FlxPoint(20, 105));
+			this.operation_table1 = new OperationTable(1, new FlxPoint(1261, 105));
+			this.operation_table0.add_to_body(OperationTable.TORSO);
+			this.operation_table1.add_to_body(OperationTable.RIGHT_ARM | OperationTable.LEFT_LEG | OperationTable.HEAD);
+			
 			this.player0 = new Player(0);
 			this.player1 = new Player(1);
 			
-			this.level0 = new Level(this.player0, new FlxPoint(200, 40), this);
-			this.level1 = new Level(this.player1, new FlxPoint(740, 40), this);
+			this.level0 = new Level(this.player0, new FlxPoint(200, 40), this.operation_table0, this);
+			this.level1 = new Level(this.player1, new FlxPoint(740, 40), this.operation_table1, this);
 			
 			player0.level = level0;
 			player1.level = level1;
 			
 			add(this.level0);
 			add(this.level1);
-			
-			this.operation_table0 = new OperationTable(0, new FlxPoint(20, 105));
-			this.operation_table1 = new OperationTable(1, new FlxPoint(1261, 105));
-			this.operation_table0.add_to_body(OperationTable.TORSO);
-			this.operation_table1.add_to_body(OperationTable.RIGHT_ARM | OperationTable.LEFT_LEG | OperationTable.HEAD);
 			
 			add(this.operation_table0);
 			add(this.operation_table1);
