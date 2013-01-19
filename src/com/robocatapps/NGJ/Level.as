@@ -1,8 +1,7 @@
 package com.robocatapps.NGJ {
-	import org.flixel.FlxRect;
-	import flash.trace.Trace;
-	import org.flixel.FlxPoint;
 	import org.flixel.FlxG;
+	import flash.display.Graphics;
+	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxGroup;
 	/**
@@ -28,6 +27,8 @@ package com.robocatapps.NGJ {
 		
 		// Layout
 		public var origin : FlxPoint;
+		public var width : uint = 510;
+		public var height: uint = 820;
 		
 		// Effects
 		private var light : FlxSprite;
@@ -49,7 +50,7 @@ package com.robocatapps.NGJ {
 			
 			// Add the floor first since it needs 
 			// to beneath the player
-			this.addFloor();
+			//this.addFloor();
 			
 			// Add obstacles to the level
 			this.addObstacles();
@@ -57,12 +58,16 @@ package com.robocatapps.NGJ {
 			
 			// Add the light sprite for flickering
 			this.light = new FlxSprite(this.origin.x, this.origin.y, lightSprite);
+			this.light.alpha = 0;
 			add(this.light);
 			
 			// Add sprite for turning off the lights
+			
+			
 			this.dark = new FlxSprite(this.origin.x, this.origin.y, darkSprite);
 			this.dark.alpha = 0;
 			add(this.dark);
+ 
 			
 			// Add the player for the level
 			this.player = player;
@@ -113,10 +118,10 @@ package com.robocatapps.NGJ {
 				pickups.push(hitlerkage);
 			}
 			
-			if ((light_counter++) > Math.random() * 100) {
-				light_counter = 0;
-				light.alpha = Math.random() * 0.25 + 0.25;
-			}
+			//if ((light_counter++) > Math.random() * 100) {
+			//	light_counter = 0;
+			//	light.alpha = Math.random() * 0.25 + 0.25;
+			//}
 		}
 		
 		public function getOpponent() : Player {

@@ -31,8 +31,8 @@ package com.robocatapps.NGJ {
 			this.player0 = new Player(0);
 			this.player1 = new Player(1);
 			
-			this.level0 = new Level(this.player0, new FlxPoint(200, 40), this.operation_table0, this);
-			this.level1 = new Level(this.player1, new FlxPoint(740, 40), this.operation_table1, this);
+			this.level0 = new Level(this.player0, new FlxPoint(209, 50), this.operation_table0, this);
+			this.level1 = new Level(this.player1, new FlxPoint(739, 50), this.operation_table1, this);
 			
 			player0.level = level0;
 			player1.level = level1;
