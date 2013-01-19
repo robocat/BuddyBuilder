@@ -43,16 +43,15 @@ package com.robocatapps.NGJ {
 //            }
         }
 		
-		public function getDistance(P1:FlxPoint, P2:FlxPoint):Number
+		public function getDistance(s1:FlxSprite, s2:FlxPoint):Number
 		{
-			var XX:Number = P2.x - P1.x;
-			var YY:Number = P2.y - P1.y;
-			return Math.sqrt( XX * XX + YY * YY );
+			var xx:Number = s2.x - s1.x;
+			var yy:Number = s2.y - s1.y;
+			return Math.sqrt( xx * xx + yy * yy );
 		}
 
         public function cohere():void {
-//            // A special case for if there's only
-//            // one patient which causes drugs behavior:
+//            // A special case for one
 //            if (patients.length == 1) {
 //                seek(new FlxPoint(player.x, player.y), player_seek_strength, 32);
 //                return;
@@ -85,9 +84,12 @@ package com.robocatapps.NGJ {
 				if (distance < 10) {
 					patient.new_distination();
 				}
+				else if (patient.velocity.x < 1 && patient.velocity.x < 1) {
+					patient.new_distination();
+				}
 				
-				patient.velocity.x += ((patient.destination.x - patient.x) / 2) * FlxG.elapsed;
-				patient.velocity.y += ((patient.destination.y - patient.y) / 2) * FlxG.elapsed;
+				patient.velocity.x += ((patient.destination.x - patient.x) / 15) * FlxG.elapsed;
+				patient.velocity.y += ((patient.destination.y - patient.y) / 15) * FlxG.elapsed;
 			}
 			
         }
@@ -116,8 +118,8 @@ package com.robocatapps.NGJ {
                     }
                 }
 
-                patient.velocity.x += x_adjustment / 2;
-                patient.velocity.y += y_adjustment / 2;
+                patient.velocity.x += x_adjustment;
+                patient.velocity.y += y_adjustment;
             }
         }
 

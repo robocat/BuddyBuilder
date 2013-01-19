@@ -56,9 +56,9 @@ package com.robocatapps.NGJ {
 //			
 //			
 //			
-//			for (var i : int = 0; i < 20; i++) {
+//			for (var i : int = 0; i < 10; i++) {
 //				var patient1 : Patient;
-//				patient1 = new Patient(Math.random()*700, Math.random()*800);
+//				patient1 = new Patient(220 + Math.random() * (480 - 220), 60 + Math.random() * (800 - 60));
 //				flock.add_patient(patient1);
 //			}
 			
