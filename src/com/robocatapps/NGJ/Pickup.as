@@ -21,7 +21,7 @@ package com.robocatapps.NGJ {
 		public static const DROP_HEAD : String = "head";
 		public static const DROP_TORSO : String = "torso";
 		
-		public static const DROP_TYPES : Array = [DROP_LIGHT, DROP_LEFTLEG, DROP_LEFTLEG, DROP_LEFTARM, DROP_RIGHTARM, DROP_HEAD, DROP_TORSO];
+		public static const DROP_TYPES : Array = [DROP_LIGHT, DROP_LEFTLEG, DROP_RIGHTLEG, DROP_LEFTARM, DROP_RIGHTARM, DROP_HEAD, DROP_TORSO];
 		
 		public var type : String;
 		
