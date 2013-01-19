@@ -23,10 +23,10 @@ package com.robocatapps.NGJ {
 			grid.loadGraphic(gridSprite);
 			add(grid);
 			
-			this.operation_table0 = new OperationTable(0, new FlxPoint(20, 105));
-			this.operation_table1 = new OperationTable(1, new FlxPoint(1261, 105));
-			//this.operation_table0.add_to_body(OperationTable.TORSO);
-			//this.operation_table1.add_to_body(OperationTable.RIGHT_ARM | OperationTable.LEFT_LEG | OperationTable.HEAD);
+			this.operation_table0 = new OperationTable(0, new FlxPoint(20, 106));
+			this.operation_table1 = new OperationTable(1, new FlxPoint(1261, 106));
+			this.operation_table0.add_to_body(OperationTable.TORSO);
+			this.operation_table1.add_to_body(OperationTable.RIGHT_ARM | OperationTable.LEFT_LEG | OperationTable.HEAD);
 			
 			this.player0 = new Player(0);
 			this.player1 = new Player(1);
@@ -42,6 +42,30 @@ package com.robocatapps.NGJ {
 			
 			add(this.operation_table0);
 			add(this.operation_table1);
+			
+			
+			// HUD: Player
+
+			{
+				var txt0 : FlxText = new FlxText(20,39,180, "DOCTOR 1");
+				txt0.setFormat("Heading", 30, 0xffffffff, "left");
+				add(txt0);
+			}
+			{
+				var txt1 : FlxText = new FlxText(1261,39,180, "DOCTOR 2");
+				txt1.setFormat("Heading", 30, 0xffffffff, "left");
+				add(txt1);
+			}
+			{
+				var sub0 : FlxText = new FlxText(18,79,181, "Wozniacki");
+				sub0.setFormat("Subtext", 16, 0x3bd9d8ff, "left");
+				add(sub0);
+			}
+			{
+				var sub1 : FlxText = new FlxText(1259,79,181, "Tsurenko");
+				sub1.setFormat("Subtext", 16, 0x1fc89aff, "left");
+				add(sub1);
+			}
 		}
 		
 		override public function update() : void {
