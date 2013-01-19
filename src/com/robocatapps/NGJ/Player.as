@@ -6,7 +6,6 @@
 		[Embed(source="doctor.png")] private var sprite : Class;
 		[Embed(source="foot_steps.mp3")] private var soundEffect:Class;
 		[Embed(source="scream0.mp3")] private var scream0Sound:Class;
-		[Embed(source="patient_dead.png")] private var deadSprite : Class;
 		
 		public var level : Level;
 		
@@ -57,9 +56,9 @@
 						level.backgroundLayer.add(new Blood(npc.x, npc.y));
 					}
 					
-					var dead : FlxSprite = new FlxSprite(npc.x, npc.y);
-					dead.loadGraphic(deadSprite);
+					var dead : Corpse = new Corpse(npc.x, npc.y);
 					dead.angle = Math.random() * 360;
+					dead.frame = Math.random() * 5;
 					level.enemyLayer.add(dead);
 					
 					for (i = 0; i < Math.random() * 5; i++) {

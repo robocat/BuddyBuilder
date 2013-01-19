@@ -22,6 +22,7 @@ package com.robocatapps.NGJ {
 		public var player:Player;
 		public var pickups : Array;
 		public var obstacles : Array;
+		public var corpses : Array;
 		
 		public var gameState : GameState;
 
@@ -145,7 +146,15 @@ package com.robocatapps.NGJ {
 				}
 			}
 			
-			if (Math.random() < 0.01 && flock.patients.length <= MAXPATIENTS) {
+			var count : uint = 0;
+			for each (var patient : Patient in flock.patients) {
+				if (patient != null)
+					count++;
+			}
+			
+			trace('patients ' + count);
+			
+			if (Math.random() < 0.01 && count <= MAXPATIENTS) {
 				addPatient();
 			}
 			
@@ -153,6 +162,12 @@ package com.robocatapps.NGJ {
 				if (pickup.timedOut) {
 					this.itemLayer.remove(pickup);
 					delete this.pickups[this.pickups.indexOf(pickup)];
+				}
+			}
+			
+			for each (var corpse : Corpse in corpses) {
+				if (corpse.gone) {
+					delete corpses[corpses.indexOf(corpse)];
 				}
 			}
 			
