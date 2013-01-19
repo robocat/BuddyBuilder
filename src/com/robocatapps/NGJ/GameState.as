@@ -23,17 +23,6 @@ package com.robocatapps.NGJ {
 
 			create_floor(0);
 			create_floor(1);
-			if(0){
-				var width : uint = 500;
-				for (var i : uint = 0; i < width / 64; i++) {
-					for (var j : uint = 0; j < FlxG.height / 64; j++) {
-						var tile : FlxSprite = new FlxSprite(i * 64, j * 64);
-						tile.loadGraphic(tileSprite);
-						add(tile);
-						tile.x += 200;
-					}
-				}
-			}
 			
 			pickups = new Array();
 			obstacles = new Array();
