@@ -6,6 +6,7 @@
 		[Embed(source="doctor.png")] private var sprite : Class;
 		[Embed(source="foot_steps.mp3")] private var soundEffect:Class;
 		[Embed(source="scream0.mp3")] private var scream0Sound:Class;
+		[Embed(source="patient_dead.png")] private var deadSprite : Class;
 		
 		public var level : Level;
 		
@@ -51,10 +52,20 @@
 			var didHit : Boolean = false;
 			for each (var npc : Patient in level.flock.patients) {
 				if (colCheck(colrect, new FlxRect(npc.x, npc.y, npc.width, npc.height))) {
-					for (var i : int = 0; i < Math.random() * 5; i++) {
+					var i : int = 0;
+					for (i = 0; i < Math.random() * 5; i++) {
 						level.backgroundLayer.add(new Blood(npc.x, npc.y));
 					}
-//					delete level.npcs[level.npcs.indexOf(npc)];
+					
+					var dead : FlxSprite = new FlxSprite(npc.x, npc.y);
+					dead.loadGraphic(deadSprite);
+					dead.angle = Math.random() * 360;
+					level.backgroundLayer.add(dead);
+					
+					for (i = 0; i < Math.random() * 5; i++) {
+						level.backgroundLayer.add(new Blood(npc.x, npc.y));
+					}
+					
 					level.flock.patients[level.flock.patients.indexOf(npc)].kill();
 					level.enemyLayer.remove(npc);
 					level.addDrop();
@@ -139,11 +150,11 @@
 			for each (var pickup : Pickup in level.pickups) {
 				if (FlxCollision.pixelPerfectCheck(this, pickup)) {
 					level.itemLayer.remove(pickup);
-					level.getOpponent().level.turnOffLights();
+					pickup.apply(this);
 					delete level.pickups[level.pickups.indexOf(pickup)];
 					
-					var mask : uint = level.operation_table.pick_a_random_that_is_not_already_visible();
-					level.operation_table.add_to_body(mask);
+//					var mask : uint = level.operation_table.pick_a_random_that_is_not_already_visible();
+//					level.operation_table.add_to_body(mask);
 					
 					FlxG.play(soundEffect);
 				}

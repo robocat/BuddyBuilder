@@ -1,26 +1,83 @@
 package com.robocatapps.NGJ {
+	import flash.sensors.Accelerometer;
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
 	
 	public class Pickup extends FlxSprite {
 		
 		[Embed(source="hitlerkage.png")] private var hitlerkageSprite : Class;
+		[Embed(source="left_leg_drop.png")] private var leftLegSprite : Class;
+		[Embed(source="right_leg_drop.png")] private var rightLegSprite : Class;
+		[Embed(source="left_arm_drop.png")] private var leftArmSprite : Class;
+		[Embed(source="right_arm_drop.png")] private var rightArmSprite : Class;
+		[Embed(source="head_drop.png")] private var headSprite : Class;
+		[Embed(source="torso_drop.png")] private var torsoSprite : Class;
+		
+		public static const DROP_LIGHT : String = "hitlerkage";
+		public static const DROP_LEFTLEG : String = "left_leg";
+		public static const DROP_RIGHTLEG : String = "right_leg";
+		public static const DROP_LEFTARM : String = "left_arm";
+		public static const DROP_RIGHTARM : String = "right_arm";
+		public static const DROP_HEAD : String = "head";
+		public static const DROP_TORSO : String = "torso";
+		
+		public static const DROP_TYPES : Array = [DROP_LIGHT, DROP_LEFTLEG, DROP_LEFTLEG, DROP_LEFTARM, DROP_RIGHTARM, DROP_HEAD, DROP_TORSO];
+		
+		public var type : String;
 		
 		public var timeoutCount : uint = 0;
 		public var maxCount : uint = 300;
 		
 		public var timedOut : Boolean = false;
 		
-		public function Pickup(x:uint, y:uint, type:String) : void{
+		private var speed : uint = 0;
+		private var area : uint = 0;
+		
+		public function Pickup(x:uint, y:uint, type:String, speed:uint = 0, angle:int = 0) : void{
 			super(x, y);
+			this.speed = speed;
+			this.angle = angle;
 			
-			if (type == "hitlerkage") {
+			area = (x > 720? 1: 0);
+			
+			this.type = type;
+			
+			if (type == DROP_LIGHT) {
 				loadGraphic(hitlerkageSprite, false, false, 22, 22, false);
 				addAnimation("spin", [0, 1, 2, 3], 10, true);
 				play("spin");
 				scale = new FlxPoint(2, 2);
-			} else if (type == "") {
-				
+			} else if (type == DROP_LEFTLEG) {
+				loadGraphic(leftLegSprite, false, false, 52, 114, false);
+			} else if (type == DROP_RIGHTLEG) {
+				loadGraphic(rightLegSprite, false, false, 52, 116, false);
+			} else if (type == DROP_LEFTARM) {
+				loadGraphic(leftArmSprite, false, false, 44, 80, false);
+			} else if (type == DROP_RIGHTARM) {
+				loadGraphic(rightArmSprite, false, false, 46, 82, false);
+			} else if (type == DROP_HEAD) {
+				loadGraphic(headSprite, false, false, 40, 44, false);
+			} else if (type == DROP_TORSO) {
+				loadGraphic(torsoSprite, false, false, 72, 110, false);
+			}
+			
+		}
+		
+		public function apply(player : Player) : void {
+			if (type == DROP_LEFTLEG) {
+				player.level.operation_table.add_to_body(OperationTable.LEFT_LEG);
+			} else if (type == DROP_RIGHTLEG) {
+				player.level.operation_table.add_to_body(OperationTable.RIGHT_LEG);
+			} else if (type == DROP_LEFTARM) {
+				player.level.operation_table.add_to_body(OperationTable.LEFT_ARM);
+			} else if (type == DROP_RIGHTARM) {
+				player.level.operation_table.add_to_body(OperationTable.RIGHT_ARM);
+			} else if (type == DROP_HEAD) {
+				player.level.operation_table.add_to_body(OperationTable.HEAD);
+			} else if (type == DROP_TORSO) {
+				player.level.operation_table.add_to_body(OperationTable.TORSO);
+			} else if (type == DROP_LIGHT) {
+				player.level.getOpponent().level.turnOffLights();
 			}
 		}
 
@@ -47,6 +104,16 @@ package com.robocatapps.NGJ {
 		
 		override public function update():void {
 			super.update();
+			
+			if (speed > 0) {
+				speed -= 0.1;
+				x += Math.sin(angle) * speed;
+				y -= Math.cos(angle) * speed;
+				
+				x = (area == 0? x > 700? 700: x < 200? 200: x: x > 1240? 1240: x < 740? 740: x);
+				y = (y > 860? 860: y < 40? 40: y);
+				
+			}
 			
 			// Flash when the item is about to disappear
 			this.alpha = alpha_from_tick(maxCount - timeoutCount);

@@ -51,8 +51,6 @@ package com.robocatapps.NGJ {
 			
 			this.operation_table0 = new OperationTable(0, new FlxPoint(20, 106));
 			this.operation_table1 = new OperationTable(1, new FlxPoint(1261, 106));
-			this.operation_table0.add_to_body(OperationTable.TORSO);
-			this.operation_table1.add_to_body(OperationTable.RIGHT_ARM | OperationTable.LEFT_LEG | OperationTable.HEAD);
 			
 			this.player0 = new Player(0);
 			this.player1 = new Player(1);
