@@ -1,4 +1,4 @@
-package com.robocatapps.NGJ {
+ package com.robocatapps.NGJ {
 	import org.flixel.plugin.photonstorm.FlxCollision;
 	import org.flixel.*;
 	
@@ -17,18 +17,30 @@ package com.robocatapps.NGJ {
 		}
 		
 		override public function update() : void {
+			var xchange : int = 0;
+			var ychange : int = 0;
+			
 			if ((cont == 0 && FlxG.keys.pressed("LEFT")) || (cont == 1 && FlxG.keys.pressed("A"))) {
-				x -= 5;
+				x += (xchange = -5);
 				frame = 1;
 			} else if ((cont == 0 && FlxG.keys.pressed("RIGHT")) || (cont == 1 && FlxG.keys.pressed("D"))) {
-				x += 5;
+				x += (xchange = 5);
 				frame = 0;
 			}
 			
 			if ((cont == 0 && FlxG.keys.pressed("UP")) || (cont == 1 && FlxG.keys.pressed("W"))) {
-				y -= 5;
+				y += (ychange = -5);
 			} else if ((cont == 0 && FlxG.keys.pressed("DOWN")) || (cont == 1 && FlxG.keys.pressed("S"))) {
-				y += 5;
+				y += (ychange = 5);
+			}
+			
+			for each (var obstacle : FlxSprite in scene.obstacles) {
+				if (x + width > obstacle.x && x < obstacle.x + obstacle.width
+				&& y + height > obstacle.y && x < obstacle.y + obstacle.height) {
+					x -= xchange;
+					y -= ychange;
+					break;
+				}
 			}
 			
 			x = (x < 0? 0: x > FlxG.width - width? FlxG.width - width: x);
@@ -37,6 +49,7 @@ package com.robocatapps.NGJ {
 			for each (var pickup : Pickup in scene.pickups) {
 				if (FlxCollision.pixelPerfectCheck(this, pickup)) {
 					scene.remove(pickup);
+					delete scene.pickups[scene.pickups.indexOf(pickup)];
 				}
 			}
 		}
