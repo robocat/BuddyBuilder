@@ -10,6 +10,12 @@ package com.robocatapps.NGJ {
 		
 		public var level : Level;
 		
+		// Velocity
+		public static const STAND_VELOCITY   : Number = 0.0;
+		public static const WALK_VELOCITY    : Number = 50.0;
+		public static const RUN_VELOCITY     : Number = 100.0;
+		
+		
 		private var area : FlxRect;
 		
 		private var timeoutCount : uint = 0;
@@ -18,6 +24,7 @@ package com.robocatapps.NGJ {
 		private static const STAND   : uint = 0;
 		private static const WALK    : uint = 1;
 		private static const RUN     : uint = 2;
+		
 		
 		// State
 		private var animationState : uint;
@@ -42,7 +49,7 @@ package com.robocatapps.NGJ {
 			destination = new FlxPoint();
 			new_distination();
 			
-			color = 0x07d303;
+//			color = 0x07d303;
 		}
 		
 		
@@ -51,19 +58,17 @@ package com.robocatapps.NGJ {
 			
 			angle = FlxU.getAngle(origin, velocity);
 			
-			if (Math.abs(velocity.x) >= 0.0 && Math.abs(velocity.x) <= 0.1
-					&& Math.abs(velocity.y) >= 0.0 && Math.abs(velocity.y) <= 0.1)
+			if (Math.abs(velocity.x) == STAND_VELOCITY && Math.abs(velocity.y) == STAND_VELOCITY)
 			{
 				play("stand");
 				animationState = STAND;
 			}
-			else if (Math.abs(velocity.x) > 0.1 && Math.abs(velocity.x) <= 30
-					&& Math.abs(velocity.y) > 0.1 && Math.abs(velocity.y) <= 30)
+			else if (Math.abs(velocity.x) == WALK_VELOCITY && Math.abs(velocity.y) == WALK_VELOCITY)
 			{
 				play("walk");
 				animationState = WALK;
 			}
-			else if (Math.abs(velocity.x) > 30 && Math.abs(velocity.y) > 30)
+			else if (Math.abs(velocity.x) == RUN_VELOCITY && Math.abs(velocity.y) == RUN_VELOCITY)
 			{
 				play("run");
 				animationState = RUN;
@@ -78,6 +83,17 @@ package com.robocatapps.NGJ {
 				play("walk");
 				animationState = WALK;
 			}
+			
+			
+//			var obstacle : Obstacle;
+//			
+//			for each (obstacle in level.obstacles) {
+//				if (x + width > obstacle.x && x < obstacle.x + obstacle.width
+//				&& y + height > obstacle.y && y < obstacle.y + obstacle.height)
+//				{
+//					FlxU.rotatePoint(x, y, x, y, 45);
+//				}
+//			}
 						
 		
 			if (x < area.x + 80) {

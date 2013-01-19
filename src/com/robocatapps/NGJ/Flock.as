@@ -43,6 +43,25 @@ package com.robocatapps.NGJ {
 //            }
         }
 		
+		
+		private function movement(patient : Patient, vel_x : Number, vel_y : Number):void {
+			if (Math.abs(vel_x) > Patient.STAND_VELOCITY && Math.abs(vel_y) > Patient.STAND_VELOCITY
+				&& Math.abs(vel_x) < Patient.RUN_VELOCITY && Math.abs(vel_y) < Patient.RUN_VELOCITY)
+			{
+				 patient.velocity.x = (vel_x > 0.0) ? Patient.WALK_VELOCITY : -Patient.WALK_VELOCITY;
+				 patient.velocity.y = (vel_y > 0.0) ? Patient.WALK_VELOCITY : -Patient.WALK_VELOCITY;
+			}
+			else if (Math.abs(vel_x) > Patient.RUN_VELOCITY && Math.abs(vel_y) > Patient.RUN_VELOCITY)
+			{
+				 patient.velocity.x = (vel_x > 0.0) ? Patient.RUN_VELOCITY : -Patient.RUN_VELOCITY;
+				 patient.velocity.y = (vel_y > 0.0) ? Patient.RUN_VELOCITY : -Patient.RUN_VELOCITY;
+			}
+			else {
+				 patient.velocity.x = Patient.STAND_VELOCITY;
+				 patient.velocity.y = Patient.STAND_VELOCITY;
+			}
+		}
+		
 
         public function cohere():void {
 //            // A special case for one
@@ -75,15 +94,20 @@ package com.robocatapps.NGJ {
                             Math.sqrt( Math.pow(patient.destination.x - patient.x, 2) + Math.pow(patient.destination.y - patient.y, 2) )
                         )
 						
-				if (distance < 10) {
+				if (distance < 1) {
 					patient.new_distination();
 				}
-				else if (patient.velocity.x < 1 && patient.velocity.x < 1) {
-					patient.new_distination();
-				}
+//				else if (patient.velocity.x < 1 && patient.velocity.x < 1) {
+//					patient.new_distination();
+//				}
+//				
+//				patient.velocity.x += ((patient.destination.x - patient.x) / 20) * FlxG.elapsed;
+//				patient.velocity.y += ((patient.destination.y - patient.y) / 20) * FlxG.elapsed;
+
+				var vel_x : Number = patient.velocity.x + ((patient.destination.x - patient.x) / 20) * FlxG.elapsed;
+				var vel_y : Number = patient.velocity.y + ((patient.destination.y - patient.y) / 20) * FlxG.elapsed;
 				
-				patient.velocity.x += ((patient.destination.x - patient.x) / 20) * FlxG.elapsed;
-				patient.velocity.y += ((patient.destination.y - patient.y) / 20) * FlxG.elapsed;
+				movement(patient, vel_x, vel_y);
 			}
 			
         }
@@ -110,8 +134,13 @@ package com.robocatapps.NGJ {
                     }
                 }
 
-                patient.velocity.x += x_adjustment / 2;
-                patient.velocity.y += y_adjustment / 2;
+//                patient.velocity.x += x_adjustment / 2;
+//                patient.velocity.y += y_adjustment / 2;
+				
+				var vel_x : Number = patient.velocity.x + x_adjustment / 2;
+				var vel_y : Number = patient.velocity.y + y_adjustment / 2;
+				
+				movement(patient, vel_x, vel_y);
             }
         }
 
@@ -131,9 +160,13 @@ package com.robocatapps.NGJ {
                 x_adjustment = x_adjustment / (patients.length - 1);
                 y_adjustment = y_adjustment / (patients.length - 1);
 
-                patient.velocity.x += (x_adjustment - patient.velocity.x) / 8;
-                patient.velocity.y += (y_adjustment - patient.velocity.y) / 8;
+//                patient.velocity.x += (x_adjustment - patient.velocity.x) / 8;
+//                patient.velocity.y += (y_adjustment - patient.velocity.y) / 8;
                 
+				var vel_x : Number = patient.velocity.x + (x_adjustment - patient.velocity.x) / 8;
+				var vel_y : Number = patient.velocity.y + (y_adjustment - patient.velocity.y) / 8;
+				
+				movement(patient, vel_x, vel_y);
             }
         }
 
@@ -145,8 +178,13 @@ package com.robocatapps.NGJ {
                 );
 
                 if (distance > max_distance) {
-                    patient.velocity.x += ((target.x - patient.x) * amount) * FlxG.elapsed;
-                    patient.velocity.y += ((target.y - patient.y) * amount) * FlxG.elapsed;
+//                    patient.velocity.x += ((target.x - patient.x) * amount) * FlxG.elapsed;
+//                    patient.velocity.y += ((target.y - patient.y) * amount) * FlxG.elapsed;
+					
+					var vel_x : Number = ((target.x - patient.x) * amount) * FlxG.elapsed;
+					var vel_y : Number = ((target.y - patient.y) * amount) * FlxG.elapsed;
+				
+					movement(patient, vel_x, vel_y);
                 }
             }
         }	
