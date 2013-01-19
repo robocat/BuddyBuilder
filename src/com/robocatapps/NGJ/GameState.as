@@ -1,10 +1,19 @@
 package com.robocatapps.NGJ {
+	import flash.display.Sprite;
 	import org.flixel.*;
 	
 	public class GameState extends FlxState {
 		[Embed(source="bed.png")] private var bedSprite : Class;
 		[Embed(source="light.png")] private var lightSprite : Class;
 		[Embed(source="level_grid.png")] private var gridSprite : Class;
+		
+		// STATE
+		public static const STATE_COUNTDOWN :uint = 1;
+		public static const STATE_PLAYING :uint = 2;
+		public static const STATE_GAMEOVER :uint = 3;
+		public static const STATE_PAUSED :uint = 4;
+		
+		public var state : uint;
 		
 		private var player0 : Player;
 		private var player1 : Player;
@@ -18,10 +27,19 @@ package com.robocatapps.NGJ {
 		private var light : FlxSprite;
 		private var light_counter : uint = 0;
 		
+		private var levelLayer : FlxGroup;
+		private var textLayer : FlxGroup;
+		
 		public function GameState() : void {
+			this.levelLayer = new FlxGroup();
+			this.textLayer = new FlxGroup();
+			
+			this.add(this.levelLayer);
+			this.add(this.textLayer)
+			
 			var grid : FlxSprite = new FlxSprite(0, 0);
 			grid.loadGraphic(gridSprite);
-			add(grid);
+			this.levelLayer.add(grid);
 			
 			this.operation_table0 = new OperationTable(0, new FlxPoint(20, 106));
 			this.operation_table1 = new OperationTable(1, new FlxPoint(1261, 106));
@@ -37,11 +55,11 @@ package com.robocatapps.NGJ {
 			player0.level = level0;
 			player1.level = level1;
 			
-			add(this.level0);
-			add(this.level1);
+			this.levelLayer.add(this.level0);
+			this.levelLayer.add(this.level1);
 			
-			add(this.operation_table0);
-			add(this.operation_table1);
+			this.levelLayer.add(this.operation_table0);
+			this.levelLayer.add(this.operation_table1);
 			
 			
 			// HUD: Player
@@ -49,22 +67,22 @@ package com.robocatapps.NGJ {
 			{
 				var txt0 : FlxText = new FlxText(20,39,180, "DOCTOR 1");
 				txt0.setFormat("Heading", 30, 0xffffffff, "left");
-				add(txt0);
+				this.levelLayer.add(txt0);
 			}
 			{
 				var txt1 : FlxText = new FlxText(1261,39,180, "DOCTOR 2");
 				txt1.setFormat("Heading", 30, 0xffffffff, "left");
-				add(txt1);
+				this.levelLayer.add(txt1);
 			}
 			{
 				var sub0 : FlxText = new FlxText(18,79,181, "Wozniacki");
 				sub0.setFormat("Subtext", 16, 0x3bd9d8ff, "left");
-				add(sub0);
+				this.levelLayer.add(sub0);
 			}
 			{
 				var sub1 : FlxText = new FlxText(1259,79,181, "Tsurenko");
 				sub1.setFormat("Subtext", 16, 0x1fc89aff, "left");
-				add(sub1);
+				this.levelLayer.add(sub1);
 			}
 		}
 		
@@ -84,7 +102,26 @@ package com.robocatapps.NGJ {
 		}
 		
 		private function gameOver(winner : Player) : void {
-			FlxG.switchState(new MenuState());
+			this.state = STATE_GAMEOVER;
+			
+			var overlay : FlxSprite = new FlxSprite(0, 0);
+			overlay.makeGraphic(FlxG.width, FlxG.height);
+			overlay.color = 0x000000;
+			overlay.alpha = 0.5;
+			
+			this.textLayer.add(overlay);
+			
+			{
+				var txt0 : FlxText = new FlxText(416,250,1024, "GAME OVER");
+				txt0.setFormat("Heading", 140, 0xffffffff, "left");
+				this.textLayer.add(txt0);
+			}
+			
+			{
+				var txt1 : FlxText = new FlxText(416,450,1024, "DOCTOR " + (winner.playernumber + 1) + " WINS");
+				txt1.setFormat("Heading", 104, 0xffffffff, "left");
+				this.textLayer.add(txt1);
+			}
 		}
 		
 		public function getOpponnent(player : Player):Player {

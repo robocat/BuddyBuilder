@@ -8,7 +8,7 @@
 		
 		public var level : Level;
 		
-		private var playernumber : uint;
+		public var playernumber : uint;
 		private var area : FlxRect;
 		private var slashing : Boolean = false;
 		private var slash_down : Boolean = false;
