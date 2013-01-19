@@ -30,6 +30,9 @@ package com.robocatapps.NGJ {
 		private var levelLayer : FlxGroup;
 		private var textLayer : FlxGroup;
 		
+		private var pausedText : FlxText;
+		private var overlay : FlxSprite;
+		
 		public function GameState() : void {
 			this.levelLayer = new FlxGroup();
 			this.textLayer = new FlxGroup();
@@ -84,6 +87,23 @@ package com.robocatapps.NGJ {
 				sub1.setFormat("Subtext", 16, 0x1fc89aff, "left");
 				this.levelLayer.add(sub1);
 			}
+			{
+				this.overlay = new FlxSprite(0, 0);
+				this.overlay.makeGraphic(FlxG.width, FlxG.height);
+				this.overlay.color = 0x000000;
+				this.overlay.alpha = 0;
+			
+				this.textLayer.add(overlay);
+			}
+			{
+				this.pausedText = new FlxText(460, 300, 500, "PAUSED");
+				this.pausedText.setFormat("Subtext",80, 0xFFFFFF, "center");
+				this.pausedText.alpha = 0;
+				this.textLayer.add(this.pausedText);
+			}
+			
+			
+			this.state = STATE_PLAYING;
 		}
 		
 		override public function update() : void {
@@ -94,22 +114,35 @@ package com.robocatapps.NGJ {
 				FlxG.switchState(new MenuState());
 			}
 			
-			if (this.level0.operation_table.complete()) {
-				this.gameOver(this.level0.player);
-			} else if (this.level1.operation_table.complete()) {
-				this.gameOver(this.level1.player);
+			if (FlxG.keys.justPressed("P")) {
+				if (this.state == STATE_PAUSED) {
+					this.state = STATE_PLAYING;
+				} else {
+					this.state = STATE_PAUSED;
+				}
+			}
+			
+			if (this.state == STATE_PAUSED) {
+				this.overlay.alpha = 0.5;
+				this.pausedText.alpha = 1;
+			} else if (this.state == GameState.STATE_PLAYING) {
+				this.overlay.alpha = 0;
+				this.pausedText.alpha = 0;
+			}
+			
+			if (this.state == GameState.STATE_PLAYING) {
+				if (this.level0.operation_table.complete()) {
+					this.gameOver(this.level0.player);
+				} else if (this.level1.operation_table.complete()) {
+					this.gameOver(this.level1.player);
+				}	
 			}
 		}
 		
 		private function gameOver(winner : Player) : void {
 			this.state = STATE_GAMEOVER;
 			
-			var overlay : FlxSprite = new FlxSprite(0, 0);
-			overlay.makeGraphic(FlxG.width, FlxG.height);
-			overlay.color = 0x000000;
-			overlay.alpha = 0.5;
-			
-			this.textLayer.add(overlay);
+			this.overlay.alpha = 0.5;
 			
 			{
 				var txt0 : FlxText = new FlxText(416,250,1024, "GAME OVER");

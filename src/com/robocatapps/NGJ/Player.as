@@ -60,6 +60,11 @@
 		}
 		
 		override public function update() : void {
+			super.update();
+			
+			if (this.level.gameState.state != GameState.STATE_PLAYING)
+				return;
+			
 			var xchange : int = 0;
 			var ychange : int = 0;
 			

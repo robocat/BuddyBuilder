@@ -24,7 +24,7 @@ package com.robocatapps.NGJ {
 		public var obstacles : Array;
 		public var npcs : Array;
 		
-		private var state : GameState;
+		public var gameState : GameState;
 
 		public var operation_table : OperationTable;
 		
@@ -56,7 +56,7 @@ package com.robocatapps.NGJ {
 			this.npcs = new Array();
 			
 			this.origin = origin;
-			this.state = state;
+			this.gameState = state;
 			this.operation_table = operation_table;
 			
 			// Add the floor first since it needs 
@@ -128,6 +128,9 @@ package com.robocatapps.NGJ {
 		override public function update():void {
 			super.update();
 			
+			if (this.gameState.state != GameState.STATE_PLAYING)
+				return;
+			
 			if (this.darkOn) {
 				this.darkCounter++;
 				
@@ -154,7 +157,7 @@ package com.robocatapps.NGJ {
 		}
 		
 		public function getOpponent() : Player {
-			return state.getOpponnent(this.player);
+			return gameState.getOpponnent(this.player);
 		}
 		
 		public function addPatient() : void {
