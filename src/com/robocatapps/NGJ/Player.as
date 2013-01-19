@@ -5,7 +5,13 @@
 	public class Player extends FlxSprite {
 		[Embed(source="doctor.png")] private var sprite : Class;
 		[Embed(source="foot_steps.mp3")] private var soundEffect:Class;
-		[Embed(source="scream0.mp3")] private var scream0Sound:Class;
+		[Embed(source="deathscream1.mp3")] private var scream1:Class;
+		[Embed(source="deathscream2.mp3")] private var scream2:Class;
+		[Embed(source="deathscream3.mp3")] private var scream3:Class;
+		[Embed(source="deathscream4.mp3")] private var scream4:Class;
+		[Embed(source="deathscream5.mp3")] private var scream5:Class;
+		[Embed(source="deathscream6.mp3")] private var scream6:Class;
+		[Embed(source="deathscream7.mp3")] private var scream7:Class;
 		[Embed(source="patient_dead.png")] private var deadSprite : Class;
 		
 		public var level : Level;
@@ -75,7 +81,14 @@
 			}
 			
 			if(didHit) {
-				FlxG.play(scream0Sound) ;
+				var r : int = Math.random() * 7;
+				if (r == 0) FlxG.play(scream1);
+				if (r == 1) FlxG.play(scream2);
+				if (r == 2) FlxG.play(scream3);
+				if (r == 3) FlxG.play(scream4);
+				if (r == 4) FlxG.play(scream5);
+				if (r == 5) FlxG.play(scream6);
+				if (r == 6) FlxG.play(scream7);
 			}
 		}
 		
