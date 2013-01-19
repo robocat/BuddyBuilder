@@ -3,7 +3,7 @@ package com.robocatapps.NGJ {
 	import org.flixel.*;
 	
 	public class Player extends FlxSprite {
-		[Embed(source="player.png")] private var sprite : Class;
+		[Embed(source="doctor.png")] private var sprite : Class;
 		
 		private var playernumber : uint;
 		public var level : Level;
@@ -12,7 +12,9 @@ package com.robocatapps.NGJ {
 		
 		public function Player(playernumber:uint) : void {
 			this.playernumber = playernumber;
-			loadGraphic(sprite, false, false, 128, 128, false);
+			loadGraphic(sprite, false, false, 92, 92, false);
+			addAnimation("walk", [0, 1], 10, true);
+			play("walk");
 			this.level = level;
 			
 			if (playernumber == 1) {
@@ -53,10 +55,10 @@ package com.robocatapps.NGJ {
 			if (go_left) { x += (xchange = -5); } else if (go_right) { x += (xchange = 5); }
 			if (go_up) { y += (ychange = -5); } else if (go_down) { y += (ychange = 5); }
 			
-			if (go_left) { angle = (go_up? -45: go_down? 45: 0); }
-			else if (go_right) { angle = (go_up? 180+45: go_down? 180-45: 180); }
-			else if (go_up) { angle = 270; }
-			else if (go_down) { angle = 90; }
+			if (go_left) { angle = (go_up? -90+45: go_down? -90-45: -90); }
+			else if (go_right) { angle = (go_up? 90-45: go_down? 90+45: 90); }
+			else if (go_up) { angle = 0; }
+			else if (go_down) { angle = 180; }
 
 			for each (var obstacle : FlxSprite in level.obstacles) {
 				if (x + width > obstacle.x && x < obstacle.x + obstacle.width
