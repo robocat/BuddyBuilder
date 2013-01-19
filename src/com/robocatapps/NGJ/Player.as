@@ -34,11 +34,11 @@ package com.robocatapps.NGJ {
 			x = (x < 0? 0: x > FlxG.width - width? FlxG.width - width: x);
 			y = (y < 0? 0: y > FlxG.height - height? FlxG.height - height: y);
 			
-			for each (var pickup : Pickup in scene.pickups) {
-				if (FlxCollision.pixelPerfectCheck(this, pickup)) {
-					scene.remove(pickup);
-				}
-			}
+			//for each (var pickup : Pickup in scene.pickups) {
+			//	if (FlxCollision.pixelPerfectCheck(this, pickup)) {
+			//		scene.remove(pickup);
+			//	}
+			//}
 		}
 	}
 }
