@@ -176,18 +176,19 @@ package com.robocatapps.NGJ {
 			var x : uint = this.origin.x + Math.random() * (500 - 40);
 			var y : uint = this.origin.y + Math.random() * (820 - 40);
 			
-			var hitlerkage : Pickup = new Pickup(x, y, "hitlerkage");
+			var dropType : uint = Math.floor(Math.random() * Pickup.DROP_TYPES.length+1);
+			var drop : Pickup = new Pickup(x, y, Pickup.DROP_TYPES[dropType]);
 			
 			var collision : Boolean = false;
 			for each (var obstacle : Obstacle in this.obstacles) {
-				if (FlxCollision.pixelPerfectCheck(hitlerkage, obstacle)) {
+				if (FlxCollision.pixelPerfectCheck(drop, obstacle)) {
 					collision = true;
 				}
 			}
 			
 			if (!collision) {
-				this.itemLayer.add(hitlerkage);
-				pickups.push(hitlerkage);
+				this.itemLayer.add(drop);
+				pickups.push(drop);
 			}
 		}
 	}
