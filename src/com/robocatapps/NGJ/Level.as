@@ -1,8 +1,9 @@
 package com.robocatapps.NGJ {
-	import org.flixel.FlxRect;
-	import flash.trace.Trace;
-	import org.flixel.FlxPoint;
+	import org.flixel.plugin.photonstorm.FlxGradient;
+	import org.flixel.plugin.photonstorm.FlxCollision;
 	import org.flixel.FlxG;
+	import flash.display.Graphics;
+	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxGroup;
 	/**
@@ -24,10 +25,19 @@ package com.robocatapps.NGJ {
 		private var state : GameState;
 
 		public var operation_table : OperationTable;
+		
+		// Layers
+		public var backgroundLayer : FlxGroup;
+		public var enemyLayer : FlxGroup;
+		public var itemLayer : FlxGroup;
+		public var playerLayer : FlxGroup;
+		public var lightLayer : FlxGroup;
 
 		
 		// Layout
 		public var origin : FlxPoint;
+		public var width : uint = 510;
+		public var height: uint = 820;
 		
 		// Effects
 		private var light : FlxSprite;
@@ -49,7 +59,21 @@ package com.robocatapps.NGJ {
 			
 			// Add the floor first since it needs 
 			// to beneath the player
-			this.addFloor();
+			//this.addFloor();
+			
+			
+			backgroundLayer = new FlxGroup();
+			enemyLayer  = new FlxGroup();
+			itemLayer  = new FlxGroup();
+			lightLayer  = new FlxGroup();
+			playerLayer  = new FlxGroup();
+			
+			
+			add(backgroundLayer);
+			add(enemyLayer);
+			add(itemLayer);
+			add(lightLayer);
+			add(playerLayer);
 			
 			// Add obstacles to the level
 			this.addObstacles();
@@ -57,30 +81,33 @@ package com.robocatapps.NGJ {
 			
 			// Add the light sprite for flickering
 			this.light = new FlxSprite(this.origin.x, this.origin.y, lightSprite);
-			add(this.light);
+			this.light.alpha = 0;
+			this.lightLayer.add(this.light);
 			
 			// Add sprite for turning off the lights
+			
+			
 			this.dark = new FlxSprite(this.origin.x, this.origin.y, darkSprite);
 			this.dark.alpha = 0;
-			add(this.dark);
+			this.lightLayer.add(this.dark);
+ 
 			
 			// Add the player for the level
 			this.player = player;
-
-			add(this.player);
+			this.playerLayer.add(this.player);
 		}
 		
 		private function addFloor():void {
 			var floor : FlxSprite = new FlxSprite(this.origin.x, this.origin.y, floorSprite);
 			floor.loadGraphic(floorSprite);
-			add(floor);
+			this.backgroundLayer.add(floor);
 		}
 		
 		private function addObstacles():void {
 			this.obstacles.push(new Obstacle(this.origin.x + 40, this.origin.y + 40, "bed"));
 			
 			for each (var obstacle : Obstacle in this.obstacles) {
-				add(obstacle);
+				this.itemLayer.add(obstacle);
 			}
 		}
 		
@@ -111,10 +138,10 @@ package com.robocatapps.NGJ {
 				addPatient();
 			}
 			
-			if ((light_counter++) > Math.random() * 100) {
-				light_counter = 0;
-				light.alpha = Math.random() * 0.25 + 0.25;
-			}
+			//if ((light_counter++) > Math.random() * 100) {
+			//	light_counter = 0;
+			//	light.alpha = Math.random() * 0.25 + 0.25;
+			//}
 		}
 		
 		public function getOpponent() : Player {
@@ -130,9 +157,22 @@ package com.robocatapps.NGJ {
 		}
 		
 		public function addDrop() : void {
-			var hitlerkage : Pickup = new Pickup(this.origin.x + Math.random() * (500 - 40), this.origin.y + Math.random() * (820 - 40), "hitlerkage");
-			add(hitlerkage);
-			pickups.push(hitlerkage);
+			var x : uint = this.origin.x + Math.random() * (500 - 40);
+			var y : uint = this.origin.y + Math.random() * (820 - 40);
+			
+			var hitlerkage : Pickup = new Pickup(x, y, "hitlerkage");
+			
+			var collision : Boolean = false;
+			for each (var obstacle : Obstacle in this.obstacles) {
+				if (FlxCollision.pixelPerfectCheck(hitlerkage, obstacle)) {
+					collision = true;
+				}
+			}
+			
+			if (!collision) {
+				this.itemLayer.add(hitlerkage);
+				pickups.push(hitlerkage);
+			}
 		}
 	}
 }
