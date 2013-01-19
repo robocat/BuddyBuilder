@@ -16,6 +16,8 @@ package com.robocatapps.NGJ {
 		[Embed(source="light_mask.png")] private var lightSprite : Class;
 		[Embed(source="dark.png")] private var darkSprite : Class;
 		
+		public static const MAXPATIENTS :uint = 10; 
+		
 		// Instance vars
 		public var player:Player;
 		public var pickups : Array;
@@ -70,8 +72,8 @@ package com.robocatapps.NGJ {
 			
 			
 			add(backgroundLayer);
-			add(enemyLayer);
 			add(itemLayer);
+			add(enemyLayer);
 			add(lightLayer);
 			add(playerLayer);
 			
@@ -104,7 +106,7 @@ package com.robocatapps.NGJ {
 		}
 		
 		private function addObstacles():void {
-			this.obstacles.push(new Obstacle(this.origin.x + 40, this.origin.y + 40, "bed"));
+			this.obstacles.push(new Obstacle(this.origin.x + this.width/2 - 128/2, this.origin.y + height/2 - 64/2, "bed"));
 			
 			for each (var obstacle : Obstacle in this.obstacles) {
 				this.itemLayer.add(obstacle);
@@ -134,7 +136,7 @@ package com.robocatapps.NGJ {
 				}
 			}
 			
-			if (Math.random() < 0.001) {
+			if (Math.random() < 0.001 && npcs.length <= MAXPATIENTS) {
 				addPatient();
 			}
 			

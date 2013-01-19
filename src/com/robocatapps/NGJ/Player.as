@@ -25,12 +25,12 @@
 			
 			if (playernumber == 0) {
 				area = new FlxRect(200, 40, 500, 820);
-				x = 300;
-				y = 700;
+				x = 414;
+				y = 655;
 			} else {
 				area = new FlxRect(740, 40, 500, 820);
-				x = 840;
-				y = 700;
+				x = 942;
+				y = 655;
 			}
 			
 	
@@ -87,8 +87,27 @@
 				slash_down = true;
 			} else slash_down = false;
 			
+			var obstacle : Obstacle;
+			
 			if (go_left) { x += (xchange = -5); } else if (go_right) { x += (xchange = 5); }
+			
+			for each (obstacle in level.obstacles) {
+				if (x + width > obstacle.x && x < obstacle.x + obstacle.width
+				&& y + height > obstacle.y && y < obstacle.y + obstacle.height) {
+					x -= xchange;
+					break;
+				}
+			}
+			
 			if (go_up) { y += (ychange = -5); } else if (go_down) { y += (ychange = 5); }
+			
+			for each (obstacle in level.obstacles) {
+				if (x + width > obstacle.x && x < obstacle.x + obstacle.width
+				&& y + height > obstacle.y && y < obstacle.y + obstacle.height) {
+					y -= ychange;
+					break;
+				}
+			}
 			
 			if (go_left) { angle = (go_up? -90+45: go_down? -90-45: -90); }
 			else if (go_right) { angle = (go_up? 90-45: go_down? 90+45: 90); }
@@ -103,15 +122,6 @@
 				}
 			}
 
-			for each (var obstacle : Obstacle in level.obstacles) {
-				if (x + width > obstacle.x && x < obstacle.x + obstacle.width
-				&& y + height > obstacle.y && y < obstacle.y + obstacle.height) {
-					x -= xchange;
-					y -= ychange;
-					break;
-				}
-			}
-			
 			x = (x < area.x? area.x: x > area.x + area.width - width? area.x + area.width - width: x);
 			y = (y < area.y? area.y: y > area.y + area.height - height? area.y + area.height - height: y);
 			
