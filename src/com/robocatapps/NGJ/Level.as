@@ -136,7 +136,7 @@ package com.robocatapps.NGJ {
 				}
 			}
 			
-			if (Math.random() < 0.001 && npcs.length <= MAXPATIENTS) {
+			if (Math.random() < 0.01 && npcs.length <= MAXPATIENTS) {
 				addPatient();
 			}
 			

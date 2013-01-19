@@ -54,6 +54,9 @@
 			
 			for each (var npc : Patient in level.npcs) {
 				if (colCheck(colrect, new FlxRect(npc.x, npc.y, npc.width, npc.height))) {
+					for (var i : int = 0; i < Math.random() * 5; i++) {
+						level.backgroundLayer.add(new Blood(npc.x, npc.y));
+					}
 					delete level.npcs[level.npcs.indexOf(npc)];
 					level.enemyLayer.remove(npc);
 					level.addDrop();
