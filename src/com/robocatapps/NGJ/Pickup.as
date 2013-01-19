@@ -1,4 +1,5 @@
 package com.robocatapps.NGJ {
+	import flash.sensors.Accelerometer;
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
 	
@@ -11,8 +12,15 @@ package com.robocatapps.NGJ {
 		
 		public var timedOut : Boolean = false;
 		
-		public function Pickup(x:uint, y:uint, type:String) : void{
+		private var speed : uint = 0;
+		private var area : uint = 0;
+		
+		public function Pickup(x:uint, y:uint, type:String, speed:uint = 0, angle:int = 0) : void{
 			super(x, y);
+			this.speed = speed;
+			this.angle = angle;
+			
+			area = (x > 720? 1: 0);
 			
 			if (type == "hitlerkage") {
 				loadGraphic(hitlerkageSprite, false, false, 22, 22, false);
@@ -47,6 +55,16 @@ package com.robocatapps.NGJ {
 		
 		override public function update():void {
 			super.update();
+			
+			if (speed > 0) {
+				speed -= 0.1;
+				x += Math.sin(angle) * speed;
+				y -= Math.cos(angle) * speed;
+				
+				x = (area == 0? x > 700? 700: x < 200? 200: x: x > 1240? 1240: x < 740? 740: x);
+				y = (y > 860? 860: y < 40? 40: y);
+				
+			}
 			
 			// Flash when the item is about to disappear
 			this.alpha = alpha_from_tick(maxCount - timeoutCount);
