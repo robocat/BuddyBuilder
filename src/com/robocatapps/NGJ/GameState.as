@@ -52,16 +52,15 @@ package com.robocatapps.NGJ {
 				FlxG.switchState(new MenuState());
 			}
 			
-			//if (Math.random() < 0.01) {
-			//	var hitlerkage : Pickup = new Pickup(Math.random() * (FlxG.width - 100) + 50, Math.random() * (FlxG.height - 100) + 50, "hitlerkage");
-			//	add(hitlerkage);
-			//	pickups.push(hitlerkage);
-			//}
-			
-			//if ((light_counter++) > Math.random() * 100) {
-			//	light_counter = 0;
-			//	light.alpha = Math.random() * 0.25 + 0.25;
-			//}
+			if (this.level0.operation_table.complete()) {
+				this.gameOver(this.level0.player);
+			} else if (this.level1.operation_table.complete()) {
+				this.gameOver(this.level1.player);
+			}
+		}
+		
+		private function gameOver(winner : Player) : void {
+			FlxG.switchState(new MenuState());
 		}
 		
 		public function getOpponnent(player : Player):Player {
