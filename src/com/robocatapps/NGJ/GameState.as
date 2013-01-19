@@ -6,11 +6,14 @@ package com.robocatapps.NGJ {
 		[Embed(source="light.png")] private var lightSprite : Class;
 		[Embed(source="level_grid.png")] private var gridSprite : Class;
 		
+		private var player0 : Player;
 		private var player1 : Player;
-		private var player2 : Player;
 		
+		private var level0 : Level;
 		private var level1 : Level;
-		private var level2 : Level;
+		
+		private var operation_table0 : OperationTable;
+		private var operation_table1 : OperationTable;
 		
 		private var light : FlxSprite;
 		private var light_counter : uint = 0;
@@ -20,17 +23,23 @@ package com.robocatapps.NGJ {
 			grid.loadGraphic(gridSprite);
 			add(grid);
 
+			this.player0 = new Player(0);
 			this.player1 = new Player(1);
-			this.player2 = new Player(0);
 			
-			this.level1 = new Level(this.player1, new FlxPoint(200, 40));
-			this.level2 = new Level(this.player2, new FlxPoint(740, 40));
+			this.level0 = new Level(this.player0, new FlxPoint(200, 40));
+			this.level1 = new Level(this.player1, new FlxPoint(740, 40));
 			
+			player0.level = level0;
 			player1.level = level1;
-			player2.level = level2;
 			
+			add(this.level0);
 			add(this.level1);
-			add(this.level2);
+			
+			this.operation_table0 = new OperationTable(0, new FlxPoint(20, 40));
+			this.operation_table1 = new OperationTable(1, new FlxPoint(740, 40));
+			
+			add(this.operation_table0);
+			add(this.operation_table1);
 		}
 		
 		override public function update() : void {
