@@ -41,7 +41,7 @@ package com.robocatapps.NGJ {
 			}
 		}
 		
-		private function didSlash() {
+		private function didSlash() : void {
 			// called when the player slashes with his cleaver
 		}
 		
