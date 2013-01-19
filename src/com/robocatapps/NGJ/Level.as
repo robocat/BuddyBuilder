@@ -54,6 +54,8 @@ package com.robocatapps.NGJ {
 		private var darkMaxCounter : uint = 400;
 		private var darkOn : Boolean = false;
 		
+		private var lightsOff : LightsOff = null;
+		
 		public function Level(player: Player, origin : FlxPoint, operation_table : OperationTable, state : GameState):void {
 			this.pickups = new Array();
 			this.obstacles = new Array();
@@ -106,6 +108,14 @@ package com.robocatapps.NGJ {
 			this.playerLayer.add(this.player);
 			
 			flock = new Flock(enemyLayer, player);
+
+
+			if(this.player.playernumber == 0) {
+				var clip_bounds : FlxRect = new FlxRect(210, 49, 490, 820);
+				this.lightsOff = new LightsOff(clip_bounds);
+				add(this.lightsOff);
+				this.lightsOff.set_center(new FlxPoint(210, 49));
+			}
 		}
 		
 		private function addObstacles():void {
@@ -175,6 +185,11 @@ package com.robocatapps.NGJ {
 			//	light_counter = 0;
 			//	light.alpha = Math.random() * 0.25 + 0.25;
 			//}
+
+			if(this.player.playernumber == 0) {
+				var center : FlxPoint = new FlxPoint(this.player.x + 48, this.player.y + 48);
+				this.lightsOff.set_center(center);
+			}
 		}
 		
 		public function getOpponent() : Player {
