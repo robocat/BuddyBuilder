@@ -4,6 +4,7 @@
 	
 	public class Player extends FlxSprite {
 		[Embed(source="doctor.png")] private var sprite : Class;
+		[Embed(source="foot_steps.mp3")] private var soundEffect:Class;
 		
 		public var level : Level;
 		
@@ -31,6 +32,11 @@
 				x = 840;
 				y = 700;
 			}
+			
+	
+	
+			
+			
 		}
 		
 		private function animationCallback(name:String, frame:uint, findex:uint) : void {
@@ -70,7 +76,8 @@
 			if ((playernumber == 1 && FlxG.keys.pressed("UP")) || (playernumber == 0 && FlxG.keys.pressed("W")))		go_up = true;
 			if ((playernumber == 1 && FlxG.keys.pressed("DOWN")) || (playernumber == 0 && FlxG.keys.pressed("S")))		go_down = true;
 			if ((playernumber == 1 && FlxG.keys.pressed("SPACE")) || playernumber == 0 && FlxG.keys.pressed("ENTER"))	slash = true;
-			
+			if (FlxG.keys.pressed("K"))	FlxG.play(soundEffect);
+
 			if (slash) {
 				if (!slash_down) {
 					slashing = true;
