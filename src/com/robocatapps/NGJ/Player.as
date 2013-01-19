@@ -25,12 +25,12 @@
 			
 			if (playernumber == 0) {
 				area = new FlxRect(200, 40, 500, 820);
-				x = 300;
-				y = 700;
+				x = 414;
+				y = 655;
 			} else {
 				area = new FlxRect(740, 40, 500, 820);
-				x = 840;
-				y = 700;
+				x = 942;
+				y = 655;
 			}
 			
 	
