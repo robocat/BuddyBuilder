@@ -58,8 +58,9 @@
 					}
 					
 					var dead : FlxSprite = new FlxSprite(npc.x, npc.y);
-					dead.loadGraphic(deadSprite);
+					dead.loadGraphic(deadSprite, false, false, 128, 128, false);
 					dead.angle = Math.random() * 360;
+					dead.frame = Math.random() * 5;
 					level.enemyLayer.add(dead);
 					
 					for (i = 0; i < Math.random() * 5; i++) {
