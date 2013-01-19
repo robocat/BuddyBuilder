@@ -90,7 +90,7 @@
 
 			for each (var obstacle : Obstacle in level.obstacles) {
 				if (x + width > obstacle.x && x < obstacle.x + obstacle.width
-				&& y + height > obstacle.y && x < obstacle.y + obstacle.height) {
+				&& y + height > obstacle.y && y < obstacle.y + obstacle.height) {
 					x -= xchange;
 					y -= ychange;
 					break;

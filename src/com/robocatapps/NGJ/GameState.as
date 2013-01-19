@@ -22,7 +22,7 @@ package com.robocatapps.NGJ {
 			var grid : FlxSprite = new FlxSprite(0, 0);
 			grid.loadGraphic(gridSprite);
 			add(grid);
-
+			
 			this.player0 = new Player(0);
 			this.player1 = new Player(1);
 			
