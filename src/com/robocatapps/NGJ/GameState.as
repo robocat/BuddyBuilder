@@ -6,6 +6,7 @@ package com.robocatapps.NGJ {
 		[Embed(source="bed.png")] private var bedSprite : Class;
 		[Embed(source="light.png")] private var lightSprite : Class;
 		[Embed(source="level_grid.png")] private var gridSprite : Class;
+		[Embed(source="tile.png")] private var body0torso : Class;
 		
 		// STATE
 		public static const STATE_COUNTDOWN :uint = 1;
