@@ -17,17 +17,17 @@ package com.robocatapps.NGJ {
 		[Embed(source="body0_right_leg.png")] private var body0_right_leg_sprite : Class;
 
 		// Masks
-		public const NONE      : uint = 0;
-		public const TORSO     : uint = 1;
-		public const HEAD      : uint = 2;
-		public const LEFT_ARM  : uint = 4;
-		public const RIGHT_ARM : uint = 8;
-		public const LEFT_LEG  : uint = 16;
-		public const RIGHT_LEG : uint = 32;
-		public const ALL       : uint = 63;
+		public static const NONE      : uint = 0;
+		public static const TORSO     : uint = 1;
+		public static const HEAD      : uint = 2;
+		public static const LEFT_ARM  : uint = 4;
+		public static const RIGHT_ARM : uint = 8;
+		public static const LEFT_LEG  : uint = 16;
+		public static const RIGHT_LEG : uint = 32;
+		public static const ALL       : uint = 63;
 		
 		// Combination of masks
-		public const NON_TORSO : uint = ALL ^ TORSO;
+		public static const NON_TORSO : uint = ALL ^ TORSO;
 
 		// State
 		private var bodyMask : uint;
@@ -62,42 +62,42 @@ package com.robocatapps.NGJ {
 			var torso : FlxSprite = new FlxSprite(0, 0);
 			torso.loadGraphic(body0_torso_sprite);
 			torso.x += origin.x;
-			torso.y += origin.y + 100;
+			torso.y += origin.y;
 			add(torso);
 			this.bodyTorso = torso;
 
 			var left_arm : FlxSprite = new FlxSprite(0, 0);
 			left_arm.loadGraphic(body0_left_arm_sprite);
 			left_arm.x += origin.x;
-			left_arm.y += origin.y + 100;
+			left_arm.y += origin.y;
 			add(left_arm);
 			this.bodyLeftArm = left_arm;
 
 			var right_arm : FlxSprite = new FlxSprite(0, 0);
 			right_arm.loadGraphic(body0_right_arm_sprite);
-			right_arm.x += origin.x + 90;
-			right_arm.y += origin.y + 100;
+			right_arm.x += origin.x;
+			right_arm.y += origin.y;
 			add(right_arm);
 			this.bodyRightArm = right_arm;
 
 			var left_leg : FlxSprite = new FlxSprite(0, 0);
 			left_leg.loadGraphic(body0_left_leg_sprite);
 			left_leg.x += origin.x;
-			left_leg.y += origin.y + 100 + 200;
+			left_leg.y += origin.y;
 			add(left_leg);
 			this.bodyLeftLeg = left_leg;
 
 			var right_leg : FlxSprite = new FlxSprite(0, 0);
 			right_leg.loadGraphic(body0_right_leg_sprite);
-			right_leg.x += origin.x + 90;
-			right_leg.y += origin.y + 100 + 200;
+			right_leg.x += origin.x;
+			right_leg.y += origin.y;
 			add(right_leg);
 			this.bodyRightLeg = right_leg;
 
 			var torso_overlay : FlxSprite = new FlxSprite(0, 0);
 			torso_overlay.loadGraphic(body0_torso_overlay_sprite);
 			torso_overlay.x += origin.x;
-			torso_overlay.y += origin.y + 100;
+			torso_overlay.y += origin.y;
 			add(torso_overlay);
 			this.bodyTorsoOverlay = torso_overlay;
 			
@@ -105,10 +105,10 @@ package com.robocatapps.NGJ {
 			
 			this.reset_body();
 			
-			this.add_to_body(HEAD);
+			/*this.add_to_body(HEAD);
 			this.add_to_body(TORSO);
 			this.add_to_body(LEFT_ARM);
-			this.add_to_body(RIGHT_LEG);
+			this.add_to_body(RIGHT_LEG);*/
 		}
 
 		public function reset_body() : void {
