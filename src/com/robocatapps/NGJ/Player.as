@@ -151,6 +151,7 @@
 				if (FlxCollision.pixelPerfectCheck(this, pickup)) {
 					level.itemLayer.remove(pickup);
 					pickup.apply(this);
+					
 					delete level.pickups[level.pickups.indexOf(pickup)];
 					
 //					var mask : uint = level.operation_table.pick_a_random_that_is_not_already_visible();

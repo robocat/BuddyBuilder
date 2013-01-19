@@ -178,8 +178,10 @@ package com.robocatapps.NGJ {
 			
 			var length : uint = Pickup.DROP_TYPES.length;
 			var dropType : uint = Math.floor(Math.random() * length + 1);
-			if (dropType == length + 1)
+			if (dropType > length)
 				dropType = length;
+				
+			
 				
 			var drop : Pickup = new Pickup(x, y, Pickup.DROP_TYPES[dropType]);
 			
