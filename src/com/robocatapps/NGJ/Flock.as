@@ -14,9 +14,9 @@ package com.robocatapps.NGJ {
 		
 		private var player_seek_strength:Number = 0.1;
 		
-		private var patient_size:Number = 40.0;
+		private var patient_size:Number = 80.0;
 		
-		private var patient_minimum_distance:Number = 20.0;
+		private var patient_minimum_distance:Number = 30.0;
 		
 		
 		public function Flock(group:FlxGroup, player:Player):void {
@@ -27,7 +27,7 @@ package com.robocatapps.NGJ {
 		
 		public function add_patient(patient:Patient):void {
             // Create a clone of the object & destroy the original.
-            var new_patient:Patient = new Patient(patient.x, patient.y);
+            var new_patient:Patient = new Patient(patient.level, patient.x, patient.y);
             patients.push(new_patient);
             group.add(new_patient);          
             patient.kill();
@@ -43,12 +43,6 @@ package com.robocatapps.NGJ {
 //            }
         }
 		
-		public function getDistance(s1:FlxSprite, s2:FlxPoint):Number
-		{
-			var xx:Number = s2.x - s1.x;
-			var yy:Number = s2.y - s1.y;
-			return Math.sqrt( xx * xx + yy * yy );
-		}
 
         public function cohere():void {
 //            // A special case for one
@@ -88,8 +82,8 @@ package com.robocatapps.NGJ {
 					patient.new_distination();
 				}
 				
-				patient.velocity.x += ((patient.destination.x - patient.x) / 15) * FlxG.elapsed;
-				patient.velocity.y += ((patient.destination.y - patient.y) / 15) * FlxG.elapsed;
+				patient.velocity.x += ((patient.destination.x - patient.x) / 20) * FlxG.elapsed;
+				patient.velocity.y += ((patient.destination.y - patient.y) / 20) * FlxG.elapsed;
 			}
 			
         }
@@ -118,8 +112,8 @@ package com.robocatapps.NGJ {
                     }
                 }
 
-                patient.velocity.x += x_adjustment;
-                patient.velocity.y += y_adjustment;
+                patient.velocity.x += x_adjustment / 2;
+                patient.velocity.y += y_adjustment / 2;
             }
         }
 

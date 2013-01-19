@@ -49,12 +49,13 @@
 			colrect.y -= Math.cos(angle) * 32;
 			
 			var didHit : Boolean = false;
-			for each (var npc : Patient in level.npcs) {
+			for each (var npc : Patient in level.flock.patients) {
 				if (colCheck(colrect, new FlxRect(npc.x, npc.y, npc.width, npc.height))) {
 					for (var i : int = 0; i < Math.random() * 5; i++) {
 						level.backgroundLayer.add(new Blood(npc.x, npc.y));
 					}
-					delete level.npcs[level.npcs.indexOf(npc)];
+//					delete level.npcs[level.npcs.indexOf(npc)];
+					level.flock.patients[level.flock.patients.indexOf(npc)].kill();
 					level.enemyLayer.remove(npc);
 					level.addDrop();
 					didHit = true;
