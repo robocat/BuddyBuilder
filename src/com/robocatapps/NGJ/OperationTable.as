@@ -49,6 +49,14 @@ package com.robocatapps.NGJ {
 		private var bodyRightArm : FlxSprite;
 		private var bodyLeftLeg : FlxSprite;
 		private var bodyRightLeg : FlxSprite;
+
+		private var appearCounterHead : uint;
+		private var appearCounterTorso : uint;
+		private var appearCounterLeftArm : uint;
+		private var appearCounterRightArm : uint;
+		private var appearCounterLeftLeg : uint;
+		private var appearCounterRightLeg : uint;
+
 		
 		public function OperationTable(controls:uint, origin : FlxPoint) : void {
 			this.origin = origin;
@@ -124,6 +132,13 @@ package com.robocatapps.NGJ {
 		}
 
 		private function set_body_visibility(mask : uint) : void {
+			var oldTorsoVisible : Boolean = this.bodyTorso.visible;
+			var oldHeadVisible : Boolean = this.bodyHead.visible;
+			var oldLeftArmVisible : Boolean = this.bodyLeftArm.visible;
+			var oldRightArmVisible : Boolean = this.bodyRightArm.visible;
+			var oldLeftLegVisible : Boolean = this.bodyLeftLeg.visible;
+			var oldRightLegVisible : Boolean = this.bodyRightLeg.visible;
+			
 			this.bodyTorso.visible        = (mask & TORSO    ) != 0;
 			this.bodyHead.visible         = (mask & HEAD     ) != 0;
 			this.bodyLeftArm.visible      = (mask & LEFT_ARM ) != 0;
@@ -131,6 +146,39 @@ package com.robocatapps.NGJ {
 			this.bodyLeftLeg.visible      = (mask & LEFT_LEG ) != 0;
 			this.bodyRightLeg.visible     = (mask & RIGHT_LEG) != 0;
 			this.bodyTorsoOverlay.visible = ((mask & NON_TORSO) != 0) && ((mask & TORSO    ) != 0);
+			
+			var newTorsoVisible : Boolean = this.bodyTorso.visible;
+			var newHeadVisible : Boolean = this.bodyHead.visible;
+			var newLeftArmVisible : Boolean = this.bodyLeftArm.visible;
+			var newRightArmVisible : Boolean = this.bodyRightArm.visible;
+			var newLeftLegVisible : Boolean = this.bodyLeftLeg.visible;
+			var newRightLegVisible : Boolean = this.bodyRightLeg.visible;
+			
+			
+			if(!oldTorsoVisible && newTorsoVisible) {
+				this.appearCounterTorso = 100;
+				this.bodyTorso.alpha = 0;
+			}
+			if(!oldHeadVisible && newHeadVisible) {
+				this.appearCounterHead = 100;
+				this.bodyHead.alpha = 0;
+			}
+			if(!oldLeftArmVisible && newLeftArmVisible) {
+				this.appearCounterLeftArm = 100;
+				this.bodyLeftArm.alpha = 0;
+			}
+			if(!oldRightArmVisible && newRightArmVisible) {
+				this.appearCounterRightArm = 100;
+				this.bodyRightArm.alpha = 0;
+			}
+			if(!oldLeftLegVisible && newLeftLegVisible) {
+				this.appearCounterLeftLeg = 100;
+				this.bodyLeftLeg.alpha = 0;
+			}
+			if(!oldRightLegVisible && newRightLegVisible) {
+				this.appearCounterRightLeg = 100;
+				this.bodyRightLeg.alpha = 0;
+			}
 		}
 		
 		public function pick_a_random_that_is_not_already_visible() : uint {
@@ -150,6 +198,47 @@ package com.robocatapps.NGJ {
 			}
 			return 0;
 		}
+		
+		private function alpha_from_tick(tick : uint) : Number {
+			if(tick > 98) return 0.3;
+			if(tick > 97) return 0.8;
+			if(tick > 95) return 1.0;
+			if(tick > 92) return 0.1;
+			if(tick > 88) return 1.0;
+			if(tick > 80) return 0.1;
+			return 1.0;
+		}
+		 
 
+		override public function update() : void {
+			super.update();
+			
+			if(this.appearCounterTorso > 0) {
+				// TODO: animate overlay
+				this.bodyTorso.alpha = this.alpha_from_tick(this.appearCounterTorso);
+				this.bodyTorsoOverlay.alpha = this.alpha_from_tick(this.appearCounterTorso);
+				this.appearCounterTorso--;	
+			}
+			if(this.appearCounterHead > 0) {
+				this.bodyHead.alpha = this.alpha_from_tick(this.appearCounterHead);
+				this.appearCounterHead--;	
+			}
+			if(this.appearCounterLeftArm > 0) {
+				this.bodyLeftArm.alpha = this.alpha_from_tick(this.appearCounterLeftArm);
+				this.appearCounterLeftArm--;	
+			}
+			if(this.appearCounterRightArm > 0) {
+				this.bodyRightArm.alpha = this.alpha_from_tick(this.appearCounterRightArm);
+				this.appearCounterRightArm--;	
+			}
+			if(this.appearCounterLeftLeg > 0) {
+				this.bodyLeftLeg.alpha = this.alpha_from_tick(this.appearCounterLeftLeg);
+				this.appearCounterLeftLeg--;	
+			}
+			if(this.appearCounterRightLeg > 0) {
+				this.bodyRightLeg.alpha = this.alpha_from_tick(this.appearCounterRightLeg);
+				this.appearCounterRightLeg--;	
+			}
+		}
 	}
 }

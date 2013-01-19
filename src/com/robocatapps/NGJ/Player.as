@@ -122,6 +122,7 @@
 					delete level.pickups[level.pickups.indexOf(pickup)];
 					
 					var mask : uint = level.operation_table.pick_a_random_that_is_not_already_visible();
+					//var mask : uint = OperationTable.RIGHT_LEG;
 					level.operation_table.add_to_body(mask);
 				}
 			}
