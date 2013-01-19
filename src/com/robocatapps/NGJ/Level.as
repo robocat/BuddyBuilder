@@ -183,9 +183,12 @@ package com.robocatapps.NGJ {
 			if (dropType > length)
 				dropType = length;
 				
+			var item : String = Pickup.DROP_TYPES[dropType];
 			
+			if (item == null)
+				return;
 				
-			var drop : Pickup = new Pickup(x, y, Pickup.DROP_TYPES[dropType]);
+			var drop : Pickup = new Pickup(x, y, item);
 			
 			var collision : Boolean = false;
 			for each (var obstacle : Obstacle in this.obstacles) {
