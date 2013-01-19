@@ -16,6 +16,7 @@ package com.robocatapps.NGJ {
 		[Embed(source="body0_right_arm.png")] private var body0_right_arm_sprite : Class;
 		[Embed(source="body0_left_leg.png")] private var body0_left_leg_sprite : Class;
 		[Embed(source="body0_right_leg.png")] private var body0_right_leg_sprite : Class;
+		[Embed(source="cannot_add_to_body.mp3")] private var cannotAddSound:Class;
 
 		// Masks
 		public static const NONE      : uint = 0;
@@ -126,8 +127,17 @@ package com.robocatapps.NGJ {
 		}
 
 		public function add_to_body(mask : uint) : void {
+			if(!this.can_add_to_body(mask)) {
+				FlxG.play(cannotAddSound);
+				return;
+			}
+			
 			this.bodyMask |= mask;
 			this.set_body_visibility(this.bodyMask);
+		}
+
+		public function can_add_to_body(mask : uint) : Boolean {
+			return (this.bodyMask & mask) == 0;
 		}
 
 		private function set_body_visibility(mask : uint) : void {
