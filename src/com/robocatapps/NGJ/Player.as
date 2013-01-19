@@ -55,7 +55,7 @@
 			for each (var npc : Patient in level.npcs) {
 				if (colCheck(colrect, new FlxRect(npc.x, npc.y, npc.width, npc.height))) {
 					delete level.npcs[level.npcs.indexOf(npc)];
-					level.remove(npc);
+					level.enemyLayer.remove(npc);
 					level.addDrop();
 				}
 			}

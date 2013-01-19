@@ -152,7 +152,7 @@ package com.robocatapps.NGJ {
 			var p : Patient = new Patient();
 			p.x = origin.x + 10 + Math.random() * 480;
 			p.y = origin.y + 10 + Math.random() * 800;
-			add(p);
+			this.enemyLayer.add(p);
 			npcs.push(p);
 		}
 		
