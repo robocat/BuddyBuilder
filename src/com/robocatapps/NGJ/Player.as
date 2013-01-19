@@ -52,7 +52,8 @@
 			var didHit : Boolean = false;
 			for each (var npc : Patient in level.npcs) {
 				if (colCheck(colrect, new FlxRect(npc.x, npc.y, npc.width, npc.height))) {
-					for (var i : int = 0; i < Math.random() * 5; i++) {
+					var i : int = 0;
+					for (i = 0; i < Math.random() * 5; i++) {
 						level.backgroundLayer.add(new Blood(npc.x, npc.y));
 					}
 					
@@ -61,7 +62,7 @@
 					dead.angle = Math.random() * 360;
 					level.backgroundLayer.add(dead);
 					
-					for (var i : int = 0; i < Math.random() * 5; i++) {
+					for (i = 0; i < Math.random() * 5; i++) {
 						level.backgroundLayer.add(new Blood(npc.x, npc.y));
 					}
 					
