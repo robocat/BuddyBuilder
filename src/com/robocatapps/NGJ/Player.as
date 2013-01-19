@@ -6,14 +6,14 @@ package com.robocatapps.NGJ {
 		[Embed(source="player.png")] private var sprite : Class;
 		
 		private var playernumber : uint;
-		private var scene : GameState;
+		public var level : Level;
 		
 		private var area : FlxRect;
 		
-		public function Player(playernumber:uint, scene:GameState) : void {
+		public function Player(playernumber:uint) : void {
 			this.playernumber = playernumber;
 			loadGraphic(sprite, false, false, 128, 128, false);
-			this.scene = scene;
+			this.level = level;
 			
 			if (playernumber == 1) {
 				area = new FlxRect(200, 40, 500, 820);
@@ -57,8 +57,8 @@ package com.robocatapps.NGJ {
 			else if (go_right) { angle = (go_up? 180+45: go_down? 180-45: 180); }
 			else if (go_up) { angle = 270; }
 			else if (go_down) { angle = 90; }
-			
-			for each (var obstacle : FlxSprite in scene.obstacles) {
+
+			for each (var obstacle : FlxSprite in level.obstacles) {
 				if (x + width > obstacle.x && x < obstacle.x + obstacle.width
 				&& y + height > obstacle.y && x < obstacle.y + obstacle.height) {
 					x -= xchange;
@@ -70,10 +70,10 @@ package com.robocatapps.NGJ {
 			x = (x < area.x? area.x: x > area.x + area.width - width? area.x + area.width - width: x);
 			y = (y < area.y? area.y: y > area.y + area.height - height? area.y + area.height - height: y);
 			
-			for each (var pickup : Pickup in scene.pickups) {
+			for each (var pickup : Pickup in level.pickups) {
 				if (FlxCollision.pixelPerfectCheck(this, pickup)) {
-					scene.remove(pickup);
-					delete scene.pickups[scene.pickups.indexOf(pickup)];
+					level.remove(pickup);
+					delete level.pickups[level.pickups.indexOf(pickup)];
 				}
 			}
 		}

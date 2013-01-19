@@ -9,36 +9,25 @@ package com.robocatapps.NGJ {
 		private var player1 : Player;
 		private var player2 : Player;
 		
-		public var pickups : Array;
-		public var obstacles : Array;
+		private var level1 : Level;
+		private var level2 : Level;
 		
 		private var light : FlxSprite;
 		private var light_counter : uint = 0;
 		
 		public function GameState() : void {
-			for (var i : uint = 0; i < FlxG.width / 64; i++) {
-				for (var j : uint = 0; j < FlxG.height / 64; j++) {
-					var tile : FlxSprite = new FlxSprite(i * 64, j * 64);
-					tile.loadGraphic(tileSprite);
-					add(tile);
-				}
-			}
 			
-			pickups = new Array();
-			obstacles = new Array();
+			this.player1 = new Player(1);
+			this.player2 = new Player(0);
 			
-			player1 = new Player(1, this);
-			player2 = new Player(0, this);
+			this.level1 = new Level(this.player1, new FlxPoint(200, 40));
+			this.level2 = new Level(this.player2, new FlxPoint(740, 40));
 			
-			add(player1);
-			add(player2);
+			player1.level = level1;
+			player2.level = level2;
 			
-			var ob1 : FlxSprite = new FlxSprite(64, 320, bedSprite);
-			obstacles.push(ob1);
-			add(ob1);
-			
-			light = new FlxSprite(0, 0, lightSprite);
-			add(light);
+			add(this.level1);
+			add(this.level2);
 		}
 		
 		override public function update() : void {
@@ -49,16 +38,16 @@ package com.robocatapps.NGJ {
 				FlxG.switchState(new MenuState());
 			}
 			
-			if (Math.random() < 0.01) {
-				var hitlerkage : Pickup = new Pickup(Math.random() * (FlxG.width - 100) + 50, Math.random() * (FlxG.height - 100) + 50, "hitlerkage");
-				add(hitlerkage);
-				pickups.push(hitlerkage);
-			}
+			//if (Math.random() < 0.01) {
+			//	var hitlerkage : Pickup = new Pickup(Math.random() * (FlxG.width - 100) + 50, Math.random() * (FlxG.height - 100) + 50, "hitlerkage");
+			//	add(hitlerkage);
+			//	pickups.push(hitlerkage);
+			//}
 			
-			if ((light_counter++) > Math.random() * 100) {
-				light_counter = 0;
-				light.alpha = Math.random() * 0.25 + 0.25;
-			}
+			//if ((light_counter++) > Math.random() * 100) {
+			//	light_counter = 0;
+			//	light.alpha = Math.random() * 0.25 + 0.25;
+			//}
 		}
 	}
 }
