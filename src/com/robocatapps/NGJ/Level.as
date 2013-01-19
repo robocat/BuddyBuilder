@@ -12,8 +12,6 @@ package com.robocatapps.NGJ {
 	 */
 	public class Level extends FlxGroup {
 		// Sprites
-		[Embed(source="tile.png")] private var tileSprite : Class;
-		[Embed(source="floor.png")] private var floorSprite : Class;
 		[Embed(source="light_mask.png")] private var lightSprite : Class;
 		[Embed(source="dark.png")] private var darkSprite : Class;
 		[Embed(source="light0.mp3")] private var light0Sound:Class;
@@ -101,12 +99,6 @@ package com.robocatapps.NGJ {
 			this.playerLayer.add(this.player);
 			
 			flock = new Flock(enemyLayer, player);
-		}
-		
-		private function addFloor():void {
-			var floor : FlxSprite = new FlxSprite(this.origin.x, this.origin.y, floorSprite);
-			floor.loadGraphic(floorSprite);
-			this.backgroundLayer.add(floor);
 		}
 		
 		private function addObstacles():void {
