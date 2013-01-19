@@ -22,7 +22,7 @@
 			play("stand");
 			this.level = level;
 			
-			if (playernumber == 1) {
+			if (playernumber == 0) {
 				area = new FlxRect(200, 40, 500, 820);
 				x = 300;
 				y = 700;
@@ -49,19 +49,17 @@
 			var xchange : int = 0;
 			var ychange : int = 0;
 			
-			trace(playernumber);
-			
 			var go_left : Boolean = false;
 			var go_right : Boolean = false;
 			var go_up : Boolean = false;
 			var go_down : Boolean = false;
 			var slash : Boolean = false;
 			
-			if ((playernumber == 0 && FlxG.keys.pressed("LEFT")) || (playernumber == 1 && FlxG.keys.pressed("A")))		go_left = true;
-			if ((playernumber == 0 && FlxG.keys.pressed("RIGHT")) || (playernumber == 1 && FlxG.keys.pressed("D"))) 	go_right = true;
-			if ((playernumber == 0 && FlxG.keys.pressed("UP")) || (playernumber == 1 && FlxG.keys.pressed("W")))		go_up = true;
-			if ((playernumber == 0 && FlxG.keys.pressed("DOWN")) || (playernumber == 1 && FlxG.keys.pressed("S")))		go_down = true;
-			if ((playernumber == 0 && FlxG.keys.pressed("SPACE")) || playernumber == 1 && FlxG.keys.pressed("ENTER"))	slash = true;
+			if ((playernumber == 1 && FlxG.keys.pressed("LEFT")) || (playernumber == 0 && FlxG.keys.pressed("A")))		go_left = true;
+			if ((playernumber == 1 && FlxG.keys.pressed("RIGHT")) || (playernumber == 0 && FlxG.keys.pressed("D"))) 	go_right = true;
+			if ((playernumber == 1 && FlxG.keys.pressed("UP")) || (playernumber == 0 && FlxG.keys.pressed("W")))		go_up = true;
+			if ((playernumber == 1 && FlxG.keys.pressed("DOWN")) || (playernumber == 0 && FlxG.keys.pressed("S")))		go_down = true;
+			if ((playernumber == 1 && FlxG.keys.pressed("SPACE")) || playernumber == 0 && FlxG.keys.pressed("ENTER"))	slash = true;
 			
 			if (slash) {
 				if (!slash_down) {
@@ -90,7 +88,7 @@
 
 			for each (var obstacle : Obstacle in level.obstacles) {
 				if (x + width > obstacle.x && x < obstacle.x + obstacle.width
-				&& y + height > obstacle.y && x < obstacle.y + obstacle.height) {
+				&& y + height > obstacle.y && y < obstacle.y + obstacle.height) {
 					x -= xchange;
 					y -= ychange;
 					break;
@@ -103,7 +101,11 @@
 			for each (var pickup : Pickup in level.pickups) {
 				if (FlxCollision.pixelPerfectCheck(this, pickup)) {
 					level.remove(pickup);
+					level.getOpponent().level.turnOffLights();
 					delete level.pickups[level.pickups.indexOf(pickup)];
+					
+					var mask : uint = level.operation_table.pick_a_random_that_is_not_already_visible();
+					level.operation_table.add_to_body(mask);
 				}
 			}
 		}
