@@ -49,6 +49,8 @@
 			var xchange : int = 0;
 			var ychange : int = 0;
 			
+			trace(playernumber);
+			
 			var go_left : Boolean = false;
 			var go_right : Boolean = false;
 			var go_up : Boolean = false;
