@@ -70,8 +70,10 @@ package com.robocatapps.NGJ {
 		}
 
 		public function set_black_center(center : FlxPoint) : void {
-			var offset_x : int = (center.x - 48 + TILESIZE*100) % TILESIZE;
-			var offset_y : int = (center.y - 48 + TILESIZE*100) % TILESIZE;
+			//var offset_x : int = (center.x + 48 + TILESIZE*100) % TILESIZE;
+			//var offset_y : int = (center.y + 48 + TILESIZE*100) % TILESIZE;
+			var offset_x : int = (center.x + TILESIZE*100) % TILESIZE;
+			var offset_y : int = (center.y + TILESIZE*100) % TILESIZE;
 			offset_x -= TILESIZE;
 			offset_y -= TILESIZE;
 			offset_x += this.clip_bounds.x;
@@ -80,8 +82,9 @@ package com.robocatapps.NGJ {
 			var tile_x : int = 0; 
 			var tile_y : int = 0; 
 			
-			
-			var gradient_rect : FlxRect = new FlxRect(center.x - TEXTURESIZE / 2, center.y - TEXTURESIZE / 2, TEXTURESIZE-1, TEXTURESIZE-1);
+			var ts : uint = TEXTURESIZE;
+			ts -= 64;
+			var gradient_rect : FlxRect = new FlxRect(center.x - ts / 2, center.y - ts / 2, ts-1, ts-1);
 			
 			for each (var sprite : FlxSprite in this.black_sprites) {
 				sprite.x = offset_x + tile_x * TILESIZE;
