@@ -123,6 +123,8 @@
 					
 					var mask : uint = level.operation_table.pick_a_random_that_is_not_already_visible();
 					level.operation_table.add_to_body(mask);
+					
+					FlxG.play(soundEffect);
 				}
 			}
 		}
