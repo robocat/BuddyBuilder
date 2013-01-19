@@ -1,4 +1,5 @@
 package com.robocatapps.NGJ {
+	import mx.core.IFlexAsset;
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxG;
 	import org.flixel.FlxSprite;
@@ -25,6 +26,7 @@ package com.robocatapps.NGJ {
 		public static const LEFT_LEG  : uint = 16;
 		public static const RIGHT_LEG : uint = 32;
 		public static const ALL       : uint = 63;
+		public static const NUMBER_OF_PARTS : uint = 6;
 		
 		// Combination of masks
 		public static const NON_TORSO : uint = ALL ^ TORSO;
@@ -52,19 +54,19 @@ package com.robocatapps.NGJ {
 			this.origin = origin;
 			cont = controls;
 			
-			var head : FlxSprite = new FlxSprite(0, 0);
-			head.loadGraphic(body0_head_sprite);
-			head.x += origin.x;
-			head.y += origin.y;
-			add(head);
-			this.bodyHead = head;
-
 			var torso : FlxSprite = new FlxSprite(0, 0);
 			torso.loadGraphic(body0_torso_sprite);
 			torso.x += origin.x;
 			torso.y += origin.y;
 			add(torso);
 			this.bodyTorso = torso;
+
+			var head : FlxSprite = new FlxSprite(0, 0);
+			head.loadGraphic(body0_head_sprite);
+			head.x += origin.x;
+			head.y += origin.y;
+			add(head);
+			this.bodyHead = head;
 
 			var left_arm : FlxSprite = new FlxSprite(0, 0);
 			left_arm.loadGraphic(body0_left_arm_sprite);
@@ -129,6 +131,24 @@ package com.robocatapps.NGJ {
 			this.bodyLeftLeg.visible      = (mask & LEFT_LEG ) != 0;
 			this.bodyRightLeg.visible     = (mask & RIGHT_LEG) != 0;
 			this.bodyTorsoOverlay.visible = ((mask & NON_TORSO) != 0) && ((mask & TORSO    ) != 0);
+		}
+		
+		public function pick_a_random_that_is_not_already_visible() : uint {
+			var mask : uint = ~this.bodyMask;
+			if(mask == 0) {
+				return 0; 
+			}
+			
+			for (var i : uint = 0; i<NUMBER_OF_PARTS*3; i++) {
+				var v : Number = Math.random() * 1000.0;
+				var v2 : uint = uint(v) % NUMBER_OF_PARTS;
+				var v3 : uint = 1 << v2;
+				if(v3 & mask) {
+					return v3;
+				}
+				
+			}
+			return 0;
 		}
 
 	}

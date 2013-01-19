@@ -22,7 +22,7 @@ package com.robocatapps.NGJ {
 		
 		private var state : GameState;
 
-		private var operation_table : OperationTable;
+		public var operation_table : OperationTable;
 
 		
 		// Layout
