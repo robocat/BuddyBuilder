@@ -21,9 +21,11 @@ package com.robocatapps.NGJ {
 		public static const DROP_HEAD : String = "head";
 		public static const DROP_TORSO : String = "torso";
 		
-		public static const DROP_TYPES : Array = [DROP_LIGHT, DROP_LEFTLEG, DROP_LEFTLEG, DROP_LEFTARM, DROP_RIGHTARM, DROP_HEAD, DROP_TORSO];
+		public static const DROP_TYPES : Array = [DROP_LIGHT, DROP_LEFTLEG, DROP_RIGHTLEG, DROP_LEFTARM, DROP_RIGHTARM, DROP_HEAD, DROP_TORSO];
+		public static const DROP_NAMES : Array = ["FLASHLIGHT", "LEFT LEG", "RIGHT LEG", "LEFT ARM", "RIGHT ARM", "HEAD", "TORSO"];
 		
 		public var type : String;
+		public var sprite : Class;
 		
 		public var timeoutCount : uint = 0;
 		public var maxCount : uint = 300;
@@ -44,40 +46,72 @@ package com.robocatapps.NGJ {
 			
 			if (type == DROP_LIGHT) {
 				loadGraphic(hitlerkageSprite, false, false, 22, 22, false);
+				sprite = hitlerkageSprite;
 				addAnimation("spin", [0, 1, 2, 3], 10, true);
 				play("spin");
 				scale = new FlxPoint(2, 2);
 			} else if (type == DROP_LEFTLEG) {
 				loadGraphic(leftLegSprite, false, false, 52, 114, false);
+				sprite = leftLegSprite;
 			} else if (type == DROP_RIGHTLEG) {
 				loadGraphic(rightLegSprite, false, false, 52, 116, false);
+				sprite = rightLegSprite;
 			} else if (type == DROP_LEFTARM) {
 				loadGraphic(leftArmSprite, false, false, 44, 80, false);
+				sprite = leftArmSprite;
 			} else if (type == DROP_RIGHTARM) {
 				loadGraphic(rightArmSprite, false, false, 46, 82, false);
+				sprite = rightArmSprite;
 			} else if (type == DROP_HEAD) {
 				loadGraphic(headSprite, false, false, 40, 44, false);
+				sprite = headSprite;
 			} else if (type == DROP_TORSO) {
 				loadGraphic(torsoSprite, false, false, 72, 110, false);
+				sprite = torsoSprite;
 			}
 			
 		}
 		
-		public function apply(player : Player) : void {
+		public function is_body_part() : Boolean {
+			return this.type != DROP_LIGHT;
+		}
+		
+		public function to_body_part() : uint {
+			if (!is_body_part())
+				return 0;
+			
 			if (type == DROP_LEFTLEG) {
-				player.level.operation_table.add_to_body(OperationTable.LEFT_LEG);
+				return OperationTable.LEFT_LEG;
 			} else if (type == DROP_RIGHTLEG) {
-				player.level.operation_table.add_to_body(OperationTable.RIGHT_LEG);
+				return OperationTable.RIGHT_LEG;
 			} else if (type == DROP_LEFTARM) {
-				player.level.operation_table.add_to_body(OperationTable.LEFT_ARM);
+				return OperationTable.LEFT_ARM;
 			} else if (type == DROP_RIGHTARM) {
-				player.level.operation_table.add_to_body(OperationTable.RIGHT_ARM);
+				return OperationTable.RIGHT_ARM;
 			} else if (type == DROP_HEAD) {
-				player.level.operation_table.add_to_body(OperationTable.HEAD);
+				return OperationTable.HEAD;
 			} else if (type == DROP_TORSO) {
-				player.level.operation_table.add_to_body(OperationTable.TORSO);
-			} else if (type == DROP_LIGHT) {
+				return OperationTable.TORSO;
+			} else {
+				return 0;
+			}
+		}
+		
+		public function text_for_pickup() : String {
+			return DROP_NAMES[DROP_TYPES.indexOf(this.type)];
+		}
+		
+		public function apply(player : Player) : void {
+			if (type == DROP_LIGHT) {
 				player.level.getOpponent().level.turnOffLights();
+			} else {
+				var part : uint = this.to_body_part();
+				if (player.level.operation_table.can_add_to_body(part)) {
+					new HUDSprite(sprite, player.playernumber, text_for_pickup(), player.level.gameState.textLayer);
+					player.level.operation_table.add_to_body(this.to_body_part());
+				}
+				
+				
 			}
 		}
 

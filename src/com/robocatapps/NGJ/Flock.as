@@ -91,14 +91,12 @@ package com.robocatapps.NGJ {
         public function separate():void {
             var min_distance:uint = patient_size;
             
-            for (var i:int = 0; i < patients.length; i++) {
-                var patient:Patient = patients[i];
+			for each (var patient : Patient in patients) {
 
                 var x_adjustment:int = 0;
                 var y_adjustment:int = 0;
                 
-                for (var j:int = 0; j < patients.length; j++) {
-                    var other_patient:Patient = patients[j];
+				for each (var other_patient : Patient in patients) {
 
                     if (other_patient != patient) {
                         var distance:Number = Math.abs(
@@ -118,14 +116,12 @@ package com.robocatapps.NGJ {
         }
 
         public function align():void {
-            for (var i:int = 0; i < patients.length; i++) {
-                var patient:Patient = patients[i];
+            for each (var patient : Patient in patients) {
 
                 var x_adjustment:int = 0;
                 var y_adjustment:int = 0;                
                 
-                for (var j:int = 0; j < patients.length; j++) {
-                    var other_patient:Patient = patients[j];
+                for each (var other_patient : Patient in patients) {
                     if (other_patient != patient) {
                         x_adjustment += patient.velocity.x;
                         y_adjustment += patient.velocity.y;
@@ -133,7 +129,7 @@ package com.robocatapps.NGJ {
                 }
 
                 x_adjustment = x_adjustment / (patients.length - 1);
-                y_adjustment = y_adjustment / (patients.length - 1);                
+                y_adjustment = y_adjustment / (patients.length - 1);
 
                 patient.velocity.x += (x_adjustment - patient.velocity.x) / 8;
                 patient.velocity.y += (y_adjustment - patient.velocity.y) / 8;
@@ -142,8 +138,7 @@ package com.robocatapps.NGJ {
         }
 
         public function seek(target:FlxPoint, amount:Number, max_distance:uint = 10):void {
-            for (var i:int = 0; i < patients.length; i++) {
-                var patient:Patient = patients[i];
+            for each (var patient : Patient in patients) {
                 
                 var distance:Number = Math.abs(
                     Math.sqrt( Math.pow(target.x - patient.x, 2) + Math.pow(target.y - patient.y, 2) )

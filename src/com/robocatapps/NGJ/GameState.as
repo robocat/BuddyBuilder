@@ -33,8 +33,8 @@ package com.robocatapps.NGJ {
 		private var light : FlxSprite;
 		private var light_counter : uint = 0;
 		
-		private var levelLayer : FlxGroup;
-		private var textLayer : FlxGroup;
+		public var levelLayer : FlxGroup;
+		public var textLayer : FlxGroup;
 		
 		private var pausedText : FlxText;
 		private var overlay : FlxSprite;
