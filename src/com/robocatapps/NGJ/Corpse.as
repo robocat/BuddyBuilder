@@ -14,7 +14,7 @@ package com.robocatapps.NGJ {
 		public function Corpse(x : uint, y : uint) : void {
 			super(x, y);
 			
-			loadGraphic(deadSprite);
+			loadGraphic(deadSprite, false, false, 128, 128);
 		}
 		
 		private function alpha_from_tick(tick : uint) : Number {
