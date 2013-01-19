@@ -96,10 +96,9 @@ package com.robocatapps.NGJ {
 				} else {
 					sprite.visible = overlap;
 				}
-				if(!overlap) {
+				if(tile_x > 3 && !overlap) {
 					tile_x = 0;
 					tile_y++;
-					if(tile_y * TILESIZE > this.clip_bounds.height) break;
 				} else {
 					tile_x++;
 				}
