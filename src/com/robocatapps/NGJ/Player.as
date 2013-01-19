@@ -86,7 +86,7 @@
 				}
 			}
 
-			for each (var obstacle : FlxSprite in level.obstacles) {
+			for each (var obstacle : Obstacle in level.obstacles) {
 				if (x + width > obstacle.x && x < obstacle.x + obstacle.width
 				&& y + height > obstacle.y && x < obstacle.y + obstacle.height) {
 					x -= xchange;
