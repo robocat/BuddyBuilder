@@ -68,6 +68,8 @@ package com.robocatapps.NGJ {
 			} else if (type == DROP_TORSO) {
 				loadGraphic(torsoSprite, false, false, 72, 110, false);
 				sprite = torsoSprite;
+			} else {
+				trace('lol ' + type);
 			}
 			
 		}
