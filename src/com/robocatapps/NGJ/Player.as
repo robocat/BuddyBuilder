@@ -103,6 +103,7 @@
 			for each (var pickup : Pickup in level.pickups) {
 				if (FlxCollision.pixelPerfectCheck(this, pickup)) {
 					level.remove(pickup);
+					level.getOpponent().level.turnOffLights();
 					delete level.pickups[level.pickups.indexOf(pickup)];
 				}
 			}
