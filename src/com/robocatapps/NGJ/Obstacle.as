@@ -18,8 +18,6 @@ package com.robocatapps.NGJ {
 			if (this.type == "bed") {
 				loadGraphic(bedSprite, false, false, 128, 64);
 			}
-			
-			scale = new FlxPoint(2, 2);
 		}
 	}
 }
