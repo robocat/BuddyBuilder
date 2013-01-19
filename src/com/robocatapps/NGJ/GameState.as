@@ -20,8 +20,8 @@ package com.robocatapps.NGJ {
 			this.player1 = new Player(1);
 			this.player2 = new Player(0);
 			
-			this.level1 = new Level(this.player1, new FlxPoint(200, 40));
-			this.level2 = new Level(this.player2, new FlxPoint(740, 40));
+			this.level1 = new Level(this.player1, new FlxPoint(200, 40), this);
+			this.level2 = new Level(this.player2, new FlxPoint(740, 40), this);
 			
 			player1.level = level1;
 			player2.level = level2;
@@ -48,6 +48,14 @@ package com.robocatapps.NGJ {
 			//	light_counter = 0;
 			//	light.alpha = Math.random() * 0.25 + 0.25;
 			//}
+		}
+		
+		public function getOpponnent(player : Player):Player {
+			if (player == this.player1){
+				return this.player2;
+			} else {
+				return this.player1;
+			}
 		}
 	}
 }
