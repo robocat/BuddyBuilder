@@ -26,7 +26,6 @@ package com.robocatapps.NGJ {
 						
 			var title:FlxText = new FlxText(0, 16, FlxG.width -500, "GAME OVER SUCKER");
 			title.setFormat(null, 160, 0xFFF00FFF, "center");
-			title.set
 			add(title);
 						
 		}
