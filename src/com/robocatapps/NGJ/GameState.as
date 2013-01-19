@@ -5,6 +5,7 @@ package com.robocatapps.NGJ {
 	public class GameState extends FlxState {
 		[Embed(source="bed.png")] private var bedSprite : Class;
 		[Embed(source="level_grid.png")] private var gridSprite : Class;
+		[Embed(source="holy_gloss.mp3")] private var music : Class;
 		
 		// STATE
 		public static const STATE_COUNTDOWN :uint = 1;
@@ -119,6 +120,8 @@ package com.robocatapps.NGJ {
 			
 			
 			this.state = STATE_PLAYING;
+			
+			FlxG.play(music);
 		}
 		
 		override public function update() : void {
