@@ -54,19 +54,19 @@ package com.robocatapps.NGJ {
 			this.origin = origin;
 			cont = controls;
 			
-			var head : FlxSprite = new FlxSprite(0, 0);
-			head.loadGraphic(body0_head_sprite);
-			head.x += origin.x;
-			head.y += origin.y;
-			add(head);
-			this.bodyHead = head;
-
 			var torso : FlxSprite = new FlxSprite(0, 0);
 			torso.loadGraphic(body0_torso_sprite);
 			torso.x += origin.x;
 			torso.y += origin.y;
 			add(torso);
 			this.bodyTorso = torso;
+
+			var head : FlxSprite = new FlxSprite(0, 0);
+			head.loadGraphic(body0_head_sprite);
+			head.x += origin.x;
+			head.y += origin.y;
+			add(head);
+			this.bodyHead = head;
 
 			var left_arm : FlxSprite = new FlxSprite(0, 0);
 			left_arm.loadGraphic(body0_left_arm_sprite);
