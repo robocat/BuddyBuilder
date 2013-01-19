@@ -108,9 +108,7 @@ package com.robocatapps.NGJ {
 			}
 			
 			if (Math.random() < 0.001) {
-				var hitlerkage : Pickup = new Pickup(this.origin.x + Math.random() * (500 - 40), this.origin.y + Math.random() * (820 - 40), "hitlerkage");
-				add(hitlerkage);
-				pickups.push(hitlerkage);
+				addPatient();
 			}
 			
 			if ((light_counter++) > Math.random() * 100) {
@@ -121,6 +119,20 @@ package com.robocatapps.NGJ {
 		
 		public function getOpponent() : Player {
 			return state.getOpponnent(this.player);
+		}
+		
+		public function addPatient() : void {
+			var p : Patient = new Patient();
+			p.x = origin.x + 10 + Math.random() * 480;
+			p.y = origin.y + 10 + Math.random() * 800;
+			add(p);
+			npcs.push(p);
+		}
+		
+		public function addDrop() : void {
+			var hitlerkage : Pickup = new Pickup(this.origin.x + Math.random() * (500 - 40), this.origin.y + Math.random() * (820 - 40), "hitlerkage");
+			add(hitlerkage);
+			pickups.push(hitlerkage);
 		}
 	}
 }

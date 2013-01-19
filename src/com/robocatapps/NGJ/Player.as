@@ -42,7 +42,17 @@
 		}
 		
 		private function didSlash() : void {
-			// called when the player slashes with his cleaver
+			var colrect : FlxRect = new FlxRect(x, y, width, height);
+			colrect.x += Math.sin(angle) * 32;
+			colrect.y -= Math.cos(angle) * 32;
+			
+			for each (var npc : Patient in level.npcs) {
+				if (colCheck(colrect, new FlxRect(npc.x, npc.y, npc.width, npc.height))) {
+					delete level.npcs[level.npcs.indexOf(npc)];
+					level.remove(npc);
+					level.addDrop();
+				}
+			}
 		}
 		
 		override public function update() : void {
@@ -108,6 +118,14 @@
 					level.operation_table.add_to_body(mask);
 				}
 			}
+		}
+		
+		public function colCheck(r1 : FlxRect, r2 : FlxRect) : Boolean {
+			if (r1.x + r1.width > r2.x && r1.x < r2.x + r2.width && r1.y + r1.height > r2.y && r1.y < r2.y + r2.height) {
+				return true;
+			}
+			
+			return false;
 		}
 	}
 }
