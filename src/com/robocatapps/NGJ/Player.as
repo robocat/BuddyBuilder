@@ -12,6 +12,8 @@
 		[Embed(source="deathscream5.mp3")] private var scream5:Class;
 		[Embed(source="deathscream6.mp3")] private var scream6:Class;
 		[Embed(source="deathscream7.mp3")] private var scream7:Class;
+		[Embed(source="Ground hit 1.mp3")] private var groundhit1:Class;
+		[Embed(source="Ground hit 2.mp3")] private var groundhit2:Class;
 		[Embed(source="patient_dead.png")] private var deadSprite : Class;
 		
 		public var level : Level;
@@ -88,6 +90,10 @@
 				if (r == 4) FlxG.play(scream5);
 				if (r == 5) FlxG.play(scream6);
 				if (r == 6) FlxG.play(scream7);
+				
+				r = Math.random() * 2;
+				if (r == 0) FlxG.play(groundhit1);
+				if (r == 1) FlxG.play(groundhit2);
 			}
 		}
 		
