@@ -3,7 +3,7 @@ package com.robocatapps.NGJ {
 
 	public class NGJ extends FlxGame {
 		public function NGJ() {
-			super(640, 512, MenuState);
+			super(1440, 900, MenuState);
 			
 			FlxG.mouse.show();
 		}
