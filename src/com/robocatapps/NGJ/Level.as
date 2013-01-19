@@ -38,7 +38,6 @@ package com.robocatapps.NGJ {
 		}
 		
 		private function addFloor():void {
-			trace("lol");
 			for (var i : uint = 0; i < Math.round(500 / 64); i++) {
 				for (var j : uint = 0; j < 820 / 64; j++) {
 					var tile : FlxSprite = new FlxSprite(this.origin.x + (i * 64),this.origin.y + (j * 64));

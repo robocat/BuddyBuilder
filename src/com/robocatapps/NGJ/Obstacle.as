@@ -15,7 +15,7 @@ package com.robocatapps.NGJ {
 		public function Obstacle(type : String):void {
 			super();
 			
-			
+			this.type = type;
 		}
 	}
 }
