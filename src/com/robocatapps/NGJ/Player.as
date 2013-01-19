@@ -55,7 +55,7 @@
 			for each (var npc : Patient in level.npcs) {
 				if (colCheck(colrect, new FlxRect(npc.x, npc.y, npc.width, npc.height))) {
 					delete level.npcs[level.npcs.indexOf(npc)];
-					level.remove(npc);
+					level.enemyLayer.remove(npc);
 					level.addDrop();
 				}
 			}
@@ -123,6 +123,8 @@
 					
 					var mask : uint = level.operation_table.pick_a_random_that_is_not_already_visible();
 					level.operation_table.add_to_body(mask);
+					
+					FlxG.play(soundEffect);
 				}
 			}
 		}

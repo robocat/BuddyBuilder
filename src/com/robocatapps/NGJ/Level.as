@@ -138,6 +138,13 @@ package com.robocatapps.NGJ {
 				addPatient();
 			}
 			
+			for each (var pickup : Pickup in pickups) {
+				if (pickup.timedOut) {
+					this.itemLayer.remove(pickup);
+					delete this.pickups[this.pickups.indexOf(pickup)];
+				}
+			}
+			
 			//if ((light_counter++) > Math.random() * 100) {
 			//	light_counter = 0;
 			//	light.alpha = Math.random() * 0.25 + 0.25;
@@ -152,7 +159,7 @@ package com.robocatapps.NGJ {
 			var p : Patient = new Patient();
 			p.x = origin.x + 10 + Math.random() * 480;
 			p.y = origin.y + 10 + Math.random() * 800;
-			add(p);
+			this.enemyLayer.add(p);
 			npcs.push(p);
 		}
 		
