@@ -214,7 +214,6 @@ package com.robocatapps.NGJ {
 			super.update();
 			
 			if(this.appearCounterTorso > 0) {
-				// TODO: animate overlay
 				this.bodyTorso.alpha = this.alpha_from_tick(this.appearCounterTorso);
 				this.bodyTorsoOverlay.alpha = this.alpha_from_tick(this.appearCounterTorso);
 				this.appearCounterTorso--;	
