@@ -36,7 +36,6 @@ package com.robocatapps.NGJ {
 
 
 		private var cont : uint;
-		private var scene : GameState;
 		
 		// Layout
 		public var origin : FlxPoint;
@@ -208,7 +207,10 @@ package com.robocatapps.NGJ {
 			if(tick > 80) return 0.1;
 			return 1.0;
 		}
-		 
+		
+		public function complete() : Boolean {
+			return this.bodyMask == ALL;
+		}
 
 		override public function update() : void {
 			super.update();
