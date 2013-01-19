@@ -60,10 +60,10 @@
 					var dead : FlxSprite = new FlxSprite(npc.x, npc.y);
 					dead.loadGraphic(deadSprite);
 					dead.angle = Math.random() * 360;
-					level.backgroundLayer.add(dead);
+					level.enemyLayer.add(dead);
 					
 					for (i = 0; i < Math.random() * 5; i++) {
-						level.backgroundLayer.add(new Blood(npc.x, npc.y));
+						level.bloodLayer.add(new Blood(npc.x, npc.y));
 					}
 					
 					level.enemyLayer.remove(npc);

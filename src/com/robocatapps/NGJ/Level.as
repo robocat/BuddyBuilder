@@ -30,6 +30,8 @@ package com.robocatapps.NGJ {
 		// Layers
 		public var backgroundLayer : FlxGroup;
 		public var enemyLayer : FlxGroup;
+		public var obstacleLayer : FlxGroup;
+		public var bloodLayer : FlxGroup;
 		public var itemLayer : FlxGroup;
 		public var playerLayer : FlxGroup;
 		public var lightLayer : FlxGroup;
@@ -66,14 +68,18 @@ package com.robocatapps.NGJ {
 			
 			backgroundLayer = new FlxGroup();
 			enemyLayer  = new FlxGroup();
+			obstacleLayer = new FlxGroup();
+			bloodLayer = new FlxGroup();
 			itemLayer  = new FlxGroup();
 			lightLayer  = new FlxGroup();
 			playerLayer  = new FlxGroup();
 			
 			
 			add(backgroundLayer);
-			add(itemLayer);
 			add(enemyLayer);
+			add(itemLayer);
+			add(obstacleLayer);
+			add(bloodLayer);
 			add(lightLayer);
 			add(playerLayer);
 			
@@ -105,7 +111,7 @@ package com.robocatapps.NGJ {
 			this.obstacles.push(new Obstacle(this.origin.x + this.width/2 - 128/2, this.origin.y + height/2 - 64/2, "bed"));
 			
 			for each (var obstacle : Obstacle in this.obstacles) {
-				this.itemLayer.add(obstacle);
+				this.obstacleLayer.add(obstacle);
 			}
 		}
 		
