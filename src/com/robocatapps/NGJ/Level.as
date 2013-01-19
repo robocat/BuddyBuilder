@@ -24,7 +24,6 @@ package com.robocatapps.NGJ {
 		public var player:Player;
 		public var pickups : Array;
 		public var obstacles : Array;
-		public var npcs : Array;
 		
 		public var gameState : GameState;
 
@@ -36,6 +35,8 @@ package com.robocatapps.NGJ {
 		public var itemLayer : FlxGroup;
 		public var playerLayer : FlxGroup;
 		public var lightLayer : FlxGroup;
+		
+		public var flock:Flock;
 
 		
 		// Layout
@@ -55,7 +56,6 @@ package com.robocatapps.NGJ {
 		public function Level(player: Player, origin : FlxPoint, operation_table : OperationTable, state : GameState):void {
 			this.pickups = new Array();
 			this.obstacles = new Array();
-			this.npcs = new Array();
 			
 			this.origin = origin;
 			this.gameState = state;
@@ -99,6 +99,8 @@ package com.robocatapps.NGJ {
 			// Add the player for the level
 			this.player = player;
 			this.playerLayer.add(this.player);
+			
+			flock = new Flock(enemyLayer, player);
 		}
 		
 		private function addFloor():void {
@@ -132,6 +134,8 @@ package com.robocatapps.NGJ {
 		override public function update():void {
 			super.update();
 			
+			flock.update();
+			
 			if (this.gameState.state != GameState.STATE_PLAYING)
 				return;
 			
@@ -143,7 +147,7 @@ package com.robocatapps.NGJ {
 				}
 			}
 			
-			if (Math.random() < 0.01/* && npcs.length <= MAXPATIENTS*/) {
+			if (Math.random() < 0.01 && flock.patients.length <= MAXPATIENTS) {
 				addPatient();
 			}
 			
@@ -165,11 +169,9 @@ package com.robocatapps.NGJ {
 		}
 		
 		public function addPatient() : void {
-			var p : Patient = new Patient();
-			p.x = origin.x + 10 + Math.random() * 480;
-			p.y = origin.y + 10 + Math.random() * 800;
-			this.enemyLayer.add(p);
-			npcs.push(p);
+			var patient : Patient;
+			patient = new Patient(this, origin.x + 10 + Math.random() * 480, origin.y + 10 + Math.random() * 800);
+			flock.add_patient(patient);
 		}
 		
 		public function addDrop() : void {
