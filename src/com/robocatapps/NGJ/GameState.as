@@ -36,7 +36,7 @@ package com.robocatapps.NGJ {
 			add(this.level1);
 			
 			this.operation_table0 = new OperationTable(0, new FlxPoint(20, 40));
-			this.operation_table1 = new OperationTable(1, new FlxPoint(740, 40));
+			this.operation_table1 = new OperationTable(1, new FlxPoint(1440 - 200, 40));
 			
 			add(this.operation_table0);
 			add(this.operation_table1);
