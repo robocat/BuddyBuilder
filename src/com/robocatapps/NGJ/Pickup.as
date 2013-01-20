@@ -159,7 +159,9 @@ package com.robocatapps.NGJ {
 				
 				if (type == DROP_LIGHT) {
 					player.level.getOpponent().level.turnOffLights();
-				} 
+				} else if(type == DROP_SWAP) {
+					player.swapWithPlayer(player.level.getOpponent());
+				}
 			}
 		}
 
