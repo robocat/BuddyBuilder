@@ -147,17 +147,21 @@ package com.robocatapps.NGJ {
 		}
 		
 		public function apply(player : Player) : void {
-			if (type == DROP_LIGHT) {
-				player.level.getOpponent().level.turnOffLights();
-			} else {
+			if(is_body_part()){
 				var part : uint = this.to_body_part();
 				if (player.level.operation_table.can_add_to_body(part)) {
-					new HUDSprite(sprite, player.playernumber, text_for_pickup(), player.level.gameState.textLayer);
+					new HUDSprite(sprite, player.playernumber, text_for_pickup(), player.level.gameState.textLayer, true);
 					player.level.operation_table.add_to_body(this.to_body_part());
 					announce();
+				}	
+			} else {
+				new HUDSprite(sprite, player.playernumber, text_for_pickup(), player.level.gameState.textLayer, false);
+				
+				if (type == DROP_LIGHT) {
+					player.level.getOpponent().level.turnOffLights();
+				} else if(type == DROP_SWAP) {
+					player.swapWithPlayer(player.level.getOpponent());
 				}
-				
-				
 			}
 		}
 
