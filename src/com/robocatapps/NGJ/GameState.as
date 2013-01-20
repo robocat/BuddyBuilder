@@ -216,7 +216,7 @@ package com.robocatapps.NGJ {
 				this.textLayer.add(this.pausedText);
 			}
 			
-			getready = new FlxText(0, 100, 1440, "GET READY");
+			getready = new FlxText(0, 60, 1440, "GET READY");
 			getready.setFormat("Subtext", 80, 0xffffff, "center");
 			add(getready);
 			player1controlsprite = new FlxSprite(350, 200);
