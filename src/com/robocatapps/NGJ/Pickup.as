@@ -202,6 +202,9 @@ package com.robocatapps.NGJ {
 				}
 			} else if (this.type == DROP_HEALTH) {
 				player.setHealth(4);
+			} else if (this.type == DROP_ZOMBIE) {
+				var zopponent : Player = player.level.getOpponent();
+				zopponent.level.switchToZombies();
 			} else {
 				new HUDSprite(sprite, player.playernumber, text_for_pickup(), player.level.gameState.textLayer, false);
 				
