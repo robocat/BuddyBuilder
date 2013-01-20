@@ -16,6 +16,8 @@
 		[Embed(source="Ground hit 2.mp3")] private var groundhit2:Class;
 		[Embed(source="patient_dead.png")] private var deadSprite : Class;
 		
+	[Embed(source="swing.mp3")] private var swoosh : Class; 
+		
 		public var level : Level;
 		
 		public var playernumber : uint;
@@ -64,6 +66,8 @@
 		}
 		
 		private function didSlash() : void {
+			FlxG.play(swoosh);
+			
 			var colrect : FlxRect = new FlxRect(x, y, width, height);
 			colrect.x += Math.sin(angle) * 32;
 			colrect.y -= Math.cos(angle) * 32;
