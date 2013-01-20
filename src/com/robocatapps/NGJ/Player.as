@@ -23,8 +23,17 @@
 		private var slashing : Boolean = false;
 		private var slash_down : Boolean = false;
 		
-		public function Player(playernumber:uint) : void {
+		private var player_title : FlxText = null;
+		private var player_name : FlxText = null;
+		
+		private var controls_swapped : Boolean = false;
+		
+		public function Player(playernumber:uint, playertitle:FlxText, playername:FlxText) : void {
 			this.playernumber = playernumber;
+			this.player_title = playertitle;
+			this.player_name = playername;
+			
+			
 			loadGraphic(sprite, false, false, 96, 96, false);
 			addAnimation("walk", [0, 1, 2, 3, 4, 5, 6, 7], 15, true);
 			addAnimation("stand", [0]);
@@ -112,12 +121,20 @@
 			var go_down : Boolean = false;
 			var slash : Boolean = false;
 			
-			if ((playernumber == 1 && FlxG.keys.pressed("LEFT")) || (playernumber == 0 && FlxG.keys.pressed("A")))		go_left = true;
-			if ((playernumber == 1 && FlxG.keys.pressed("RIGHT")) || (playernumber == 0 && FlxG.keys.pressed("D"))) 	go_right = true;
-			if ((playernumber == 1 && FlxG.keys.pressed("UP")) || (playernumber == 0 && FlxG.keys.pressed("W")))		go_up = true;
-			if ((playernumber == 1 && FlxG.keys.pressed("DOWN")) || (playernumber == 0 && FlxG.keys.pressed("S")))		go_down = true;
-			if ((playernumber == 1 && FlxG.keys.pressed("SPACE")) || playernumber == 0 && FlxG.keys.pressed("ENTER"))	slash = true;
-			if (FlxG.keys.pressed("K"))	FlxG.play(soundEffect);
+			var keys0 : Boolean = (playernumber == 0); 
+			var keys1 : Boolean = (playernumber == 1); 
+			
+			if(this.controls_swapped) {
+				var tmp : Boolean = keys0;
+				keys0 = keys1;
+				keys1 = tmp;
+			}
+			
+			if ((keys1 && FlxG.keys.pressed("LEFT"))  || (keys0 && FlxG.keys.pressed("A")))		go_left = true;
+			if ((keys1 && FlxG.keys.pressed("RIGHT")) || (keys0 && FlxG.keys.pressed("D"))) 	go_right = true;
+			if ((keys1 && FlxG.keys.pressed("UP"))    || (keys0 && FlxG.keys.pressed("W")))		go_up = true;
+			if ((keys1 && FlxG.keys.pressed("DOWN"))  || (keys0 && FlxG.keys.pressed("S")))		go_down = true;
+			if ((keys1 && FlxG.keys.pressed("SPACE")) || (keys0 && FlxG.keys.pressed("ENTER")))	slash = true;
 
 			if (slash) {
 				if (!slash_down) {
@@ -187,6 +204,26 @@
 			}
 			
 			return false;
+		}
+
+		public function swapWithPlayer(other_player:Player) : void {
+			var title : String = this.player_title.text;
+			this.player_title.text = other_player.player_title.text;
+			other_player.player_title.text = title;
+			
+			var name : String = this.player_name.text;
+			this.player_name.text = other_player.player_name.text;
+			other_player.player_name.text = name;
+
+			var our_mask : uint = this.level.operation_table.get_body();
+			this.level.operation_table.reset_body();
+			var other_mask : uint = other_player.level.operation_table.get_body();
+			other_player.level.operation_table.reset_body();
+			this.level.operation_table.add_to_body(other_mask);			
+			other_player.level.operation_table.add_to_body(our_mask);
+			
+			controls_swapped = ! controls_swapped;
+			other_player.controls_swapped = ! other_player.controls_swapped;
 		}
 	}
 }
