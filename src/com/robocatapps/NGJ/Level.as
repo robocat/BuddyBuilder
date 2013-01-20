@@ -61,6 +61,8 @@ package com.robocatapps.NGJ {
 		
 		private var levelAppearCounter : uint = 0;
 		
+		public var flash : FlxSprite;
+		
 		public function Level(player: Player, origin : FlxPoint, operation_table : OperationTable, state : GameState):void {
 			this.pickups = new Array();
 			this.obstacles = new Array();
@@ -135,6 +137,12 @@ package com.robocatapps.NGJ {
 			}
 			
 			this.levelAppearCounter = 0;
+			
+			flash = new FlxSprite(origin.x, origin.y);
+			flash.makeGraphic(500, 820);
+			flash.color = 0xff0000;
+			flash.alpha = 0;
+			add(flash);
 		}
 		
 		private function addObstacles():void {
@@ -197,6 +205,10 @@ package com.robocatapps.NGJ {
 			
 			flock.update();
 			zombieFlock.update();
+			
+			if (flash.alpha > 0) {
+				flash.alpha -= 0.05;
+			} else flash.alpha = 0;
 			
 			if (this.gameState.state != GameState.STATE_PLAYING)
 				return;

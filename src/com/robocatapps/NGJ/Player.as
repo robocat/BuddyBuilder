@@ -69,17 +69,19 @@
 				level.gameState.p1heart2.alpha = (health >= 2? 1: 0);
 				level.gameState.p1heart3.alpha = (health >= 3? 1: 0);
 				level.gameState.p1heart4.alpha = (health >= 4? 1: 0);
+				level.flash.alpha = 1;
+				if (health == 0) level.gameState.gameOver(this);
 			} else {
 				level.gameState.p2heart1.alpha = (health >= 1? 1: 0);
 				level.gameState.p2heart2.alpha = (health >= 2? 1: 0);
 				level.gameState.p2heart3.alpha = (health >= 3? 1: 0);
 				level.gameState.p2heart4.alpha = (health >= 4? 1: 0);
+				level.flash.alpha = 1;
+				if (health == 0) level.gameState.gameOver(level.gameState.getOpponnent(this));
 			}
 		}
 		
 		private function animationCallback(name:String, frame:uint, findex:uint) : void {
-			trace(name);
-			trace(frame);
 			if (name == "slash" && frame == 8) {
 				slashing = false;
 			} else if (name == "slash" && frame == 4) {

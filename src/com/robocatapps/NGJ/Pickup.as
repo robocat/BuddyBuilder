@@ -148,7 +148,8 @@ package com.robocatapps.NGJ {
 					this.type != DROP_SPEED &&
 					this.type != DROP_SWAP &&
 					this.type != DROP_ZOMBIE &&
-					this.type != DROP_INVERTED;
+					this.type != DROP_INVERTED &&
+					this.type != DROP_HEALTH;
 		}
 		
 		public function to_body_part() : uint {
