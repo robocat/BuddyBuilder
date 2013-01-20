@@ -37,6 +37,7 @@ package com.robocatapps.NGJ {
 		[Embed(source="swap.mp3")] private var swapSpeaker : Class;
 		[Embed(source="zombies.mp3")] private var zombiesSpeaker : Class;
 		[Embed(source="body fail.mp3")] private var bodyfail : Class;
+		[Embed(source="speed.mp3")] private var speedSpeaker : Class;
 		
 		public static const DROP_HEALTH : String = "health";
 		public static const DROP_LIGHT : String = "light";
@@ -252,6 +253,9 @@ package com.robocatapps.NGJ {
 						opponent.level.itemLayer.add(spike);
 					}
 						
+				} else if (type == DROP_SPEED) {
+					opponent.speed = 30;
+					opponent.effects.push(this);
 				}
 
 				
@@ -269,6 +273,8 @@ package com.robocatapps.NGJ {
 					FlxG.play(swapSpeaker);
 				} else if (type == DROP_ZOMBIE) {
 					FlxG.play(zombiesSpeaker);
+				} else if (type == DROP_SPEED) {
+					FlxG.play(speedSpeaker);
 				}
 			}
 		}
@@ -294,6 +300,10 @@ package com.robocatapps.NGJ {
 			if(tick < 135) return 0.8;
 			if(tick < 170) return 1.0;
 			if(tick < 175) return 0.8;
+			if(tick > 176) {
+				
+				return 0;
+			}
 			return 1.0;
 		}
 		
@@ -328,6 +338,8 @@ package com.robocatapps.NGJ {
 					opponent.level.turnOnLights();
 				} else if (type == DROP_INVERTED) {
 					opponent.revert_controls();
+				} else if (type == DROP_SPEED) {
+					opponent.speed = 3;
 				}
 					
 				this.state = STATE_EXPIRED;

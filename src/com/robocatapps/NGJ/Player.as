@@ -18,6 +18,7 @@
 		[Embed(source="swing.mp3")] private var swoosh : Class;
 		[Embed(source="spikehit.mp3")] private var spikeRemove : Class;
 		[Embed(source="doctor_hit.mp3")] private var dochit : Class;
+		[Embed(source="doctor_death.mp3")] private var docdeath : Class;
 		
 		public var level : Level;
 		
@@ -25,6 +26,9 @@
 		public var hpDropCounter : uint;
 		
 		public var playernumber : uint;
+		
+		public var speed : uint = 3;
+		
 		private var area : FlxRect;
 		private var slashing : Boolean = false;
 		private var slash_down : Boolean = false;
@@ -36,8 +40,6 @@
 		private var controls_inverted : Boolean = false;
 		
 		private var spikeBallNoHit : int = 0;
-		
-		private var speed : uint = 3;
 		
 		public var effects : Array = [];
 		
@@ -70,28 +72,33 @@
 		public function setHealth(health:int) : void {
 			hp = health;
 			
+			var i : int;
+			var m : int = Math.random() * 50;
+			
 			if (playernumber == 0) {
 				level.gameState.p1heart1.alpha = (health >= 1? 1: 0);
 				level.gameState.p1heart2.alpha = (health >= 2? 1: 0);
 				level.gameState.p1heart3.alpha = (health >= 3? 1: 0);
 				level.gameState.p1heart4.alpha = (health >= 4? 1: 0);
 				level.flash.alpha = 1;
-				if (health == 0) level.gameState.gameOver(level.gameState.player0);
-				
-				if (health == 0) for (var i : int = 0; i < Math.random() * 50; i++) {
+				if (health == 0) level.gameState.gameOver(level.gameState.player1);
+				if (health == 0) level.gameState.player0.alpha = 0;
+				if (health == 0) for (i = 0; i < m; i++) {
 					level.bloodLayer.add(new Blood(level.gameState.player0.x, level.gameState.player0.y, level.bloodLayer, Math.random() * 30 + 10));
 				}
+				if (health == 0) FlxG.play(docdeath);
 			} else {
 				level.gameState.p2heart1.alpha = (health >= 1? 1: 0);
 				level.gameState.p2heart2.alpha = (health >= 2? 1: 0);
 				level.gameState.p2heart3.alpha = (health >= 3? 1: 0);
 				level.gameState.p2heart4.alpha = (health >= 4? 1: 0);
 				level.flash.alpha = 1;
-				if (health == 0) level.gameState.gameOver(level.gameState.player1);
-				
-				if (health == 0) for (var i2 : int = 0; i2 < Math.random() * 50; i2++) {
+				if (health == 0) level.gameState.gameOver(level.gameState.player0);
+				if (health == 0) level.gameState.player1.alpha = 0;
+				if (health == 0) for (i = 0; i < m; i++) {
 					level.bloodLayer.add(new Blood(level.gameState.player1.x, level.gameState.player1.y, level.bloodLayer, Math.random() * 30 + 10));
 				}
+				if (health == 0) FlxG.play(docdeath);
 			}
 		}
 		
