@@ -35,6 +35,8 @@
 		
 		private var spikeBallNoHit : int = 0;
 		
+		public var effects : Array = [];
+		
 		public function Player(playernumber:uint, playertitle:FlxText, playername:FlxText) : void {
 			this.playernumber = playernumber;
 			this.player_title = playertitle;

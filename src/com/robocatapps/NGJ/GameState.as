@@ -60,6 +60,32 @@ package com.robocatapps.NGJ {
 		public var p2heart3empty : FlxSprite;
 		public var p2heart4empty : FlxSprite;
 		
+		public var p0Effect1 : FlxSprite;
+		public var p0Effect2 : FlxSprite;
+		public var p0Effect3 : FlxSprite;
+		public var p0Effect4 : FlxSprite;
+		
+		public var p1Effect1 : FlxSprite;
+		public var p1Effect2 : FlxSprite;
+		public var p1Effect3 : FlxSprite;
+		public var p1Effect4 : FlxSprite;
+		
+		public var p0Effect1Timer : FlxText;
+		public var p0Effect2Timer : FlxText;
+		public var p0Effect3Timer : FlxText;
+		public var p0Effect4Timer : FlxText;
+		
+		public var p1Effect1Timer : FlxText;
+		public var p1Effect2Timer : FlxText;
+		public var p1Effect3Timer : FlxText;
+		public var p1Effect4Timer : FlxText;
+		
+		public var p0EffectSlots : Array = [p0Effect1, p0Effect2, p0Effect3, p0Effect4];
+		public var p0TimerSlots : Array = [p0Effect1Timer, p0Effect2Timer, p0Effect3Timer, p0Effect4Timer];
+		
+		public var p1EffectSlots : Array = [p1Effect1, p1Effect2, p1Effect3, p1Effect4];
+		public var p1TimerSlots : Array = [p1Effect1Timer, p1Effect2Timer, p1Effect3Timer, p1Effect4Timer];
+		
 		public function GameState() : void {
 			this.levelLayer = new FlxGroup();
 			this.textLayer = new FlxGroup();
@@ -187,6 +213,70 @@ package com.robocatapps.NGJ {
 			}
 			
 			super.update();
+			
+			for each (var sprite0 : FlxSprite in p0EffectSlots) {
+				if (sprite0 != null)
+					this.levelLayer.remove(sprite0);
+			}
+			
+			for each (var text0 : FlxText in p0TimerSlots) {
+				if (text0 != null)
+					this.levelLayer.remove(text0);
+			}
+			
+			for each (var sprite1 : FlxSprite in p1EffectSlots) {
+				if (sprite1 != null)
+					this.levelLayer.remove(sprite1);
+			}
+			
+			for each (var text1 : FlxText in p1TimerSlots) {
+				if (text1 != null)
+					this.levelLayer.remove(text1);
+			}
+			
+			
+			if (player0 != null) {
+				var p0EffectsCount : uint = 0;
+				for each (var effect0 : Pickup in player0.effects) {
+					if (effect0 == null)
+						continue; 
+				
+					if (effect0.state == Pickup.STATE_EFFECTING && effect0.timerInSeconds() > 0) {
+						
+						this.levelLayer.add(p0EffectSlots[p0EffectsCount] = new FlxSprite(22, 480 + p0EffectsCount * 52));
+						p0EffectSlots[p0EffectsCount].loadGraphic(effect0.sprite);
+					
+						var text0 : FlxText = new FlxText(42, 485 + p0EffectsCount * 52, 200, effect0.timerInSeconds() + "S");
+						text0.setFormat("Subtext", 32, 0xFFFFFF, "center");
+						p0TimerSlots[p0EffectsCount] = text0;
+						this.levelLayer.add(text0);
+					
+						p0EffectsCount++;
+					}
+				}
+			}
+			
+			if (player1 != null) {
+				var p1EffectsCount : uint = 0;
+				for each (var effect1 : Pickup in player1.effects) {
+					
+					if (effect1 == null)
+						continue; 
+				
+					if (effect1.state == Pickup.STATE_EFFECTING && effect1.timerInSeconds() > 0) {
+						
+						this.levelLayer.add(p1EffectSlots[p1EffectsCount] = new FlxSprite(1250, 480 + p1EffectsCount * 52));
+						p1EffectSlots[p1EffectsCount].loadGraphic(effect1.sprite);
+					
+						var text1 : FlxText = new FlxText(1270, 485 + p1EffectsCount * 52, 200, effect1.timerInSeconds() + "S");
+						text1.setFormat("Subtext", 32, 0xFFFFFF, "center");
+						p1TimerSlots[p1EffectsCount] = text1;
+						this.levelLayer.add(text1);
+					
+						p1EffectsCount++;
+					}
+				}
+			}
 			
 //			flock.update();
 			
