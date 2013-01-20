@@ -58,6 +58,8 @@ package com.robocatapps.NGJ {
 		
 		private var lightsOff : LightsOff = null;
 		
+		private var levelAppearCounter : uint = 0;
+		
 		public function Level(player: Player, origin : FlxPoint, operation_table : OperationTable, state : GameState):void {
 			this.pickups = new Array();
 			this.obstacles = new Array();
@@ -129,6 +131,8 @@ package com.robocatapps.NGJ {
 				this.lightsOff.set_center(new FlxPoint(740, 49));
 				this.lightsOff.visible = false;
 			}
+			
+			this.levelAppearCounter = 0;
 		}
 		
 		private function addObstacles():void {
@@ -226,6 +230,29 @@ package com.robocatapps.NGJ {
 			if(this.lightsOff) {
 				var center : FlxPoint = new FlxPoint(this.player.x + 48, this.player.y + 48);
 				this.lightsOff.set_center(center);
+			}
+
+			// Flicker the light when the level starts			
+			if(this.levelAppearCounter < 1000) {
+				if(this.levelAppearCounter == 0) {
+					this.turnOffLights();
+				}
+				if(this.levelAppearCounter == 90) {
+					this.turnOnLights();
+				}
+				if(this.levelAppearCounter == 100) {
+					this.turnOffLights();
+				}
+				if(this.levelAppearCounter == 190) {
+					this.turnOnLights();
+				}
+				if(this.levelAppearCounter == 200) {
+					this.turnOffLights();
+				}
+				if(this.levelAppearCounter == 300) {
+					this.turnOnLights();
+				}
+				this.levelAppearCounter++;
 			}
 		}
 		
