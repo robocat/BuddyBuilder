@@ -210,6 +210,9 @@ package com.robocatapps.NGJ {
 				}
 			} else if (this.type == DROP_HEALTH) {
 				player.setHealth(4);
+			} else if (this.type == DROP_ZOMBIE) {
+				var zopponent : Player = player.level.getOpponent();
+				zopponent.level.switchToZombies();
 			} else {
 				var opponent : Player = player.level.getOpponent();
 				

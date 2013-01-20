@@ -381,5 +381,28 @@ package com.robocatapps.NGJ {
 				pickups.push(drop);
 			}
 		}
+		
+		public function switchToZombies() : void {
+
+			// Convert all patients into zombies
+			for each (var npc : Patient in this.flock.patients) {
+
+				var zombie : Zombie;
+				
+				var x : Number = npc.x;
+				var y : Number = npc.y;
+				
+				while (collideObstacle(x, y) == true) {
+					x = origin.x + 10 + Math.random() * 400;
+					y = origin.y + 10 + Math.random() * 700;
+				}
+				
+				zombie = new Zombie(this, x, y);
+				zombieFlock.add_zombie(zombie);
+
+				this.enemyLayer.remove(npc);
+				delete this.flock.patients[this.flock.patients.indexOf(npc)];
+			}
+		}
 	}
 }
