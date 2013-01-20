@@ -21,6 +21,7 @@
 		public var level : Level;
 		
 		public var hp : int;
+		public var lastZombieCollisionCounter : uint;
 		
 		public var playernumber : uint;
 		private var area : FlxRect;
@@ -165,12 +166,42 @@
 			}
 		}
 		
+		private function collisionWithZombies() : Boolean {
+			var colrect : FlxRect = new FlxRect(x, y, width, height);
+
+			var didHit : Boolean = false;
+			for each (var npc : Zombie in level.zombieFlock.zombies) {
+				if (colCheck(colrect, new FlxRect(npc.x, npc.y, npc.width, npc.height))) {
+					didHit = true;
+					break;
+				}
+			}
+			return didHit;
+		}
+		
 		override public function update() : void {
 			super.update();
 			if (color == 0xfd0000) color = 0xffffff;
 			
 			if (this.level.gameState.state != GameState.STATE_PLAYING)
 				return;
+				
+			if(this.collisionWithZombies()) {
+				if(this.lastZombieCollisionCounter == 0) {
+					var our_hp : int = this.hp;
+					our_hp--;
+					if(our_hp >= 0) {
+						this.setHealth(our_hp);
+					}
+					
+				}
+				lastZombieCollisionCounter++;
+				if(this.lastZombieCollisionCounter > 100) {
+					lastZombieCollisionCounter = 0;
+				}
+			} else {
+				lastZombieCollisionCounter = 0;
+			}
 			
 			var xchange : int = 0;
 			var ychange : int = 0;
@@ -271,12 +302,13 @@
 			
 			if (spikeBallNoHit > 0) spikeBallNoHit--; else
 			for each (var spike : Spikeball in level.spikeballs) {
-				if (FlxCollision.pixelPerfectCheck(this, spike)) {
+				if (spike.speed == 0 && FlxCollision.pixelPerfectCheck(this, spike)) {
 					x -= xchange;
 					y -= ychange;
 					color = 0xfd0000;
 					setHealth(hp - 1);
 					FlxG.play(groundhit1);
+
 					spikeBallNoHit = 50;
 					
 					for (var i : int = 0; i < Math.random() * 5; i++) {

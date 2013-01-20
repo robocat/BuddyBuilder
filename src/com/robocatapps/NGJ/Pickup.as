@@ -113,7 +113,7 @@ package com.robocatapps.NGJ {
 				sprite = invertedSprite;
 			} else if (type == DROP_HORDE) {
 				loadGraphic(hordeSprite, false, false, 48, 52, false);
-				sprite = invertedSprite;
+				sprite = hordeSprite;
 			} else if (type == DROP_LEFTLEG) {
 				loadGraphic(leftLegSprite, false, false, 52, 114, false);
 				sprite = leftLegSprite;
