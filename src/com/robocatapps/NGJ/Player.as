@@ -26,6 +26,9 @@
 		public var lastZombieCollisionCounter : uint;
 		
 		public var playernumber : uint;
+		
+		public var speed : uint = 3;
+		
 		private var area : FlxRect;
 		private var slashing : Boolean = false;
 		private var slash_down : Boolean = false;
@@ -37,8 +40,6 @@
 		private var controls_inverted : Boolean = false;
 		
 		private var spikeBallNoHit : int = 0;
-		
-		private var speed : uint = 3;
 		
 		public var effects : Array = [];
 		
@@ -363,6 +364,11 @@
 			
 			controls_swapped = ! controls_swapped;
 			other_player.controls_swapped = ! other_player.controls_swapped;
+			
+			var our_hp : int = this.hp;
+			var other_hp : int = other_player.hp;
+			this.setHealth(other_hp);
+			other_player.setHealth(our_hp);
 		}
 		
 		public function invert_controls() : void {
