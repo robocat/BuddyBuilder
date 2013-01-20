@@ -102,8 +102,8 @@ package com.robocatapps.NGJ {
 			var obstacle : Obstacle;
 			
 			for each (obstacle in level.obstacles) {
-				if (x + width > obstacle.x && x < obstacle.x + obstacle.width
-				&& y + height > obstacle.y && y < obstacle.y + obstacle.height)
+				if (x + width + 10 > obstacle.x && x < obstacle.x + obstacle.width + 10
+				&& y + height + 10 > obstacle.y && y < obstacle.y + obstacle.height + 10)
 				{
 //					x += Math.sin(angle) * velocity.x;
 //					y -= Math.cos(angle) * velocity.y;
@@ -132,8 +132,8 @@ package com.robocatapps.NGJ {
 		
 		public function collideObstacle(x : Number, y : Number) : Boolean {
 			for each (var obstacle : Obstacle in level.obstacles) {
-				if (x + width > obstacle.x && x < obstacle.x + obstacle.width
-					&& y + height > obstacle.y && y < obstacle.y + obstacle.height)
+				if (x + 80 > obstacle.x && x < obstacle.x + obstacle.width + 80
+					&& y + 80 > obstacle.y && y < obstacle.y + obstacle.height + 80)
 				{
 					return true;
 				}
@@ -142,17 +142,22 @@ package com.robocatapps.NGJ {
 			return false;
 		}
 		
+		public function randomRange(max:Number, min:Number = 0):Number
+		{
+     		return Math.floor(Math.random() * (max - min)) + min;
+		}
+		
 		public function new_distination():void {
-			var x1 : Number = area.x + 10 + Math.random() * (area.width - 80);
-			var y1 : Number = area.y + 10 + Math.random() * (area.height - 80);
+			var x1 : Number = randomRange(area.width - 80,area.x + 80);
+			var y1 : Number = randomRange(area.height - 80,area.y + 80);
 			
 //			while (collideObstacle(x, y) == true) {
-//				x1 = area.x + 10 + Math.random() * (area.width - 80);
-//				y1 = area.y + 10 + Math.random() * (area.height - 80);
+//				x1 = randomRange(area.width - 80,area.x + 80);
+//				y1 = randomRange(area.height - 80,area.y + 80);
 //			}
 			
-			destination.x = x;
-			destination.y = y;
+			destination.x = x1;
+			destination.y = y1;
 		}
 		
 	}
