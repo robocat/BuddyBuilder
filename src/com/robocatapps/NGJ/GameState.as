@@ -119,6 +119,8 @@ package com.robocatapps.NGJ {
 		public var p1TimerSlots : Array = [p1Effect1Timer, p1Effect2Timer, p1Effect3Timer, p1Effect4Timer];
 		
 		public function GameState() : void {
+			FlxG.mouse.hide();
+
 			this.levelLayer = new FlxGroup();
 			this.textLayer = new FlxGroup();
 			
