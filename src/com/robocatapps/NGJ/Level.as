@@ -195,7 +195,7 @@ package com.robocatapps.NGJ {
 			//}
 
 			if (Math.random() < 0.01) {
-				this.lightsOff.visible = ! this.lightsOff.visible;
+				//this.lightsOff.visible = ! this.lightsOff.visible;
 			}
 			if(this.lightsOff) {
 				var center : FlxPoint = new FlxPoint(this.player.x + 48, this.player.y + 48);

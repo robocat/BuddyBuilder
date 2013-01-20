@@ -9,6 +9,7 @@ package com.robocatapps.NGJ {
 	 */
 	public class LightsOff extends FlxGroup {
 		[Embed(source="lights_off_gradient.png")] private var lights_off_gradient_sprite : Class;
+		[Embed(source="lights_off_border.png")] private var lights_off_border_sprite : Class;
 
 		
 		public static const TEXTURESIZE : uint = 512;
@@ -50,6 +51,13 @@ package com.robocatapps.NGJ {
 				add(black_sprite);
 				this.black_sprites.push(black_sprite);
 			}
+
+			var border_sprite : FlxSprite = new FlxSprite(0, 0);
+			border_sprite.loadGraphic(lights_off_border_sprite);
+			border_sprite.offset = new FlxPoint(15, 15);
+			border_sprite.x = clip_bounds.x;
+			border_sprite.y = clip_bounds.y;
+			add(border_sprite);
 		}
 
 		public function set_center(center : FlxPoint) : void {
