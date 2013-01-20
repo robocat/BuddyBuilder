@@ -23,7 +23,7 @@
 		public var level : Level;
 		
 		public var hp : int;
-		public var lastZombieCollisionCounter : uint;
+		public var hpDropCounter : uint;
 		
 		public var playernumber : uint;
 		
@@ -145,6 +145,41 @@
 					}
 		}
 		
+		public function killZombie(npc : Zombie, shouldDrop : Boolean) : void {
+					var i : int = 0;
+					for (i = 0; i < Math.random() * 5; i++) {
+						level.backgroundLayer.add(new Blood(npc.x, npc.y, level.backgroundLayer));
+					}
+
+					var dead : Corpse = new Corpse(npc.x, npc.y);
+					dead.angle = Math.random() * 360;
+					dead.frame = Math.random() * 5;
+					
+					var area : int = (dead.x > 720? 1: 0);
+					dead.x = (area == 0? dead.x + dead.width > 660? 660 - dead.width: dead.x < 240? 240: dead.x: dead.x + dead.width > 1200? 1200 - dead.width: dead.x < 780? 780: dead.x);
+					dead.y = (dead.y + dead.height > 840? 840 - dead.height: dead.y < 50? 50: dead.y);
+					level.corpseLayer.add(dead);
+					
+					for (i = 0; i < Math.random() * 5; i++) {
+						level.bloodLayer.add(new Blood(npc.x, npc.y, level.bloodLayer));
+					}
+					
+					// Flee
+					level.zombieFlock.flee(new FlxPoint(npc.x, npc.y), -Zombie.RUN_VELOCITY, 300);
+					
+					level.enemyLayer.remove(npc);
+					delete level.zombieFlock.zombies[level.zombieFlock.zombies.indexOf(npc)];
+					
+					if (Math.random() <= 0.5) {
+						if (shouldDrop)
+							level.addDrop(dead.x, dead.y);
+					} else if (Math.random() <= 0.1) {
+						var spike : Spikeball = new Spikeball(npc.x, npc.y, level.itemLayer);
+						level.spikeballs.push(spike);
+						level.itemLayer.add(spike);
+					}
+		}
+		
 		private function didSlash() : void {
 			FlxG.play(swoosh);
 			
@@ -164,6 +199,12 @@
 			for each (var npc : Patient in level.flock.patients) {
 				if (colCheck(colrect, new FlxRect(npc.x, npc.y, npc.width, npc.height))) {
 					this.killPatient(npc, true);
+					didHit = true;
+				}
+			}
+			for each (var npc2 : Zombie in level.zombieFlock.zombies) {
+				if (colCheck(colrect, new FlxRect(npc2.x, npc2.y, npc2.width, npc2.height))) {
+					this.killZombie(npc2, true);
 					didHit = true;
 				}
 			}
@@ -204,21 +245,18 @@
 			if (this.level.gameState.state != GameState.STATE_PLAYING)
 				return;
 				
+			this.hpDropCounter++;
+				
 			if(this.collisionWithZombies()) {
-				if(this.lastZombieCollisionCounter == 0) {
+				if(this.hpDropCounter > 100) {
 					var our_hp : int = this.hp;
 					our_hp--;
+					this.hpDropCounter = 0;
 					if(our_hp >= 0) {
 						this.setHealth(our_hp);
 					}
 					
 				}
-				lastZombieCollisionCounter++;
-				if(this.lastZombieCollisionCounter > 100) {
-					lastZombieCollisionCounter = 0;
-				}
-			} else {
-				lastZombieCollisionCounter = 0;
 			}
 			
 			var xchange : int = 0;
