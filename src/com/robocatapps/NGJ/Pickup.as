@@ -1,7 +1,5 @@
 package com.robocatapps.NGJ {
-	import flash.sensors.Accelerometer;
-	import org.flixel.FlxPoint;
-	import org.flixel.FlxSprite;
+	import org.flixel.*;
 	
 	public class Pickup extends FlxSprite {
 		
@@ -12,6 +10,14 @@ package com.robocatapps.NGJ {
 		[Embed(source="right_arm_drop.png")] private var rightArmSprite : Class;
 		[Embed(source="head_drop.png")] private var headSprite : Class;
 		[Embed(source="torso_drop.png")] private var torsoSprite : Class;
+		
+		[Embed(source="head.mp3")] private var headSpeaker : Class;
+		[Embed(source="left arm.mp3")] private var leftarmSpeaker : Class;
+		[Embed(source="left leg.mp3")] private var leftlegSpeaker : Class;
+		[Embed(source="right arm.mp3")] private var rightarmSpeaker : Class;
+		[Embed(source="right leg.mp3")] private var rightlegSpeaker : Class;
+		[Embed(source="torso.mp3")] private var torsoSpeaker : Class;
+		[Embed(source="bodypart.mp3")] private var bodypartSound : Class;
 		
 		public static const DROP_LIGHT : String = "hitlerkage";
 		public static const DROP_LEFTLEG : String = "left_leg";
@@ -74,6 +80,26 @@ package com.robocatapps.NGJ {
 			
 		}
 		
+		public function announce() : void {
+			if (type == DROP_LEFTLEG) {
+				FlxG.play(leftlegSpeaker);
+			} else if (type == DROP_RIGHTLEG) {
+				FlxG.play(rightlegSpeaker);
+			} else if (type == DROP_LEFTARM) {
+				FlxG.play(leftarmSpeaker);
+			} else if (type == DROP_RIGHTARM) {
+				FlxG.play(rightarmSpeaker);
+			} else if (type == DROP_HEAD) {
+				FlxG.play(headSpeaker);
+			} else if (type == DROP_TORSO) {
+				FlxG.play(torsoSpeaker);
+			} else {
+				return;
+			}
+			
+			FlxG.play(bodypartSound);
+		}
+		
 		public function is_body_part() : Boolean {
 			return this.type != DROP_LIGHT;
 		}
@@ -111,6 +137,7 @@ package com.robocatapps.NGJ {
 				if (player.level.operation_table.can_add_to_body(part)) {
 					new HUDSprite(sprite, player.playernumber, text_for_pickup(), player.level.gameState.textLayer);
 					player.level.operation_table.add_to_body(this.to_body_part());
+					announce();
 				}
 				
 				
