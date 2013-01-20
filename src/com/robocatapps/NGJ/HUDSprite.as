@@ -38,7 +38,7 @@ package com.robocatapps.NGJ {
 				if (count >= 70) alpha = 0;
 			}
 			
-			if (count > 110) {
+			if (count > 70) {
 				group.remove(txt);
 				group.remove(this);
 			}
