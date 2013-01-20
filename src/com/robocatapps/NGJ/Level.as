@@ -72,9 +72,9 @@ package com.robocatapps.NGJ {
 			
 			backgroundLayer = new FlxGroup();
 			corpseLayer = new FlxGroup();
-			enemyLayer  = new FlxGroup();
 			obstacleLayer = new FlxGroup();
 			bloodLayer = new FlxGroup();
+			enemyLayer  = new FlxGroup();
 			itemLayer  = new FlxGroup();
 			lightLayer  = new FlxGroup();
 			playerLayer  = new FlxGroup();
@@ -82,10 +82,10 @@ package com.robocatapps.NGJ {
 			
 			add(backgroundLayer);
 			add(corpseLayer);
-			add(enemyLayer);
 			add(itemLayer);
 			add(obstacleLayer);
 			add(bloodLayer);
+			add(enemyLayer);
 			add(lightLayer);
 			add(playerLayer);
 			
