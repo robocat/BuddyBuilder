@@ -61,6 +61,8 @@ package com.robocatapps.NGJ {
 		
 		private var levelAppearCounter : uint = 0;
 		
+		private var num_of_patients : uint = MAXPATIENTS;
+		
 		public var flash : FlxSprite;
 		
 		public function Level(player: Player, origin : FlxPoint, operation_table : OperationTable, state : GameState):void {
@@ -200,6 +202,10 @@ package com.robocatapps.NGJ {
 			this.darkOn = false;
 		}
 		
+		public function horde():void {
+			num_of_patients *= 2;
+		}
+		
 		override public function update():void {
 			super.update();
 			
@@ -217,9 +223,19 @@ package com.robocatapps.NGJ {
 			var count : uint = flock.patient_count();
 			
 			// Make sure to only spawn MAXPATIENTS at a time
-			if (Math.random() < 0.01 && count <= MAXPATIENTS) {
-				addPatient();
-				//addZombie();
+			if (num_of_patients > MAXPATIENTS) {
+				if (count < num_of_patients) {
+					addPatient();
+				}
+				else if (count == num_of_patients) {
+					num_of_patients = MAXPATIENTS;
+				}
+			}
+			else {
+				if (Math.random() < 0.01 && count <= num_of_patients) {
+					addPatient();
+					//addZombie();
+				}
 			}
 			
 			// Throw away unused pickups

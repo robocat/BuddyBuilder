@@ -10,6 +10,7 @@ package com.robocatapps.NGJ {
 		[Embed(source="swap_pickup.png")] private var swapSprite : Class;
 		[Embed(source="zombie_pickup.png")] private var zombieSprite : Class;
 		[Embed(source="inverted_pickup.png")] private var invertedSprite : Class;
+		[Embed(source="horde.png")] private var hordeSprite : Class;
 		
 		[Embed(source="left_leg_drop.png")] private var leftLegSprite : Class;
 		[Embed(source="right_leg_drop.png")] private var rightLegSprite : Class;
@@ -27,6 +28,7 @@ package com.robocatapps.NGJ {
 		[Embed(source="bodypart.mp3")] private var bodypartSound : Class;
 		[Embed(source="darkness.mp3")] private var darknessSpeaker : Class;
 		[Embed(source="health pickup.mp3")] private var healthSpeaker : Class;
+		[Embed(source="horde.mp3")] private var hordeSpeaker : Class;
 		
 		public static const DROP_HEALTH : String = "health";
 		public static const DROP_LIGHT : String = "light";
@@ -34,6 +36,7 @@ package com.robocatapps.NGJ {
 		public static const DROP_SWAP : String = "swap";
 		public static const DROP_ZOMBIE : String = "zombie";
 		public static const DROP_INVERTED : String = "inverted";
+		public static const DROP_HORDE : String = "horde";
 		
 		public static const DROP_LEFTLEG : String = "left_leg";
 		public static const DROP_RIGHTLEG : String = "right_leg";
@@ -42,8 +45,8 @@ package com.robocatapps.NGJ {
 		public static const DROP_HEAD : String = "head";
 		public static const DROP_TORSO : String = "torso";
 		
-		public static const DROP_TYPES : Array = [DROP_ZOMBIE, DROP_INVERTED, DROP_SWAP, DROP_SPEED, DROP_LIGHT, DROP_LEFTLEG, DROP_RIGHTLEG, DROP_LEFTARM, DROP_RIGHTARM, DROP_HEAD, DROP_TORSO, DROP_HEALTH];
-		public static const DROP_NAMES : Array = ["ZOMBIE", "INVERTED", "SWAP", "SPEED", "DARKNESS", "LEFT LEG", "RIGHT LEG", "LEFT ARM", "RIGHT ARM", "HEAD", "TORSO", "HEALTH"];
+		public static const DROP_TYPES : Array = [DROP_HORDE, DROP_HORDE, DROP_ZOMBIE, DROP_INVERTED, DROP_SWAP, DROP_SPEED, DROP_LIGHT, DROP_LEFTLEG, DROP_RIGHTLEG, DROP_LEFTARM, DROP_RIGHTARM, DROP_HEAD, DROP_TORSO, DROP_HEALTH];
+		public static const DROP_NAMES : Array = ["HORDE", "HORDE", "ZOMBIE", "INVERTED", "SWAP", "SPEED", "DARKNESS", "LEFT LEG", "RIGHT LEG", "LEFT ARM", "RIGHT ARM", "HEAD", "TORSO", "HEALTH"];
 		
 		public static const STATE_DROPPED : uint = 1;
 		public static const STATE_APPLIED : uint = 2;
@@ -101,6 +104,9 @@ package com.robocatapps.NGJ {
 			} else if (type == DROP_INVERTED) {
 				loadGraphic(invertedSprite, false, false, 48, 52, false);
 				sprite = invertedSprite;
+			} else if (type == DROP_HORDE) {
+				loadGraphic(hordeSprite, false, false, 48, 52, false);
+				sprite = invertedSprite;
 			} else if (type == DROP_LEFTLEG) {
 				loadGraphic(leftLegSprite, false, false, 52, 114, false);
 				sprite = leftLegSprite;
@@ -151,7 +157,8 @@ package com.robocatapps.NGJ {
 					this.type != DROP_SWAP &&
 					this.type != DROP_ZOMBIE &&
 					this.type != DROP_INVERTED &&
-					this.type != DROP_HEALTH;
+					this.type != DROP_HEALTH &&
+					this.type != DROP_HORDE;
 		}
 		
 		public function to_body_part() : uint {
@@ -201,12 +208,17 @@ package com.robocatapps.NGJ {
 					player.swapWithPlayer(player.level.getOpponent());
 				} else if (type == DROP_INVERTED) {
 					opponent.invert_controls();
+				} else if (type == DROP_HORDE) {
+					opponent.level.horde();
 				}
+
 				
 				if (type == DROP_LIGHT) {
 					FlxG.play(darknessSpeaker);
 				} else if (type == DROP_HEALTH) {
 					FlxG.play(healthSpeaker);
+				} else if (type == DROP_HORDE) {
+					FlxG.play(hordeSpeaker);
 				}
 			}
 		}
