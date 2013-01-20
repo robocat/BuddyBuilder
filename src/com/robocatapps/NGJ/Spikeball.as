@@ -8,13 +8,14 @@ package com.robocatapps.NGJ {
 		private var group : FlxGroup;
 		private var dead : Boolean = false;
 		public var speed : int = 20;
+		private var dir : int;
 		
 		public function Spikeball(x:uint, y:uint, group : FlxGroup) : void {
 			super(x, y);
 			loadGraphic(sprite);
 			this.group = group;
 			FlxG.play(sound);
-			angle = Math.random() * 360;
+			dir = Math.random() * 360;
 		}
 		
 		public function remove() : void {
@@ -25,10 +26,12 @@ package com.robocatapps.NGJ {
 		override public function update() : void {
 			if (dead) group.remove(this);
 			
+			angle += 10;
+			
 			if (speed > 0) {
 				speed -= 0.1;
-				x += Math.sin(angle) * speed;
-				y -= Math.cos(angle) * speed;
+				x += Math.sin(dir) * speed;
+				y -= Math.cos(dir) * speed;
 			} else {
 				speed = 0;
 			}
