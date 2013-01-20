@@ -113,14 +113,14 @@ package com.robocatapps.NGJ {
 			if(this.player.playernumber == 0) {
 				var clip_bounds0 : FlxRect = new FlxRect(210, 49, 490, 820);
 				this.lightsOff = new LightsOff(clip_bounds0);
-				add(this.lightsOff);
+				this.lightLayer.add(this.lightsOff);
 				this.lightsOff.set_center(new FlxPoint(210, 49));
 				this.lightsOff.visible = false;
 			}
 			if(this.player.playernumber == 1) {
 				var clip_bounds1 : FlxRect = new FlxRect(740, 49, 490, 820);
 				this.lightsOff = new LightsOff(clip_bounds1);
-				add(this.lightsOff);
+				this.lightLayer.add(this.lightsOff);
 				this.lightsOff.set_center(new FlxPoint(740, 49));
 				this.lightsOff.visible = false;
 			}
@@ -168,7 +168,7 @@ package com.robocatapps.NGJ {
 		}
 		
 		public function turnOffLights():void {
-			this.dark.alpha = 1;
+			this.lightsOff.visible = true;
 			this.darkCounter = 0;
 			this.darkOn = true;
 			
@@ -176,7 +176,7 @@ package com.robocatapps.NGJ {
 		}
 		
 		public function turnOnLights():void {
-			this.dark.alpha = 0;
+			this.lightsOff.visible = false;
 			this.darkCounter = 0;
 			this.darkOn = false;
 		}
@@ -227,9 +227,6 @@ package com.robocatapps.NGJ {
 			//	light.alpha = Math.random() * 0.25 + 0.25;
 			//}
 
-			if (Math.random() < 0.01) {
-			//	this.lightsOff.visible = ! this.lightsOff.visible;
-			}
 			if(this.lightsOff) {
 				var center : FlxPoint = new FlxPoint(this.player.x + 48, this.player.y + 48);
 				this.lightsOff.set_center(center);
