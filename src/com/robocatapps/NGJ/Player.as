@@ -96,7 +96,7 @@
 					delete level.flock.patients[level.flock.patients.indexOf(npc)];
 					
 					if (Math.random() <= 0.5)
-						level.addDrop();
+						level.addDrop(dead.x, dead.y);
 					
 					didHit = true;
 				}

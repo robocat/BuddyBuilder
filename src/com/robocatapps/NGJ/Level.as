@@ -266,10 +266,7 @@ package com.robocatapps.NGJ {
 			flock.add_patient(patient);
 		}
 		
-		public function addDrop() : void {
-			var x : uint = this.origin.x + Math.random() * (500 - 40);
-			var y : uint = this.origin.y + Math.random() * (820 - 40);
-			
+		public function addDrop(x : uint, y : uint) : void {
 			var length : uint = Pickup.DROP_TYPES.length;
 			var dropType : uint = Math.floor(Math.random() * length + 1);
 			if (dropType > length)
@@ -280,7 +277,7 @@ package com.robocatapps.NGJ {
 			if (item == null)
 				return;
 				
-			var drop : Pickup = new Pickup(x, y, item);
+			var drop : Pickup = new Pickup(x + Math.sin(player.angle) * 50, y - Math.cos(player.angle) * 50, item, Math.random() * 15 + 5, player.angle);
 			
 			var collision : Boolean = false;
 			for each (var obstacle : Obstacle in this.obstacles) {
