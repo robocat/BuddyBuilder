@@ -7,6 +7,8 @@ package com.robocatapps.NGJ {
 		[Embed(source="level_grid.png")] private var gridSprite : Class;
 		[Embed(source="holy_gloss.mp3")] private var music : Class;
 		[Embed(source="loop.mp3")] private var loop : Class;
+		[Embed(source="fullheart.png")] private var fullheart : Class;
+		[Embed(source="emptyheart.png")] private var emptyheart : Class;
 		
 		// STATE
 		public static const STATE_COUNTDOWN :uint = 1;
@@ -39,6 +41,23 @@ package com.robocatapps.NGJ {
 		private var pausedText : FlxText;
 		private var overlay : FlxSprite;
 		
+		public var p1heart1 : FlxSprite;
+		public var p1heart2 : FlxSprite;
+		public var p1heart3 : FlxSprite;
+		public var p1heart4 : FlxSprite;
+		public var p2heart1 : FlxSprite;
+		public var p2heart2 : FlxSprite;
+		public var p2heart3 : FlxSprite;
+		public var p2heart4 : FlxSprite;
+		public var p1heart1empty : FlxSprite;
+		public var p1heart2empty : FlxSprite;
+		public var p1heart3empty : FlxSprite;
+		public var p1heart4empty : FlxSprite;
+		public var p2heart1empty : FlxSprite;
+		public var p2heart2empty : FlxSprite;
+		public var p2heart3empty : FlxSprite;
+		public var p2heart4empty : FlxSprite;
+		
 		public function GameState() : void {
 			this.levelLayer = new FlxGroup();
 			this.textLayer = new FlxGroup();
@@ -68,7 +87,40 @@ package com.robocatapps.NGJ {
 			var player1name : FlxText = new FlxText(1259,79,181, "Tsurenko");
 			player1name.setFormat("Subtext", 16, 0x1fc89aff, "left");
 			this.levelLayer.add(player1name);
-
+			
+			add(p1heart1empty = new FlxSprite(22 + 0 * 40, 430));
+			p1heart1empty.loadGraphic(emptyheart);
+			add(p1heart2empty = new FlxSprite(22 + 1 * 40, 430));
+			p1heart2empty.loadGraphic(emptyheart);
+			add(p1heart3empty = new FlxSprite(22 + 2 * 40, 430));
+			p1heart3empty.loadGraphic(emptyheart);
+			add(p1heart4empty = new FlxSprite(22 + 3 * 40, 430));
+			p1heart4empty.loadGraphic(emptyheart);
+			add(p2heart1empty = new FlxSprite(1240 + 22 + 0 * 40, 430));
+			p2heart1empty.loadGraphic(emptyheart);
+			add(p2heart2empty = new FlxSprite(1240 + 22 + 1 * 40, 430));
+			p2heart2empty.loadGraphic(emptyheart);
+			add(p2heart3empty = new FlxSprite(1240 + 22 + 2 * 40, 430));
+			p2heart3empty.loadGraphic(emptyheart);
+			add(p2heart4empty = new FlxSprite(1240 + 22 + 3 * 40, 430));
+			p2heart4empty.loadGraphic(emptyheart);
+			
+			add(p1heart1 = new FlxSprite(22 + 0 * 40, 430));
+			p1heart1.loadGraphic(fullheart);
+			add(p1heart2 = new FlxSprite(22 + 1 * 40, 430));
+			p1heart2.loadGraphic(fullheart);
+			add(p1heart3 = new FlxSprite(22 + 2 * 40, 430));
+			p1heart3.loadGraphic(fullheart);
+			add(p1heart4 = new FlxSprite(22 + 3 * 40, 430));
+			p1heart4.loadGraphic(fullheart);
+			add(p2heart1 = new FlxSprite(1240 + 22 + 0 * 40, 430));
+			p2heart1.loadGraphic(fullheart);
+			add(p2heart2 = new FlxSprite(1240 + 22 + 1 * 40, 430));
+			p2heart2.loadGraphic(fullheart);
+			add(p2heart3 = new FlxSprite(1240 + 22 + 2 * 40, 430));
+			p2heart3.loadGraphic(fullheart);
+			add(p2heart4 = new FlxSprite(1240 + 22 + 3 * 40, 430));
+			p2heart4.loadGraphic(fullheart);
 			
 			this.player0 = new Player(0, player0title, player0name);
 			this.player1 = new Player(1, player1title, player1name);

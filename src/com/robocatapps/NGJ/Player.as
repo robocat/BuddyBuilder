@@ -15,10 +15,12 @@
 		[Embed(source="Ground hit 1.mp3")] private var groundhit1:Class;
 		[Embed(source="Ground hit 2.mp3")] private var groundhit2:Class;
 		[Embed(source="patient_dead.png")] private var deadSprite : Class;
-		
-	[Embed(source="swing.mp3")] private var swoosh : Class; 
+		[Embed(source="swing.mp3")] private var swoosh : Class;
+		[Embed(source="spikehit.mp3")] private var spikeRemove : Class;
 		
 		public var level : Level;
+		
+		public var hp : int;
 		
 		public var playernumber : uint;
 		private var area : FlxRect;
@@ -30,11 +32,14 @@
 		
 		private var controls_swapped : Boolean = false;
 		
+		private var spikeBallNoHit : int = 0;
+		
 		public function Player(playernumber:uint, playertitle:FlxText, playername:FlxText) : void {
 			this.playernumber = playernumber;
 			this.player_title = playertitle;
 			this.player_name = playername;
 			
+			hp = 4;
 			
 			loadGraphic(sprite, false, false, 96, 96, false);
 			addAnimation("walk", [0, 1, 2, 3, 4, 5, 6, 7], 15, true);
@@ -55,6 +60,22 @@
 			}
 		}
 		
+		public function setHealth(health:int) : void {
+			hp = health;
+			
+			if (playernumber == 0) {
+				level.gameState.p1heart1.alpha = (health >= 1? 1: 0);
+				level.gameState.p1heart2.alpha = (health >= 2? 1: 0);
+				level.gameState.p1heart3.alpha = (health >= 3? 1: 0);
+				level.gameState.p1heart4.alpha = (health >= 4? 1: 0);
+			} else {
+				level.gameState.p2heart1.alpha = (health >= 1? 1: 0);
+				level.gameState.p2heart2.alpha = (health >= 2? 1: 0);
+				level.gameState.p2heart3.alpha = (health >= 3? 1: 0);
+				level.gameState.p2heart4.alpha = (health >= 4? 1: 0);
+			}
+		}
+		
 		private function animationCallback(name:String, frame:uint, findex:uint) : void {
 			trace(name);
 			trace(frame);
@@ -71,6 +92,14 @@
 			var colrect : FlxRect = new FlxRect(x, y, width, height);
 			colrect.x += Math.sin(angle) * 32;
 			colrect.y -= Math.cos(angle) * 32;
+			
+			for each (var spikeb : Spikeball in level.spikeballs) {
+				if (colCheck(colrect, new FlxRect(spikeb.x, spikeb.y, spikeb.width, spikeb.height))) {
+					delete level.spikeballs[level.spikeballs.indexOf(spikeb)];
+					spikeb.remove();
+					FlxG.play(spikeRemove);
+				}
+			}
 			
 			var didHit : Boolean = false;
 			for each (var npc : Patient in level.flock.patients) {
@@ -101,7 +130,11 @@
 					
 					if (Math.random() <= 0.5)
 						level.addDrop();
-					
+					else if (Math.random() <= 0.1) {
+						var spike : Spikeball = new Spikeball(npc.x, npc.y, level.itemLayer);
+						level.spikeballs.push(spike);
+						level.itemLayer.add(spike);
+					}
 					didHit = true;
 				}
 			}
@@ -124,6 +157,7 @@
 		
 		override public function update() : void {
 			super.update();
+			if (color == 0xfd0000) color = 0xffffff;
 			
 			if (this.level.gameState.state != GameState.STATE_PLAYING)
 				return;
@@ -168,6 +202,7 @@
 				if (x + width > obstacle.x && x < obstacle.x + obstacle.width
 				&& y + height > obstacle.y && y < obstacle.y + obstacle.height) {
 					x -= xchange;
+					xchange = 0;
 					break;
 				}
 			}
@@ -178,6 +213,7 @@
 				if (x + width > obstacle.x && x < obstacle.x + obstacle.width
 				&& y + height > obstacle.y && y < obstacle.y + obstacle.height) {
 					y -= ychange;
+					ychange = 0;
 					break;
 				}
 			}
@@ -209,6 +245,22 @@
 //					level.operation_table.add_to_body(mask);
 					
 					FlxG.play(soundEffect);
+				}
+			}
+			
+			if (spikeBallNoHit > 0) spikeBallNoHit--; else
+			for each (var spike : Spikeball in level.spikeballs) {
+				if (FlxCollision.pixelPerfectCheck(this, spike)) {
+					x -= xchange;
+					y -= ychange;
+					color = 0xfd0000;
+					setHealth(hp - 1);
+					FlxG.play(groundhit1);
+					spikeBallNoHit = 50;
+					
+					for (var i : int = 0; i < Math.random() * 5; i++) {
+						level.bloodLayer.add(new Blood(x, y, level.bloodLayer));
+					}
 				}
 			}
 		}
