@@ -10,6 +10,8 @@ package com.robocatapps.NGJ {
 		[Embed(source="fullheart.png")] private var fullheart : Class;
 		[Embed(source="emptyheart.png")] private var emptyheart : Class;
 		
+		public static const PLAYER_NAMES : Array = ["Damm", "Wu", "Flarup", "Strandgaard", "Weyreuther", "Andersen", "Bruckhoff"];
+		
 		// STATE
 		public static const STATE_COUNTDOWN :uint = 1;
 		public static const STATE_PLAYING :uint = 2;
@@ -71,6 +73,11 @@ package com.robocatapps.NGJ {
 			
 			this.operation_table0 = new OperationTable(0, new FlxPoint(20, 106));
 			this.operation_table1 = new OperationTable(1, new FlxPoint(1261, 106));
+			
+			var shuffledNames : Array = [];
+			while (PLAYER_NAMES.length > 0) {
+ 			   shuffledNames.push(PLAYER_NAMES.splice(Math.round(Math.random() * (PLAYER_NAMES.length - 1)), 1)[0]);
+			}
 
 			var player0title : FlxText = new FlxText(20,39,180, "DOCTOR 1");
 			player0title.setFormat("Heading", 30, 0xffffffff, "left");
@@ -80,11 +87,11 @@ package com.robocatapps.NGJ {
 			player1title.setFormat("Heading", 30, 0xffffffff, "left");
 			this.levelLayer.add(player1title);
 
-			var player0name : FlxText = new FlxText(18,79,181, "Wozniacki");
+			var player0name : FlxText = new FlxText(18,79,181, shuffledNames[0]);
 			player0name.setFormat("Subtext", 16, 0x3bd9d8ff, "left");
 			this.levelLayer.add(player0name);
 
-			var player1name : FlxText = new FlxText(1259,79,181, "Tsurenko");
+			var player1name : FlxText = new FlxText(1259,79,181, shuffledNames[1]);
 			player1name.setFormat("Subtext", 16, 0x1fc89aff, "left");
 			this.levelLayer.add(player1name);
 			
