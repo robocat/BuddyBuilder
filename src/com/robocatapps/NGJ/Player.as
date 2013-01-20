@@ -25,6 +25,9 @@
 		public var lastZombieCollisionCounter : uint;
 		
 		public var playernumber : uint;
+		
+		public var speed : uint = 3;
+		
 		private var area : FlxRect;
 		private var slashing : Boolean = false;
 		private var slash_down : Boolean = false;
@@ -36,8 +39,6 @@
 		private var controls_inverted : Boolean = false;
 		
 		private var spikeBallNoHit : int = 0;
-		
-		private var speed : uint = 3;
 		
 		public var effects : Array = [];
 		
