@@ -99,15 +99,20 @@ package com.robocatapps.NGJ {
 			}
 			
 			
-//			var obstacle : Obstacle;
-//			
-//			for each (obstacle in level.obstacles) {
-//				if (x + width > obstacle.x && x < obstacle.x + obstacle.width
-//				&& y + height > obstacle.y && y < obstacle.y + obstacle.height)
-//				{
-//					FlxU.rotatePoint(x, y, x, y, 45);
-//				}
-//			}
+			var obstacle : Obstacle;
+			
+			for each (obstacle in level.obstacles) {
+				if (x + width > obstacle.x && x < obstacle.x + obstacle.width
+				&& y + height > obstacle.y && y < obstacle.y + obstacle.height)
+				{
+//					x += Math.sin(angle) * velocity.x;
+//					y -= Math.cos(angle) * velocity.y;
+					velocity.x *= -1;
+					velocity.y *= -1;
+					new_distination();
+					break;
+				}
+			}
 						
 		
 			if (x < area.x) {
@@ -125,9 +130,29 @@ package com.robocatapps.NGJ {
 			}
         }
 		
+		public function collideObstacle(x : Number, y : Number) : Boolean {
+			for each (var obstacle : Obstacle in level.obstacles) {
+				if (x + width > obstacle.x && x < obstacle.x + obstacle.width
+					&& y + height > obstacle.y && y < obstacle.y + obstacle.height)
+				{
+					return true;
+				}
+			}
+			
+			return false;
+		}
+		
 		public function new_distination():void {
-			destination.x = area.x + 10 + Math.random() * (area.width - 80);
-			destination.y = area.y + 10 + Math.random() * (area.height - 80);
+			var x1 : Number = area.x + 10 + Math.random() * (area.width - 80);
+			var y1 : Number = area.y + 10 + Math.random() * (area.height - 80);
+			
+//			while (collideObstacle(x, y) == true) {
+//				x1 = area.x + 10 + Math.random() * (area.width - 80);
+//				y1 = area.y + 10 + Math.random() * (area.height - 80);
+//			}
+			
+			destination.x = x;
+			destination.y = y;
 		}
 		
 	}

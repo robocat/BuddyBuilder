@@ -239,9 +239,30 @@ package com.robocatapps.NGJ {
 			return gameState.getOpponnent(this.player);
 		}
 		
+		public function collideObstacle(x : Number, y : Number) : Boolean {
+			for each (var obstacle : Obstacle in this.obstacles) {
+				if (x + width > obstacle.x && x < obstacle.x + obstacle.width
+					&& y + height > obstacle.y && y < obstacle.y + obstacle.height)
+				{
+					return true;
+				}
+			}
+			
+			return false;
+		}
+		
 		public function addPatient() : void {
 			var patient : Patient;
-			patient = new Patient(this, origin.x + 10 + Math.random() * 400, origin.y + 10 + Math.random() * 700);
+			
+			var x : Number = origin.x + 10 + Math.random() * 400;
+			var y : Number = origin.y + 10 + Math.random() * 700;
+			
+			while (collideObstacle(x, y) == true) {
+				x = origin.x + 10 + Math.random() * 400;
+				y = origin.y + 10 + Math.random() * 700;
+			}
+			
+			patient = new Patient(this, x, y);
 			flock.add_patient(patient);
 		}
 		
