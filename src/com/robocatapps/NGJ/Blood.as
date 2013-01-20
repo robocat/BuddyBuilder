@@ -13,13 +13,14 @@ package com.robocatapps.NGJ {
 		[Embed(source="blood9.png")] private var bloodSprite9 : Class;
 		[Embed(source="blood10.png")] private var bloodSprite10 : Class;
 		
-		private var speed : int = 10.0;
+		public var speed : int = 10.0;
 		private var counter : int = 0;
 		private var scene : FlxGroup;
 		
-		public function Blood(x:uint, y:uint, scene:FlxGroup) : void {
+		public function Blood(x:uint, y:uint, scene:FlxGroup, speed:int = 10) : void {
 			super(x, y);
 			this.scene = scene;
+			this.speed = speed;
 			var i : int = Math.random() * 10;
 			if (i == 0) loadGraphic(bloodSprite1);
 			if (i == 1) loadGraphic(bloodSprite2);

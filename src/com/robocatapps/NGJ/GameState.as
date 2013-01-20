@@ -26,8 +26,8 @@ package com.robocatapps.NGJ {
 		
 		public var state : uint;
 		
-		private var player0 : Player;
-		private var player1 : Player;
+		public var player0 : Player;
+		public var player1 : Player;
 		
 		private var level0 : Level;
 		private var level1 : Level;
@@ -357,7 +357,8 @@ package com.robocatapps.NGJ {
 
 			/*if (FlxG.keys.justPressed("Y"))
 			{
-				this.level0.switchToZombies();
+				//this.level0.switchToZombies();
+				this.swapPlayers();
 			}*/
 			
 		}
