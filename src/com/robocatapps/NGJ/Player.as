@@ -37,6 +37,8 @@
 		
 		private var spikeBallNoHit : int = 0;
 		
+		private var speed : uint = 3;
+		
 		public var effects : Array = [];
 		
 		public function Player(playernumber:uint, playertitle:FlxText, playername:FlxText) : void {
@@ -258,7 +260,7 @@
 			
 			var obstacle : Obstacle;
 			
-			if (go_left) { x += (xchange = -5); } else if (go_right) { x += (xchange = 5); }
+			if (go_left) { x += (xchange = -1 * speed); } else if (go_right) { x += (xchange = speed); }
 			
 			for each (obstacle in level.obstacles) {
 				if (x + width > obstacle.x && x < obstacle.x + obstacle.width
@@ -269,7 +271,7 @@
 				}
 			}
 			
-			if (go_up) { y += (ychange = -5); } else if (go_down) { y += (ychange = 5); }
+			if (go_up) { y += (ychange = -1 * speed); } else if (go_down) { y += (ychange = speed); }
 			
 			for each (obstacle in level.obstacles) {
 				if (x + width > obstacle.x && x < obstacle.x + obstacle.width

@@ -35,6 +35,8 @@ package com.robocatapps.NGJ {
 		[Embed(source="spikeball_drop.mp3")] private var spikeballSpeaker : Class;
 		[Embed(source="cannot_add_to_body.mp3")] private var bodyFailSpeaker : Class;
 		[Embed(source="swap.mp3")] private var swapSpeaker : Class;
+		[Embed(source="zombies.mp3")] private var zombiesSpeaker : Class;
+		[Embed(source="body fail.mp3")] private var bodyfail : Class;
 		
 		public static const DROP_HEALTH : String = "health";
 		public static const DROP_LIGHT : String = "light";
@@ -265,6 +267,8 @@ package com.robocatapps.NGJ {
 					FlxG.play(spikeballSpeaker);
 				} else if (type == DROP_SWAP) {
 					FlxG.play(swapSpeaker);
+				} else if (type == DROP_ZOMBIE) {
+					FlxG.play(zombiesSpeaker);
 				}
 			}
 		}
