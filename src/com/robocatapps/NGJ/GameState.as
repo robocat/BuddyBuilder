@@ -66,6 +66,23 @@ package com.robocatapps.NGJ {
 		public var p2heart3empty : FlxSprite;
 		public var p2heart4empty : FlxSprite;
 		
+		public var p1heart12 : FlxSprite;
+		public var p1heart22 : FlxSprite;
+		public var p1heart32 : FlxSprite;
+		public var p1heart42 : FlxSprite;
+		public var p2heart12 : FlxSprite;
+		public var p2heart22 : FlxSprite;
+		public var p2heart32 : FlxSprite;
+		public var p2heart42 : FlxSprite;
+		public var p1heart12empty : FlxSprite;
+		public var p1heart22empty : FlxSprite;
+		public var p1heart32empty : FlxSprite;
+		public var p1heart42empty : FlxSprite;
+		public var p2heart12empty : FlxSprite;
+		public var p2heart22empty : FlxSprite;
+		public var p2heart32empty : FlxSprite;
+		public var p2heart42empty : FlxSprite;
+		
 
 		public var wincountdown1 : int = -1;
 		public var wincountdown2 : int = -1;
@@ -169,6 +186,40 @@ package com.robocatapps.NGJ {
 			p2heart3.loadGraphic(fullheart);
 			add(p2heart4 = new FlxSprite(1240 + 22 + 3 * 40, 430));
 			p2heart4.loadGraphic(fullheart);
+			
+			add(p1heart12empty = new FlxSprite(22 + 0 * 40, 470));
+			p1heart12empty.loadGraphic(emptyheart);
+			add(p1heart22empty = new FlxSprite(22 + 1 * 40, 470));
+			p1heart22empty.loadGraphic(emptyheart);
+			add(p1heart32empty = new FlxSprite(22 + 2 * 40, 470));
+			p1heart32empty.loadGraphic(emptyheart);
+			add(p1heart42empty = new FlxSprite(22 + 3 * 40, 470));
+			p1heart42empty.loadGraphic(emptyheart);
+			add(p2heart12empty = new FlxSprite(1240 + 22 + 0 * 40, 470));
+			p2heart12empty.loadGraphic(emptyheart);
+			add(p2heart22empty = new FlxSprite(1240 + 22 + 1 * 40, 470));
+			p2heart22empty.loadGraphic(emptyheart);
+			add(p2heart32empty = new FlxSprite(1240 + 22 + 2 * 40, 470));
+			p2heart32empty.loadGraphic(emptyheart);
+			add(p2heart42empty = new FlxSprite(1240 + 22 + 3 * 40, 470));
+			p2heart42empty.loadGraphic(emptyheart);
+			
+			add(p1heart12 = new FlxSprite(22 + 0 * 40, 470));
+			p1heart12.loadGraphic(fullheart);
+			add(p1heart22 = new FlxSprite(22 + 1 * 40, 470));
+			p1heart22.loadGraphic(fullheart);
+			add(p1heart32 = new FlxSprite(22 + 2 * 40, 470));
+			p1heart32.loadGraphic(fullheart);
+			add(p1heart42 = new FlxSprite(22 + 3 * 40, 470));
+			p1heart42.loadGraphic(fullheart);
+			add(p2heart12 = new FlxSprite(1240 + 22 + 0 * 40, 470));
+			p2heart12.loadGraphic(fullheart);
+			add(p2heart22 = new FlxSprite(1240 + 22 + 1 * 40, 470));
+			p2heart22.loadGraphic(fullheart);
+			add(p2heart32 = new FlxSprite(1240 + 22 + 2 * 40, 470));
+			p2heart32.loadGraphic(fullheart);
+			add(p2heart42 = new FlxSprite(1240 + 22 + 3 * 40, 470));
+			p2heart42.loadGraphic(fullheart);
 			
 			this.player0 = new Player(0, player0title, player0name);
 			this.player1 = new Player(1, player1title, player1name);
@@ -279,10 +330,10 @@ package com.robocatapps.NGJ {
 				
 					if (effect0.state == Pickup.STATE_EFFECTING && effect0.timerInSeconds() > 0) {
 						
-						this.levelLayer.add(p0EffectSlots[p0EffectsCount] = new FlxSprite(22, 480 + p0EffectsCount * 52));
+						this.levelLayer.add(p0EffectSlots[p0EffectsCount] = new FlxSprite(22, 520 + p0EffectsCount * 52));
 						p0EffectSlots[p0EffectsCount].loadGraphic(effect0.sprite);
 					
-						var text0 : FlxText = new FlxText(42, 485 + p0EffectsCount * 52, 200, effect0.timerInSeconds() + "S");
+						var text0 : FlxText = new FlxText(42, 525 + p0EffectsCount * 52, 200, effect0.timerInSeconds() + "S");
 						text0.setFormat("Subtext", 32, 0xFFFFFF, "center");
 						p0TimerSlots[p0EffectsCount] = text0;
 						this.levelLayer.add(text0);
@@ -301,10 +352,10 @@ package com.robocatapps.NGJ {
 				
 					if (effect1.state == Pickup.STATE_EFFECTING && effect1.timerInSeconds() > 0) {
 						
-						this.levelLayer.add(p1EffectSlots[p1EffectsCount] = new FlxSprite(1250, 480 + p1EffectsCount * 52));
+						this.levelLayer.add(p1EffectSlots[p1EffectsCount] = new FlxSprite(1250, 520 + p1EffectsCount * 52));
 						p1EffectSlots[p1EffectsCount].loadGraphic(effect1.sprite);
 					
-						var text1 : FlxText = new FlxText(1270, 485 + p1EffectsCount * 52, 200, effect1.timerInSeconds() + "S");
+						var text1 : FlxText = new FlxText(1270, 525 + p1EffectsCount * 52, 200, effect1.timerInSeconds() + "S");
 						text1.setFormat("Subtext", 32, 0xFFFFFF, "center");
 						p1TimerSlots[p1EffectsCount] = text1;
 						this.levelLayer.add(text1);

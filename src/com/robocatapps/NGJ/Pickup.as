@@ -219,7 +219,7 @@ package com.robocatapps.NGJ {
 					FlxG.play(bodyFailSpeaker);
 				}
 			} else if (this.type == DROP_HEALTH) {
-				player.setHealth(4);
+				player.setHealth(8);
 			} else if (this.type == DROP_ZOMBIE) {
 				var zopponent : Player = player.level.getOpponent();
 				zopponent.level.switchToZombies();

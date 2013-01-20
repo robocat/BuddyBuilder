@@ -49,7 +49,7 @@
 			this.player_title = playertitle;
 			this.player_name = playername;
 			
-			hp = 4;
+			hp = 8;
 			
 			loadGraphic(sprite, false, false, 96, 96, false);
 			addAnimation("walk", [0, 1, 2, 3, 4, 5, 6, 7], 15, true);
@@ -81,6 +81,10 @@
 				level.gameState.p1heart2.alpha = (health >= 2? 1: 0);
 				level.gameState.p1heart3.alpha = (health >= 3? 1: 0);
 				level.gameState.p1heart4.alpha = (health >= 4? 1: 0);
+				level.gameState.p1heart12.alpha = (health >= 5? 1: 0);
+				level.gameState.p1heart22.alpha = (health >= 6? 1: 0);
+				level.gameState.p1heart32.alpha = (health >= 7? 1: 0);
+				level.gameState.p1heart42.alpha = (health >= 8? 1: 0);
 				level.flash.alpha = 1;
 				if (health == 0) level.gameState.gameOver(level.gameState.player1);
 				if (health == 0) level.gameState.player0.alpha = 0;
@@ -93,6 +97,10 @@
 				level.gameState.p2heart2.alpha = (health >= 2? 1: 0);
 				level.gameState.p2heart3.alpha = (health >= 3? 1: 0);
 				level.gameState.p2heart4.alpha = (health >= 4? 1: 0);
+				level.gameState.p2heart12.alpha = (health >= 5? 1: 0);
+				level.gameState.p2heart22.alpha = (health >= 6? 1: 0);
+				level.gameState.p2heart32.alpha = (health >= 7? 1: 0);
+				level.gameState.p2heart42.alpha = (health >= 8? 1: 0);
 				level.flash.alpha = 1;
 				if (health == 0) level.gameState.gameOver(level.gameState.player0);
 				if (health == 0) level.gameState.player1.alpha = 0;
