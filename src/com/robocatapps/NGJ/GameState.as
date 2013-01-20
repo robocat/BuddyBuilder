@@ -233,7 +233,7 @@ package com.robocatapps.NGJ {
 		override public function update() : void {
 			if (first) {
 				first = false;
-				FlxG.play(loop);
+				FlxG.playMusic(loop);
 			}
 			
 			super.update();
