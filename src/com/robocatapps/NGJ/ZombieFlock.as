@@ -13,7 +13,7 @@ package com.robocatapps.NGJ {
 		
 		private var group:FlxGroup;
 		
-		private var player_seek_strength:Number = 0.1;
+		private var player_seek_strength:Number = 13.9;
 		
 		private var zombie_size:Number = 100.0;
 		
@@ -46,6 +46,7 @@ package com.robocatapps.NGJ {
 //            if (player.velocity.x || player.velocity.y) {
 //                seek(new FlxPoint(player.x, player.y), player_seek_strength);
 //            }
+            seek(new FlxPoint(player.x, player.y), player_seek_strength);
 
 //			flee(new FlxPoint(player.x, player.y), -4);
         }
