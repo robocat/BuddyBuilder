@@ -102,8 +102,8 @@ package com.robocatapps.NGJ {
 			var obstacle : Obstacle;
 			
 			for each (obstacle in level.obstacles) {
-				if (x + width + 10 > obstacle.x && x < obstacle.x + obstacle.width + 10
-				&& y + height + 10 > obstacle.y && y < obstacle.y + obstacle.height + 10)
+				if (x + width + 20 > obstacle.x && x < obstacle.x + obstacle.width + 20
+				&& y + height + 20 > obstacle.y && y < obstacle.y + obstacle.height + 20)
 				{
 //					x += Math.sin(angle) * velocity.x;
 //					y -= Math.cos(angle) * velocity.y;
@@ -115,17 +115,17 @@ package com.robocatapps.NGJ {
 			}
 						
 		
-			if (x < area.x) {
+			if (x < area.x + 80) {
 				velocity.x *= -1;
 			}
-			else if (x >= area.x + area.width - 50) {
+			else if (x >= area.x + area.width - 80) {
 				velocity.x *= -1;
 			}
 			
-			if (y < area.y) {
+			if (y < area.y + 80) {
 				velocity.y *= -1;
 			}
-			else if (y >= area.y + area.height - 50) {
+			else if (y >= area.y + area.height - 80) {
 				velocity.y *= -1;
 			}
         }

@@ -9,6 +9,12 @@ package com.robocatapps.NGJ {
 		[Embed(source="loop.mp3")] private var loop : Class;
 		[Embed(source="fullheart.png")] private var fullheart : Class;
 		[Embed(source="emptyheart.png")] private var emptyheart : Class;
+		[Embed(source="doctor1win.mp3")] private var doc1win : Class;
+		[Embed(source="doctor2wins.mp3")] private var doc2win : Class;
+		[Embed(source="player2.png")] private var player2controls : Class;
+		[Embed(source="player1.png")] private var player1controls : Class;
+		[Embed(source="build.mp3")] private var buildsound : Class;
+		[Embed(source="getready.mp3")] private var getreadysound : Class;
 		
 		public static const PLAYER_NAMES : Array = ["Damm", "Wu", "Flarup", "Strandgaard", "Weyreuther", "Andersen", "Bruckhoff"];
 		
@@ -60,6 +66,15 @@ package com.robocatapps.NGJ {
 		public var p2heart3empty : FlxSprite;
 		public var p2heart4empty : FlxSprite;
 		
+
+		public var wincountdown1 : int = -1;
+		public var wincountdown2 : int = -1;
+		
+		private var player1controlsprite : FlxSprite;
+		private var player2controlsprite : FlxSprite;
+		private var getready : FlxText;
+		public var getreadycountdown : int = 300;
+
 		public var p0Effect1 : FlxSprite;
 		public var p0Effect2 : FlxSprite;
 		public var p0Effect3 : FlxSprite;
@@ -201,6 +216,15 @@ package com.robocatapps.NGJ {
 				this.textLayer.add(this.pausedText);
 			}
 			
+			getready = new FlxText(0, 100, 1440, "GET READY");
+			getready.setFormat("Subtext", 80, 0xffffff, "center");
+			add(getready);
+			player1controlsprite = new FlxSprite(350, 200);
+			player1controlsprite.loadGraphic(player1controls);
+			add(player1controlsprite);
+			player2controlsprite = new FlxSprite(800, 200);
+			player2controlsprite.loadGraphic(player2controls);
+			add(player2controlsprite);
 			
 			this.state = STATE_PLAYING;
 		}
@@ -213,6 +237,18 @@ package com.robocatapps.NGJ {
 			}
 			
 			super.update();
+			
+			if (getreadycountdown == 300) {
+				FlxG.play(getreadysound);
+			} if (getreadycountdown > 1) {
+				getreadycountdown--;
+			} else if (getreadycountdown == 1) {
+				getreadycountdown = 0;
+				FlxG.play(buildsound);
+				remove(player1controlsprite);
+				remove(player2controlsprite);
+				remove(getready);
+			}
 			
 			for each (var sprite0 : FlxSprite in p0EffectSlots) {
 				if (sprite0 != null)
@@ -279,6 +315,16 @@ package com.robocatapps.NGJ {
 			}
 			
 //			flock.update();
+
+			if (wincountdown1 != -1) {
+				wincountdown1--;
+				if (wincountdown1 == 0) FlxG.play(doc1win); 
+			}
+			
+			if (wincountdown2 != -1) {
+				wincountdown2--;
+				if (wincountdown2 == 0) FlxG.play(doc2win); 
+			}
 			
 			if (FlxG.keys.justPressed("ESCAPE"))
 			{
@@ -312,6 +358,12 @@ package com.robocatapps.NGJ {
 		
 		public function gameOver(winner : Player) : void {
 			this.state = STATE_GAMEOVER;
+			
+			if (winner.playernumber == 0) {
+				wincountdown1 = 100;
+			} else {
+				wincountdown2 = 100;
+			}
 			
 			this.overlay.alpha = 0.5;
 			
