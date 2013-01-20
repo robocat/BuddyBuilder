@@ -32,6 +32,7 @@ package com.robocatapps.NGJ {
 		[Embed(source="death.mp3")] private var deathSpeaker : Class;
 		[Embed(source="horde.mp3")] private var hordeSpeaker : Class;
 		[Embed(source="swap.mp3")] private var swapSpeaker : Class;
+		[Embed(source="zombies.mp3")] private var zombiesSpeaker : Class;
 		[Embed(source="body fail.mp3")] private var bodyfail : Class;
 		
 		public static const DROP_HEALTH : String = "health";
@@ -242,6 +243,8 @@ package com.robocatapps.NGJ {
 					FlxG.play(hordeSpeaker);
 				} else if (type == DROP_SWAP) {
 					FlxG.play(swapSpeaker);
+				} else if (type == DROP_ZOMBIE) {
+					FlxG.play(zombiesSpeaker);
 				}
 			}
 		}
