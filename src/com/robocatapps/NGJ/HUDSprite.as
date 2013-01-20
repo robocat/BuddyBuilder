@@ -27,13 +27,6 @@ package com.robocatapps.NGJ {
 		override public function update() : void {
 			count++;
 			
-			if (count == 10) { alpha = 0; txt.alpha = 0; }
-			if (count == 20) { alpha = 1; txt.alpha = 1; }
-			if (count == 30) { alpha = 0; txt.alpha = 0; }
-			if (count == 40) { alpha = 1; txt.alpha = 1; }
-			if (count == 50) { alpha = 0; txt.alpha = 0; }
-			if (count == 60) { alpha = 1; txt.alpha = 1; }
-			
 			if (toOpearationTable) {
 				if (count > 80) {
 					var prog : Number = (Number)(count - 80.0) / 30.0;

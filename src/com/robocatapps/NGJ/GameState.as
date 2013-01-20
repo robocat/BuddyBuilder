@@ -233,7 +233,7 @@ package com.robocatapps.NGJ {
 		override public function update() : void {
 			if (first) {
 				first = false;
-				FlxG.play(loop);
+				FlxG.playMusic(loop);
 			}
 			
 			super.update();
@@ -354,6 +354,12 @@ package com.robocatapps.NGJ {
 					this.gameOver(this.level1.player);
 				}	
 			}
+
+			/*if (FlxG.keys.justPressed("Y"))
+			{
+				this.level0.switchToZombies();
+			}*/
+			
 		}
 		
 		public function gameOver(winner : Player) : void {
