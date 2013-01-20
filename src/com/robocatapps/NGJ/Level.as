@@ -203,8 +203,6 @@ package com.robocatapps.NGJ {
 					count++;
 			}
 			
-			trace('patients ' + count);
-			
 			if (Math.random() < 0.01 && count <= MAXPATIENTS) {
 				addPatient();
 			}
@@ -239,7 +237,7 @@ package com.robocatapps.NGJ {
 		
 		public function addPatient() : void {
 			var patient : Patient;
-			patient = new Patient(this, origin.x + 10 + Math.random() * 480, origin.y + 10 + Math.random() * 800);
+			patient = new Patient(this, origin.x + 10 + Math.random() * 400, origin.y + 10 + Math.random() * 700);
 			flock.add_patient(patient);
 		}
 		

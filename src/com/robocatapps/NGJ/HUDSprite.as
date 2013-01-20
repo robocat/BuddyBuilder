@@ -15,7 +15,7 @@ package com.robocatapps.NGJ {
 			this.group = group;
 			this.area = area;
 			
-			txt = new FlxText(area == 0? 200: 740, 300, 500, name);
+			txt = new FlxText(area == 0? 200: 740, y + height + 80, 500, name);
 			txt.setFormat("Heading", 75, 0xffffffff, "center", 0x000000);
 			
 			group.add(this);
