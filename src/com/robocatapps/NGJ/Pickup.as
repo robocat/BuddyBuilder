@@ -1,12 +1,15 @@
 package com.robocatapps.NGJ {
 	import org.flixel.*;
+	import flash.utils.getTimer;
 	
 	public class Pickup extends FlxSprite {
 		
+		[Embed(source="heart_drop.png")] private var heartDropSprite : Class;
 		[Embed(source="light_pickup.png")] private var lightSprite : Class;
 		[Embed(source="speed_pickup.png")] private var speedSprite : Class;
 		[Embed(source="swap_pickup.png")] private var swapSprite : Class;
 		[Embed(source="zombie_pickup.png")] private var zombieSprite : Class;
+		[Embed(source="inverted_pickup.png")] private var invertedSprite : Class;
 		
 		[Embed(source="left_leg_drop.png")] private var leftLegSprite : Class;
 		[Embed(source="right_leg_drop.png")] private var rightLegSprite : Class;
@@ -23,10 +26,12 @@ package com.robocatapps.NGJ {
 		[Embed(source="torso.mp3")] private var torsoSpeaker : Class;
 		[Embed(source="bodypart.mp3")] private var bodypartSound : Class;
 		
+		public static const DROP_HEALTH : String = "health";
 		public static const DROP_LIGHT : String = "light";
 		public static const DROP_SPEED : String = "speed";
 		public static const DROP_SWAP : String = "swap";
 		public static const DROP_ZOMBIE : String = "zombie";
+		public static const DROP_INVERTED : String = "inverted";
 		
 		public static const DROP_LEFTLEG : String = "left_leg";
 		public static const DROP_RIGHTLEG : String = "right_leg";
@@ -35,11 +40,27 @@ package com.robocatapps.NGJ {
 		public static const DROP_HEAD : String = "head";
 		public static const DROP_TORSO : String = "torso";
 		
-		public static const DROP_TYPES : Array = [DROP_ZOMBIE, DROP_SWAP, DROP_SPEED, DROP_LIGHT, DROP_LEFTLEG, DROP_RIGHTLEG, DROP_LEFTARM, DROP_RIGHTARM, DROP_HEAD, DROP_TORSO];
-		public static const DROP_NAMES : Array = ["ZOMBIE", "SWAP", "SPEED", "DARKNESS", "LEFT LEG", "RIGHT LEG", "LEFT ARM", "RIGHT ARM", "HEAD", "TORSO"];
+		public static const DROP_TYPES : Array = [DROP_ZOMBIE, DROP_INVERTED, DROP_SWAP, DROP_SPEED, DROP_LIGHT, DROP_LEFTLEG, DROP_RIGHTLEG, DROP_LEFTARM, DROP_RIGHTARM, DROP_HEAD, DROP_TORSO, DROP_HEALTH];
+		public static const DROP_NAMES : Array = ["ZOMBIE", "INVERTED", "SWAP", "SPEED", "DARKNESS", "LEFT LEG", "RIGHT LEG", "LEFT ARM", "RIGHT ARM", "HEAD", "TORSO", "HEALTH"];
 		
+		public static const STATE_DROPPED : uint = 1;
+		public static const STATE_APPLIED : uint = 2;
+		public static const STATE_EFFECTING : uint = 3;
+		public static const STATE_EXPIRED : uint = 4;
+		
+		public var player : Player;
 		public var type : String;
+		public var state : uint = Pickup.STATE_DROPPED;
 		public var sprite : Class;
+		
+		
+		private static const TICKS_PER_SECOND : uint = 24;
+		private static const COOLDOWN_IN_SECONDS : uint = 10;
+		
+		private var timer : int = -1;
+		
+		
+		
 		
 		public var timeoutCount : uint = 0;
 		public var maxCount : uint = 300;
@@ -49,16 +70,21 @@ package com.robocatapps.NGJ {
 		private var speed : uint = 0;
 		private var area : uint = 0;
 		
-		public function Pickup(x:uint, y:uint, type:String, speed:uint = 0, angle:int = 0) : void{
+		public function Pickup(x:uint, y:uint, type:String, player : Player, speed:uint = 0, angle:int = 0) : void {
 			super(x, y);
 			this.speed = speed;
 			this.angle = angle;
+			this.player = player;
+			
 			
 			area = (x > 720? 1: 0);
 			
 			this.type = type;
 			
-			if (type == DROP_LIGHT) {
+			if (type == DROP_HEALTH) {
+				loadGraphic(heartDropSprite, false, false, 44, 40, false);
+				sprite = heartDropSprite;
+			} else if (type == DROP_LIGHT) {
 				loadGraphic(lightSprite, false, false, 48, 52, false);
 				sprite = lightSprite;
 			} else if (type == DROP_SPEED) {
@@ -70,6 +96,9 @@ package com.robocatapps.NGJ {
 			} else if (type == DROP_ZOMBIE) {
 				loadGraphic(zombieSprite, false, false, 48, 52, false);
 				sprite = zombieSprite;
+			} else if (type == DROP_INVERTED) {
+				loadGraphic(invertedSprite, false, false, 48, 52, false);
+				sprite = invertedSprite;
 			} else if (type == DROP_LEFTLEG) {
 				loadGraphic(leftLegSprite, false, false, 52, 114, false);
 				sprite = leftLegSprite;
@@ -118,7 +147,8 @@ package com.robocatapps.NGJ {
 			return 	this.type != DROP_LIGHT &&
 					this.type != DROP_SPEED &&
 					this.type != DROP_SWAP &&
-					this.type != DROP_ZOMBIE;
+					this.type != DROP_ZOMBIE &&
+					this.type != DROP_INVERTED;
 		}
 		
 		public function to_body_part() : uint {
@@ -146,7 +176,9 @@ package com.robocatapps.NGJ {
 			return DROP_NAMES[DROP_TYPES.indexOf(this.type)];
 		}
 		
-		public function apply(player : Player) : void {
+		public function apply() : void {
+			this.state = STATE_APPLIED;
+			
 			if(is_body_part()){
 				var part : uint = this.to_body_part();
 				if (player.level.operation_table.can_add_to_body(part)) {
@@ -154,13 +186,18 @@ package com.robocatapps.NGJ {
 					player.level.operation_table.add_to_body(this.to_body_part());
 					announce();
 				}	
+			} else if (this.type == DROP_HEALTH) {
+				player.setHealth(4);
 			} else {
 				new HUDSprite(sprite, player.playernumber, text_for_pickup(), player.level.gameState.textLayer, false);
 				
+				var opponent : Player = player.level.getOpponent();
 				if (type == DROP_LIGHT) {
-					player.level.getOpponent().level.turnOffLights();
+					opponent.level.turnOffLights();
 				} else if(type == DROP_SWAP) {
 					player.swapWithPlayer(player.level.getOpponent());
+				} else if (type == DROP_INVERTED) {
+					opponent.invert_controls();
 				}
 			}
 		}
@@ -189,7 +226,7 @@ package com.robocatapps.NGJ {
 		override public function update():void {
 			super.update();
 			
-			if (speed > 0) {
+			if (state == STATE_DROPPED && speed > 0) {
 				speed -= 0.1;
 				x += Math.sin(angle) * speed;
 				y -= Math.cos(angle) * speed;
@@ -198,6 +235,28 @@ package com.robocatapps.NGJ {
 				y = (y > 860? 860: y < 40? 40: y);
 				
 			}
+			
+			if (state == STATE_APPLIED)
+			{
+				timer = getTimer();
+				state = STATE_EFFECTING;
+			}
+			
+				
+			if (state == STATE_EFFECTING && (getTimer() - timer) * 0.001 > COOLDOWN_IN_SECONDS) {
+				var opponent : Player = player.level.getOpponent();
+					
+				if (type == DROP_LIGHT) {
+					opponent.level.turnOnLights();
+				} else if (type == DROP_INVERTED) {
+					opponent.revert_controls();
+				}
+					
+				this.state = STATE_EXPIRED;
+			}
+				
+				
+			
 			
 			// Flash when the item is about to disappear
 			this.alpha = alpha_from_tick(maxCount - timeoutCount);

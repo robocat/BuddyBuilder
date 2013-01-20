@@ -198,43 +198,35 @@ package com.robocatapps.NGJ {
 			if (this.gameState.state != GameState.STATE_PLAYING)
 				return;
 			
-			if (this.darkOn) {
-				this.darkCounter++;
-				
-				if (this.darkCounter > this.darkMaxCounter) {
-					this.turnOnLights();
-				}
-			}
-			
+			// Count how many patients we have
 			var count : uint = 0;
 			for each (var patient : Patient in flock.patients) {
 				if (patient != null)
 					count++;
 			}
 			
+			// Make sure to only spawn MAXPATIENTS at a time
 			if (Math.random() < 0.01 && count <= MAXPATIENTS) {
 				addPatient();
 			}
 			
-			for each (var pickup : Pickup in pickups) {
-				if (pickup.timedOut) {
-					this.itemLayer.remove(pickup);
-					delete this.pickups[this.pickups.indexOf(pickup)];
-				}
-			}
+			// Throw away unused pickups
+//			for each (var pickup : Pickup in pickups) {
+//				if (pickup.timedOut && pickup.state == Pickup.STATE_EXPIRED) {
+//					this.itemLayer.remove(pickup);
+//					delete this.pickups[this.pickups.indexOf(pickup)];
+//				}
+//			}
 			
+			// Throw away corpses that are no longer visible
 			for each (var corpse : Corpse in corpses) {
 				if (corpse.gone) {
 					this.corpseLayer.remove(corpse);
 					delete corpses[corpses.indexOf(corpse)];
 				}
 			}
-			
-			//if ((light_counter++) > Math.random() * 100) {
-			//	light_counter = 0;
-			//	light.alpha = Math.random() * 0.25 + 0.25;
-			//}
 
+			// make the lighting mask follow the player
 			if(this.lightsOff) {
 				var center : FlxPoint = new FlxPoint(this.player.x + 48, this.player.y + 48);
 				this.lightsOff.set_center(center);
@@ -306,7 +298,7 @@ package com.robocatapps.NGJ {
 			if (item == null)
 				return;
 				
-			var drop : Pickup = new Pickup(x + Math.sin(player.angle) * 50, y - Math.cos(player.angle) * 50, item, Math.random() * 15 + 5, player.angle);
+			var drop : Pickup = new Pickup(x + Math.sin(player.angle) * 50, y - Math.cos(player.angle) * 50, item, player, Math.random() * 15 + 5, player.angle);
 			
 			var collision : Boolean = false;
 			for each (var obstacle : Obstacle in this.obstacles) {

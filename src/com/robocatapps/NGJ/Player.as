@@ -31,6 +31,7 @@
 		private var player_name : FlxText = null;
 		
 		private var controls_swapped : Boolean = false;
+		private var controls_inverted : Boolean = false;
 		
 		private var spikeBallNoHit : int = 0;
 		
@@ -184,7 +185,17 @@
 			if ((keys1 && FlxG.keys.pressed("RIGHT")) || (keys0 && FlxG.keys.pressed("D"))) 	go_right = true;
 			if ((keys1 && FlxG.keys.pressed("UP"))    || (keys0 && FlxG.keys.pressed("W")))		go_up = true;
 			if ((keys1 && FlxG.keys.pressed("DOWN"))  || (keys0 && FlxG.keys.pressed("S")))		go_down = true;
-			if ((keys1 && FlxG.keys.pressed("SPACE")) || (keys0 && FlxG.keys.pressed("ENTER")))	slash = true;
+			if ((keys0 && FlxG.keys.pressed("SPACE")) || (keys1 && FlxG.keys.pressed("ENTER")))	slash = true;
+			
+			if (controls_inverted) {
+				var tempLeft : Boolean = go_left;
+				go_left = go_right;
+				go_right = tempLeft;
+				
+				var tempUp : Boolean = go_up;
+				go_up = go_down;
+				go_down = tempUp; 
+			}
 
 			if (slash) {
 				if (!slash_down) {
@@ -236,8 +247,9 @@
 			
 			for each (var pickup : Pickup in level.pickups) {
 				if (FlxCollision.pixelPerfectCheck(this, pickup)) {
-					level.itemLayer.remove(pickup);
-					pickup.apply(this);
+//					level.itemLayer.remove(pickup);
+					
+					pickup.apply();
 					
 					delete level.pickups[level.pickups.indexOf(pickup)];
 					
@@ -291,6 +303,14 @@
 			
 			controls_swapped = ! controls_swapped;
 			other_player.controls_swapped = ! other_player.controls_swapped;
+		}
+		
+		public function invert_controls() : void {
+			this.controls_inverted = true;
+		}
+		
+		public function revert_controls() : void {
+			this.controls_inverted = false;
 		}
 	}
 }
