@@ -85,7 +85,10 @@
 					
 					level.enemyLayer.remove(npc);
 					delete level.flock.patients[level.flock.patients.indexOf(npc)];
-					level.addDrop();
+					
+					if (Math.random() <= 0.5)
+						level.addDrop();
+					
 					didHit = true;
 				}
 			}

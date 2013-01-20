@@ -1,11 +1,14 @@
 package com.robocatapps.NGJ {
-	import flash.sensors.Accelerometer;
-	import org.flixel.FlxPoint;
-	import org.flixel.FlxSprite;
+	import org.flixel.*;
 	
 	public class Pickup extends FlxSprite {
 		
-		[Embed(source="hitlerkage.png")] private var hitlerkageSprite : Class;
+		[Embed(source="light_pickup.png")] private var lightSprite : Class;
+		[Embed(source="speed_pickup.png")] private var swapSprite : Class;
+		[Embed(source="swap_pickup.png")] private var speedSprite : Class;
+		[Embed(source="zombie_pickup.png")] private var zombieSprite : Class;
+		
+		
 		[Embed(source="left_leg_drop.png")] private var leftLegSprite : Class;
 		[Embed(source="right_leg_drop.png")] private var rightLegSprite : Class;
 		[Embed(source="left_arm_drop.png")] private var leftArmSprite : Class;
@@ -13,7 +16,19 @@ package com.robocatapps.NGJ {
 		[Embed(source="head_drop.png")] private var headSprite : Class;
 		[Embed(source="torso_drop.png")] private var torsoSprite : Class;
 		
-		public static const DROP_LIGHT : String = "hitlerkage";
+		[Embed(source="head.mp3")] private var headSpeaker : Class;
+		[Embed(source="left arm.mp3")] private var leftarmSpeaker : Class;
+		[Embed(source="left leg.mp3")] private var leftlegSpeaker : Class;
+		[Embed(source="right arm.mp3")] private var rightarmSpeaker : Class;
+		[Embed(source="right leg.mp3")] private var rightlegSpeaker : Class;
+		[Embed(source="torso.mp3")] private var torsoSpeaker : Class;
+		[Embed(source="bodypart.mp3")] private var bodypartSound : Class;
+		
+		public static const DROP_LIGHT : String = "light";
+		public static const DROP_SPEED : String = "speed";
+		public static const DROP_SWAP : String = "swap";
+		public static const DROP_ZOMBIE : String = "zombie";
+		
 		public static const DROP_LEFTLEG : String = "left_leg";
 		public static const DROP_RIGHTLEG : String = "right_leg";
 		public static const DROP_LEFTARM : String = "left_arm";
@@ -21,8 +36,8 @@ package com.robocatapps.NGJ {
 		public static const DROP_HEAD : String = "head";
 		public static const DROP_TORSO : String = "torso";
 		
-		public static const DROP_TYPES : Array = [DROP_LIGHT, DROP_LEFTLEG, DROP_RIGHTLEG, DROP_LEFTARM, DROP_RIGHTARM, DROP_HEAD, DROP_TORSO];
-		public static const DROP_NAMES : Array = ["FLASHLIGHT", "LEFT LEG", "RIGHT LEG", "LEFT ARM", "RIGHT ARM", "HEAD", "TORSO"];
+		public static const DROP_TYPES : Array = [DROP_ZOMBIE, DROP_SWAP, DROP_SPEED, DROP_LIGHT, DROP_LEFTLEG, DROP_RIGHTLEG, DROP_LEFTARM, DROP_RIGHTARM, DROP_HEAD, DROP_TORSO];
+		public static const DROP_NAMES : Array = ["ZOMBIE", "SWAP", "SPEED", "DARKNESS", "LEFT LEG", "RIGHT LEG", "LEFT ARM", "RIGHT ARM", "HEAD", "TORSO"];
 		
 		public var type : String;
 		public var sprite : Class;
@@ -45,11 +60,17 @@ package com.robocatapps.NGJ {
 			this.type = type;
 			
 			if (type == DROP_LIGHT) {
-				loadGraphic(hitlerkageSprite, false, false, 22, 22, false);
-				sprite = hitlerkageSprite;
-				addAnimation("spin", [0, 1, 2, 3], 10, true);
-				play("spin");
-				scale = new FlxPoint(2, 2);
+				loadGraphic(lightSprite, false, false, 48, 52, false);
+				sprite = lightSprite;
+			} else if (type == DROP_SPEED) {
+				loadGraphic(speedSprite, false, false, 48, 52, false);
+				sprite = speedSprite;
+			} else if (type == DROP_SWAP) {
+				loadGraphic(swapSprite, false, false, 48, 52, false);
+				sprite = swapSprite;
+			} else if (type == DROP_ZOMBIE) {
+				loadGraphic(zombieSprite, false, false, 48, 52, false);
+				sprite = zombieSprite;
 			} else if (type == DROP_LEFTLEG) {
 				loadGraphic(leftLegSprite, false, false, 52, 114, false);
 				sprite = leftLegSprite;
@@ -74,8 +95,31 @@ package com.robocatapps.NGJ {
 			
 		}
 		
+		public function announce() : void {
+			if (type == DROP_LEFTLEG) {
+				FlxG.play(leftlegSpeaker);
+			} else if (type == DROP_RIGHTLEG) {
+				FlxG.play(rightlegSpeaker);
+			} else if (type == DROP_LEFTARM) {
+				FlxG.play(leftarmSpeaker);
+			} else if (type == DROP_RIGHTARM) {
+				FlxG.play(rightarmSpeaker);
+			} else if (type == DROP_HEAD) {
+				FlxG.play(headSpeaker);
+			} else if (type == DROP_TORSO) {
+				FlxG.play(torsoSpeaker);
+			} else {
+				return;
+			}
+			
+			FlxG.play(bodypartSound);
+		}
+		
 		public function is_body_part() : Boolean {
-			return this.type != DROP_LIGHT;
+			return 	this.type != DROP_LIGHT &&
+					this.type != DROP_SPEED &&
+					this.type != DROP_SWAP &&
+					this.type != DROP_ZOMBIE;
 		}
 		
 		public function to_body_part() : uint {
@@ -111,6 +155,7 @@ package com.robocatapps.NGJ {
 				if (player.level.operation_table.can_add_to_body(part)) {
 					new HUDSprite(sprite, player.playernumber, text_for_pickup(), player.level.gameState.textLayer);
 					player.level.operation_table.add_to_body(this.to_body_part());
+					announce();
 				}
 				
 				
