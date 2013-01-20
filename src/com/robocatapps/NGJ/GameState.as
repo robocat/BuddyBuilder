@@ -355,10 +355,10 @@ package com.robocatapps.NGJ {
 				}	
 			}
 
-			if (FlxG.keys.justPressed("Y"))
+			/*if (FlxG.keys.justPressed("Y"))
 			{
 				this.level0.switchToZombies();
-			}
+			}*/
 			
 		}
 		
