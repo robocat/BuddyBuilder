@@ -130,7 +130,7 @@ package com.robocatapps.NGJ {
 		}
 		
 		private function addObstacles():void {
-			var level : int = Math.random() * 2;
+			var level : int = Math.random() * 3;
 			
 			if (level == 0) {
 				this.obstacles.push(new Obstacle(this.origin.x + 40, this.origin.y + 320, Obstacle.SOFA, 180));
@@ -150,7 +150,7 @@ package com.robocatapps.NGJ {
 				this.obstacles.push(new Obstacle(this.origin.x + 350, this.origin.y + 250, Obstacle.BLOOD_TABLE, 0));
 				this.obstacles.push(new Obstacle(this.origin.x + 350, this.origin.y + 530, Obstacle.BLOOD_TABLE, 0));
 				this.obstacles.push(new Obstacle(this.origin.x + 350, this.origin.y + 600, Obstacle.BLOOD_TABLE, 0));
-			} else if (level == 2) {
+			} else if (level == 2 || level == 3) {
 				this.obstacles.push(new Obstacle(this.origin.x + 200, this.origin.y + 130, Obstacle.DESK, 0));
 				this.obstacles.push(new Obstacle(this.origin.x + 200, this.origin.y + 280, Obstacle.DESK, 0));
 				this.obstacles.push(new Obstacle(this.origin.x + 200, this.origin.y + 430, Obstacle.DESK, 0));
