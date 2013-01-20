@@ -82,7 +82,7 @@ package com.robocatapps.NGJ {
 		public function Pickup(x:uint, y:uint, type:String, player : Player, speed:uint = 0, angle:int = 0) : void {
 			super(x, y);
 			this.speed = speed;
-			this.angle = angle;
+			this.angle = 0;
 			this.player = player;
 			
 			
