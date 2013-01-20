@@ -82,9 +82,9 @@ package com.robocatapps.NGJ {
 			
 			add(backgroundLayer);
 			add(corpseLayer);
+			add(bloodLayer);
 			add(itemLayer);
 			add(obstacleLayer);
-			add(bloodLayer);
 			add(enemyLayer);
 			add(lightLayer);
 			add(playerLayer);
