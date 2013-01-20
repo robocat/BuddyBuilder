@@ -29,6 +29,14 @@ package com.robocatapps.NGJ {
 			previous_velocity = new FlxPoint();
         }
 		
+		public function patient_count() : uint {
+			var count : uint = 0;
+			for each (var patient : Patient in this.patients) {
+				if (patient != null)
+					count++;
+			}
+			return count;
+		}
 		
 		public function add_patient(patient:Patient):void {
             // Create a clone of the object & destroy the original.
@@ -99,10 +107,6 @@ package com.robocatapps.NGJ {
 			
 			for each (var patient : Patient in patients) {
 				
-//				if (patient.animationState == Patient.RUN) {
-//					continue;
-//				}
-				
 				var distance:Number = Math.abs(
                             Math.sqrt( Math.pow(patient.destination.x - patient.x, 2) + Math.pow(patient.destination.y - patient.y, 2) )
                         )
@@ -127,8 +131,8 @@ package com.robocatapps.NGJ {
 				{
 					movement(patient, vel_x, vel_y);
 					
-					previous_velocity.x = patient.velocity.x;
-					previous_velocity.y = patient.velocity.y;			
+					previous_velocity.x = (patient.animationState == Patient.RUN) ? patient.velocity.x * - 100 : patient.velocity.x;
+					previous_velocity.y = (patient.animationState == Patient.RUN) ? patient.velocity.y * - 100 : patient.velocity.y;
 				}
 			}
 			
@@ -240,6 +244,7 @@ package com.robocatapps.NGJ {
                 if (distance < max_distance) {
                     patient.velocity.x *= amount;
                     patient.velocity.y *= amount;
+					patient.new_distination();
                 }
             }
 		}

@@ -71,17 +71,19 @@
 				level.gameState.p1heart2.alpha = (health >= 2? 1: 0);
 				level.gameState.p1heart3.alpha = (health >= 3? 1: 0);
 				level.gameState.p1heart4.alpha = (health >= 4? 1: 0);
+				level.flash.alpha = 1;
+				if (health == 0) level.gameState.gameOver(this);
 			} else {
 				level.gameState.p2heart1.alpha = (health >= 1? 1: 0);
 				level.gameState.p2heart2.alpha = (health >= 2? 1: 0);
 				level.gameState.p2heart3.alpha = (health >= 3? 1: 0);
 				level.gameState.p2heart4.alpha = (health >= 4? 1: 0);
+				level.flash.alpha = 1;
+				if (health == 0) level.gameState.gameOver(level.gameState.getOpponnent(this));
 			}
 		}
 		
 		private function animationCallback(name:String, frame:uint, findex:uint) : void {
-			trace(name);
-			trace(frame);
 			if (name == "slash" && frame == 8) {
 				slashing = false;
 			} else if (name == "slash" && frame == 4) {
@@ -187,7 +189,7 @@
 			if ((keys1 && FlxG.keys.pressed("RIGHT")) || (keys0 && FlxG.keys.pressed("D"))) 	go_right = true;
 			if ((keys1 && FlxG.keys.pressed("UP"))    || (keys0 && FlxG.keys.pressed("W")))		go_up = true;
 			if ((keys1 && FlxG.keys.pressed("DOWN"))  || (keys0 && FlxG.keys.pressed("S")))		go_down = true;
-			if ((keys1 && FlxG.keys.pressed("SPACE")) || (keys0 && FlxG.keys.pressed("ENTER")))	slash = true;
+			if ((keys0 && FlxG.keys.pressed("SPACE")) || (keys1 && FlxG.keys.pressed("ENTER")))	slash = true;
 			
 			if (controls_inverted) {
 				var tempLeft : Boolean = go_left;

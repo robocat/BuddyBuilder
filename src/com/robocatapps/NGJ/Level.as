@@ -40,6 +40,7 @@ package com.robocatapps.NGJ {
 		public var lightLayer : FlxGroup;
 		
 		public var flock:Flock;
+		public var zombieFlock:ZombieFlock;
 
 		
 		// Layout
@@ -57,6 +58,10 @@ package com.robocatapps.NGJ {
 		private var darkOn : Boolean = false;
 		
 		private var lightsOff : LightsOff = null;
+		
+		private var levelAppearCounter : uint = 0;
+		
+		public var flash : FlxSprite;
 		
 		public function Level(player: Player, origin : FlxPoint, operation_table : OperationTable, state : GameState):void {
 			this.pickups = new Array();
@@ -113,6 +118,7 @@ package com.robocatapps.NGJ {
 			this.playerLayer.add(this.player);
 			
 			flock = new Flock(enemyLayer, player);
+			zombieFlock = new ZombieFlock(enemyLayer, player);
 
 
 			if(this.player.playernumber == 0) {
@@ -129,6 +135,14 @@ package com.robocatapps.NGJ {
 				this.lightsOff.set_center(new FlxPoint(740, 49));
 				this.lightsOff.visible = false;
 			}
+			
+			this.levelAppearCounter = 0;
+			
+			flash = new FlxSprite(origin.x, origin.y);
+			flash.makeGraphic(500, 820);
+			flash.color = 0xff0000;
+			flash.alpha = 0;
+			add(flash);
 		}
 		
 		private function addObstacles():void {
@@ -190,20 +204,22 @@ package com.robocatapps.NGJ {
 			super.update();
 			
 			flock.update();
+			zombieFlock.update();
+			
+			if (flash.alpha > 0) {
+				flash.alpha -= 0.05;
+			} else flash.alpha = 0;
 			
 			if (this.gameState.state != GameState.STATE_PLAYING)
 				return;
 			
 			// Count how many patients we have
-			var count : uint = 0;
-			for each (var patient : Patient in flock.patients) {
-				if (patient != null)
-					count++;
-			}
+			var count : uint = flock.patient_count();
 			
 			// Make sure to only spawn MAXPATIENTS at a time
 			if (Math.random() < 0.01 && count <= MAXPATIENTS) {
 				addPatient();
+				//addZombie();
 			}
 			
 			// Throw away unused pickups
@@ -227,6 +243,29 @@ package com.robocatapps.NGJ {
 				var center : FlxPoint = new FlxPoint(this.player.x + 48, this.player.y + 48);
 				this.lightsOff.set_center(center);
 			}
+
+			// Flicker the light when the level starts			
+			if(this.levelAppearCounter < 1000) {
+				if(this.levelAppearCounter == 0) {
+					this.turnOffLights();
+				}
+				if(this.levelAppearCounter == 90) {
+					this.turnOnLights();
+				}
+				if(this.levelAppearCounter == 100) {
+					this.turnOffLights();
+				}
+				if(this.levelAppearCounter == 190) {
+					this.turnOnLights();
+				}
+				if(this.levelAppearCounter == 200) {
+					this.turnOffLights();
+				}
+				if(this.levelAppearCounter == 300) {
+					this.turnOnLights();
+				}
+				this.levelAppearCounter++;
+			}
 		}
 		
 		public function getOpponent() : Player {
@@ -235,8 +274,8 @@ package com.robocatapps.NGJ {
 		
 		public function collideObstacle(x : Number, y : Number) : Boolean {
 			for each (var obstacle : Obstacle in this.obstacles) {
-				if (x + width > obstacle.x && x < obstacle.x + obstacle.width
-					&& y + height > obstacle.y && y < obstacle.y + obstacle.height)
+				if (x + 80 > obstacle.x && x < obstacle.x + obstacle.width + 80
+					&& y + 80 > obstacle.y && y < obstacle.y + obstacle.height + 80)
 				{
 					return true;
 				}
@@ -245,8 +284,31 @@ package com.robocatapps.NGJ {
 			return false;
 		}
 		
+		
+		public function randomRange(max:Number, min:Number = 0):Number
+		{
+     		return Math.floor(Math.random() * (max - min)) + min;
+		}
+		
 		public function addPatient() : void {
 			var patient : Patient;
+			
+			var x : Number = randomRange(origin.x + 400, origin.x + 80);
+			var y : Number = randomRange(origin.y + 700, origin.y + 80);
+			
+			while (collideObstacle(x, y) == true) {
+				x = randomRange(origin.x + 400, origin.x + 80);
+				y = randomRange(origin.y + 700, origin.y + 80);
+			}
+			
+			trace("x,y", x, y);
+			
+			patient = new Patient(this, x, y);
+			flock.add_patient(patient);
+		}
+		
+		public function addZombie() : void {
+			var zombie : Zombie;
 			
 			var x : Number = origin.x + 10 + Math.random() * 400;
 			var y : Number = origin.y + 10 + Math.random() * 700;
@@ -256,8 +318,8 @@ package com.robocatapps.NGJ {
 				y = origin.y + 10 + Math.random() * 700;
 			}
 			
-			patient = new Patient(this, x, y);
-			flock.add_patient(patient);
+			zombie = new Zombie(this, x, y);
+			zombieFlock.add_zombie(zombie);
 		}
 		
 		public function addDrop(x : uint, y : uint) : void {
