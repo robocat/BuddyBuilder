@@ -78,8 +78,6 @@
 		}
 		
 		private function animationCallback(name:String, frame:uint, findex:uint) : void {
-			trace(name);
-			trace(frame);
 			if (name == "slash" && frame == 8) {
 				slashing = false;
 			} else if (name == "slash" && frame == 4) {
