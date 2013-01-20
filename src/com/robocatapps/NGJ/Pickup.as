@@ -210,23 +210,27 @@ package com.robocatapps.NGJ {
 			} else if (this.type == DROP_HEALTH) {
 				player.setHealth(4);
 			} else {
-				new HUDSprite(sprite, player.playernumber, text_for_pickup(), player.level.gameState.textLayer, false);
-				
 				var opponent : Player = player.level.getOpponent();
 				
 				if (type == DROP_LIGHT) {
+					new HUDSprite(sprite, player.level.gameState.getOpponnent(player).playernumber, text_for_pickup(), player.level.gameState.textLayer, false);
 					opponent.level.turnOffLights();
 					opponent.effects.push(this);
 				} else if (type == DROP_SWAP) {
+					new HUDSprite(sprite, player.playernumber, text_for_pickup(), player.level.gameState.textLayer, false);
+					new HUDSprite(sprite, player.level.gameState.getOpponnent(player).playernumber, text_for_pickup(), player.level.gameState.textLayer, false);
 					player.swapWithPlayer(player.level.getOpponent());
 				} else if (type == DROP_INVERTED) {
+					new HUDSprite(sprite, player.level.gameState.getOpponnent(player).playernumber, text_for_pickup(), player.level.gameState.textLayer, false);
 					opponent.invert_controls();
 					opponent.effects.push(this);
 				} else if (type == DROP_DEATH) {
+					new HUDSprite(sprite, player.level.gameState.getOpponnent(player).playernumber, text_for_pickup(), player.level.gameState.textLayer, false);
 					for each (var patient : Patient in opponent.level.flock.patients) {
 						opponent.killPatient(patient, false);
 					}
 				} else if (type == DROP_HORDE) {
+					new HUDSprite(sprite, player.level.gameState.getOpponnent(player).playernumber, text_for_pickup(), player.level.gameState.textLayer, false);
 					opponent.level.horde();
 				}
 
