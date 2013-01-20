@@ -25,6 +25,8 @@ package com.robocatapps.NGJ {
 		[Embed(source="right leg.mp3")] private var rightlegSpeaker : Class;
 		[Embed(source="torso.mp3")] private var torsoSpeaker : Class;
 		[Embed(source="bodypart.mp3")] private var bodypartSound : Class;
+		[Embed(source="darkness.mp3")] private var darknessSpeaker : Class;
+		[Embed(source="health pickup.mp3")] private var healthSpeaker : Class;
 		
 		public static const DROP_HEALTH : String = "health";
 		public static const DROP_LIGHT : String = "light";
@@ -179,6 +181,7 @@ package com.robocatapps.NGJ {
 		
 		public function apply() : void {
 			this.state = STATE_APPLIED;
+			this.alpha = 0;
 			
 			if(is_body_part()){
 				var part : uint = this.to_body_part();
@@ -193,6 +196,8 @@ package com.robocatapps.NGJ {
 				new HUDSprite(sprite, player.playernumber, text_for_pickup(), player.level.gameState.textLayer, false);
 				
 				var opponent : Player = player.level.getOpponent();
+				opponent.effects.push(this);
+				
 				if (type == DROP_LIGHT) {
 					opponent.level.turnOffLights();
 				} else if(type == DROP_SWAP) {
@@ -200,10 +205,19 @@ package com.robocatapps.NGJ {
 				} else if (type == DROP_INVERTED) {
 					opponent.invert_controls();
 				}
+				
+				if (type == DROP_LIGHT) {
+					FlxG.play(darknessSpeaker);
+				} else if (type == DROP_HEALTH) {
+					FlxG.play(healthSpeaker);
+				}
 			}
 		}
 
 		private function alpha_from_tick(tick : uint) : Number {
+			if (this.state != STATE_DROPPED)
+				return 0;
+			
 			if(tick < 2) return 0.2;
 			if(tick < 5) return 0.3;
 			if(tick < 8) return 0.8;
@@ -222,6 +236,10 @@ package com.robocatapps.NGJ {
 			if(tick < 170) return 1.0;
 			if(tick < 175) return 0.8;
 			return 1.0;
+		}
+		
+		public function timerInSeconds() : int {
+			return COOLDOWN_IN_SECONDS - (getTimer() - timer) * 0.001;
 		}
 		
 		override public function update():void {
@@ -254,6 +272,10 @@ package com.robocatapps.NGJ {
 				}
 					
 				this.state = STATE_EXPIRED;
+			}
+			
+			if (state == STATE_EXPIRED) {
+				player.level.itemLayer.remove(this);
 			}
 				
 				
