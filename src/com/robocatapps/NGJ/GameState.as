@@ -220,7 +220,7 @@ package com.robocatapps.NGJ {
 			}
 		}
 		
-		private function gameOver(winner : Player) : void {
+		public function gameOver(winner : Player) : void {
 			this.state = STATE_GAMEOVER;
 			
 			this.overlay.alpha = 0.5;
