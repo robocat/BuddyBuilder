@@ -24,6 +24,7 @@ package com.robocatapps.NGJ {
 			super.update(); // calls update on everything you added to the game loop
  
 			if (FlxG.keys.justPressed("SPACE")) {
+				FlxG.music.stop();
 				FlxG.switchState(new GameState());
 			}
  
