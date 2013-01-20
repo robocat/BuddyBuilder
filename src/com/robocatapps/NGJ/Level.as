@@ -23,6 +23,7 @@ package com.robocatapps.NGJ {
 		public var pickups : Array;
 		public var obstacles : Array;
 		public var corpses : Array;
+		public var spikeballs : Array;
 		
 		public var gameState : GameState;
 
@@ -60,6 +61,7 @@ package com.robocatapps.NGJ {
 		public function Level(player: Player, origin : FlxPoint, operation_table : OperationTable, state : GameState):void {
 			this.pickups = new Array();
 			this.obstacles = new Array();
+			this.spikeballs = new Array();
 			
 			this.origin = origin;
 			this.gameState = state;
