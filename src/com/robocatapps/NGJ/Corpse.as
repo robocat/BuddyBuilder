@@ -22,10 +22,16 @@ package com.robocatapps.NGJ {
 				return 0.0;
 			
 			if(tick < 435) return 0.8;
+			if(tick < 440) return 0.7;
 			if(tick < 445) return 0.6;
+			if(tick < 450) return 0.5;
 			if(tick < 455) return 0.4;
+			if(tick < 460) return 0.3;
 			if(tick < 465) return 0.2;
+			if(tick < 470) return 0.1;
 			if(tick < 475) return 0.0;
+			if(tick < 476) return 0.0;
+			if(tick < 477) return 0.0;
 			
 			return 1.0;
 		}

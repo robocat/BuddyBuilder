@@ -30,6 +30,7 @@ package com.robocatapps.NGJ {
 		
 		// Layers
 		public var backgroundLayer : FlxGroup;
+		public var corpseLayer : FlxGroup;
 		public var enemyLayer : FlxGroup;
 		public var obstacleLayer : FlxGroup;
 		public var bloodLayer : FlxGroup;
@@ -70,6 +71,7 @@ package com.robocatapps.NGJ {
 			
 			
 			backgroundLayer = new FlxGroup();
+			corpseLayer = new FlxGroup();
 			enemyLayer  = new FlxGroup();
 			obstacleLayer = new FlxGroup();
 			bloodLayer = new FlxGroup();
@@ -79,6 +81,7 @@ package com.robocatapps.NGJ {
 			
 			
 			add(backgroundLayer);
+			add(corpseLayer);
 			add(enemyLayer);
 			add(itemLayer);
 			add(obstacleLayer);
@@ -216,6 +219,7 @@ package com.robocatapps.NGJ {
 			
 			for each (var corpse : Corpse in corpses) {
 				if (corpse.gone) {
+					this.corpseLayer.remove(corpse);
 					delete corpses[corpses.indexOf(corpse)];
 				}
 			}
