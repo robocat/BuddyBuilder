@@ -74,14 +74,22 @@
 				level.gameState.p1heart3.alpha = (health >= 3? 1: 0);
 				level.gameState.p1heart4.alpha = (health >= 4? 1: 0);
 				level.flash.alpha = 1;
-				if (health == 0) level.gameState.gameOver(this);
+				if (health == 0) level.gameState.gameOver(level.gameState.player0);
+				
+				if (health == 0) for (var i : int = 0; i < Math.random() * 50; i++) {
+					level.bloodLayer.add(new Blood(level.gameState.player0.x, level.gameState.player0.y, level.bloodLayer, Math.random() * 30 + 10));
+				}
 			} else {
 				level.gameState.p2heart1.alpha = (health >= 1? 1: 0);
 				level.gameState.p2heart2.alpha = (health >= 2? 1: 0);
 				level.gameState.p2heart3.alpha = (health >= 3? 1: 0);
 				level.gameState.p2heart4.alpha = (health >= 4? 1: 0);
 				level.flash.alpha = 1;
-				if (health == 0) level.gameState.gameOver(level.gameState.getOpponnent(this));
+				if (health == 0) level.gameState.gameOver(level.gameState.player1);
+				
+				if (health == 0) for (var i : int = 0; i < Math.random() * 50; i++) {
+					level.bloodLayer.add(new Blood(level.gameState.player1.x, level.gameState.player1.y, level.bloodLayer, Math.random() * 30 + 10));
+				}
 			}
 		}
 		
