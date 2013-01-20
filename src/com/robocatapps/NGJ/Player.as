@@ -17,7 +17,7 @@
 		[Embed(source="patient_dead.png")] private var deadSprite : Class;
 		[Embed(source="swing.mp3")] private var swoosh : Class;
 		[Embed(source="spikehit.mp3")] private var spikeRemove : Class;
-	//	[Embed(source="doctor_hit.mp3")] private var dochit : Class;
+		[Embed(source="doctor_hit.mp3")] private var dochit : Class;
 		
 		public var level : Level;
 		
@@ -354,7 +354,7 @@
 					color = 0xfd0000;
 					setHealth(hp - 1);
 					FlxG.play(groundhit1);
-				//	FlxG.play(dochit);
+					FlxG.play(dochit);
 					spikeBallNoHit = 50;
 					
 					for (var i : int = 0; i < Math.random() * 5; i++) {
