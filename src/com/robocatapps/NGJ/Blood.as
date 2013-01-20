@@ -52,7 +52,7 @@ package com.robocatapps.NGJ {
 			y -= Math.cos(angle) * speed;
 			
 			var area : int = (x > 720? 1: 0);
-			x = (area == 0? x + width > 700? 700 - width: x < 200? 200: x: x + width > 1240? 1240 - width: x < 740? 740: x);
+			x = (area == 0? x + width > 660? 660 - width: x < 240? 240: x: x + width > 1200? 1200 - width: x < 780? 780: x);
 			y = (y + height > 840? 840 - height: y < 50? 50: y);
 		}
 	}
