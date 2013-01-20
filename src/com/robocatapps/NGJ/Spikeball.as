@@ -35,6 +35,10 @@ package com.robocatapps.NGJ {
 			} else {
 				speed = 0;
 			}
+			
+			var area : int = (x > 720? 1: 0);
+			x = (area == 0? x > 700? 700: x < 200? 200: x: x > 1240? 1240: x < 740? 740: x);
+			y = (y > 860? 860: y < 40? 40: y);
 		}
 	}
 }
