@@ -47,7 +47,7 @@ package com.robocatapps.NGJ {
 //                seek(new FlxPoint(player.x, player.y), player_seek_strength);
 //            }
 
-			flee(player.origin);
+//			flee(new FlxPoint(player.x, player.y), -4);
         }
 		
 		
@@ -98,6 +98,11 @@ package com.robocatapps.NGJ {
 //            }
 			
 			for each (var patient : Patient in patients) {
+				
+//				if (patient.animationState == Patient.RUN) {
+//					continue;
+//				}
+				
 				var distance:Number = Math.abs(
                             Math.sqrt( Math.pow(patient.destination.x - patient.x, 2) + Math.pow(patient.destination.y - patient.y, 2) )
                         )
@@ -222,17 +227,15 @@ package com.robocatapps.NGJ {
 		}
 		
 		
-		public function flee(target:FlxPoint, amount:Number = -10, max_distance:uint = 100):void {
+		public function flee(target:FlxPoint, amount:Number = -2, max_distance:uint = 100):void {
             for each (var patient : Patient in patients) {
                 
                 var distance:Number = Math.abs(
                     Math.sqrt( Math.pow(target.x - patient.x, 2) + Math.pow(target.y - patient.y, 2) )
                 );
 				
-				if (distance < 100) {
-					trace("distance");
-					trace(distance);
-				}
+				trace("distance");
+				trace(distance);
 
                 if (distance < max_distance) {
                     patient.velocity.x *= amount;

@@ -23,13 +23,13 @@ package com.robocatapps.NGJ {
 		
 		
 		// State
-		private static const STAND   : uint = 0;
-		private static const WALK    : uint = 1;
-		private static const RUN     : uint = 2;
+		public static const STAND   : uint = 0;
+		public static const WALK    : uint = 1;
+		public static const RUN     : uint = 2;
 		
 		
 		// State
-		private var animationState : uint;
+		public var animationState : uint;
 		
 		[Embed(source="patient.png")] private var sprite : Class;
 		
@@ -70,31 +70,33 @@ package com.robocatapps.NGJ {
 //			}
 			
 			
-			if (Math.abs(velocity.x) == STAND_VELOCITY) // && Math.abs(velocity.y) == STAND_VELOCITY
-			{
-				play("stand");
-				animationState = STAND;
+			if (animationState != RUN) {
+				if (Math.abs(velocity.x) == STAND_VELOCITY) // && Math.abs(velocity.y) == STAND_VELOCITY
+				{
+					play("stand");
+					animationState = STAND;
+				}
+				else if (Math.abs(velocity.x) == WALK_VELOCITY) //  && Math.abs(velocity.y) == WALK_VELOCITY
+				{
+					play("walk");
+					animationState = WALK;
+				}
+				else if (Math.abs(velocity.x) == RUN_VELOCITY) //  && Math.abs(velocity.y) == RUN_VELOCITY
+				{
+					play("run");
+					animationState = RUN;
+				}
 			}
-			else if (Math.abs(velocity.x) == WALK_VELOCITY) //  && Math.abs(velocity.y) == WALK_VELOCITY
-			{
-				play("walk");
-				animationState = WALK;
+			else {
+				timeoutCount++;
+				if (animationState == RUN && timeoutCount >= 200) {
+					timeoutCount = 0;
+					velocity.x /= 2;
+					velocity.y /= 2;
+					play("walk");
+					animationState = WALK;
+				}
 			}
-			else if (Math.abs(velocity.x) == RUN_VELOCITY) //  && Math.abs(velocity.y) == RUN_VELOCITY
-			{
-				play("run");
-				animationState = RUN;
-			}
-			
-			
-//			timeoutCount++;
-//			if (animationState == RUN && timeoutCount >= 200) {
-//				timeoutCount = 0;
-//				velocity.x /= 2;
-//				velocity.y /= 2;
-//				play("walk");
-//				animationState = WALK;
-//			}
 			
 			
 //			var obstacle : Obstacle;
