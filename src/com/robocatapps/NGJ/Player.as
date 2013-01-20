@@ -184,7 +184,7 @@
 			if ((keys1 && FlxG.keys.pressed("RIGHT")) || (keys0 && FlxG.keys.pressed("D"))) 	go_right = true;
 			if ((keys1 && FlxG.keys.pressed("UP"))    || (keys0 && FlxG.keys.pressed("W")))		go_up = true;
 			if ((keys1 && FlxG.keys.pressed("DOWN"))  || (keys0 && FlxG.keys.pressed("S")))		go_down = true;
-			if ((keys1 && FlxG.keys.pressed("SPACE")) || (keys0 && FlxG.keys.pressed("ENTER")))	slash = true;
+			if ((keys0 && FlxG.keys.pressed("SPACE")) || (keys1 && FlxG.keys.pressed("ENTER")))	slash = true;
 
 			if (slash) {
 				if (!slash_down) {

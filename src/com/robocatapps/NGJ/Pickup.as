@@ -3,6 +3,7 @@ package com.robocatapps.NGJ {
 	
 	public class Pickup extends FlxSprite {
 		
+		[Embed(source="heart_drop.png")] private var heartDropSprite : Class;
 		[Embed(source="light_pickup.png")] private var lightSprite : Class;
 		[Embed(source="speed_pickup.png")] private var speedSprite : Class;
 		[Embed(source="swap_pickup.png")] private var swapSprite : Class;
@@ -23,6 +24,7 @@ package com.robocatapps.NGJ {
 		[Embed(source="torso.mp3")] private var torsoSpeaker : Class;
 		[Embed(source="bodypart.mp3")] private var bodypartSound : Class;
 		
+		public static const DROP_HEALTH : String = "health";
 		public static const DROP_LIGHT : String = "light";
 		public static const DROP_SPEED : String = "speed";
 		public static const DROP_SWAP : String = "swap";
@@ -35,8 +37,8 @@ package com.robocatapps.NGJ {
 		public static const DROP_HEAD : String = "head";
 		public static const DROP_TORSO : String = "torso";
 		
-		public static const DROP_TYPES : Array = [DROP_ZOMBIE, DROP_SWAP, DROP_SPEED, DROP_LIGHT, DROP_LEFTLEG, DROP_RIGHTLEG, DROP_LEFTARM, DROP_RIGHTARM, DROP_HEAD, DROP_TORSO];
-		public static const DROP_NAMES : Array = ["ZOMBIE", "SWAP", "SPEED", "DARKNESS", "LEFT LEG", "RIGHT LEG", "LEFT ARM", "RIGHT ARM", "HEAD", "TORSO"];
+		public static const DROP_TYPES : Array = [DROP_ZOMBIE, DROP_SWAP, DROP_SPEED, DROP_LIGHT, DROP_LEFTLEG, DROP_RIGHTLEG, DROP_LEFTARM, DROP_RIGHTARM, DROP_HEAD, DROP_TORSO, DROP_HEALTH];
+		public static const DROP_NAMES : Array = ["ZOMBIE", "SWAP", "SPEED", "DARKNESS", "LEFT LEG", "RIGHT LEG", "LEFT ARM", "RIGHT ARM", "HEAD", "TORSO", "HEALTH"];
 		
 		public var type : String;
 		public var sprite : Class;
@@ -58,7 +60,10 @@ package com.robocatapps.NGJ {
 			
 			this.type = type;
 			
-			if (type == DROP_LIGHT) {
+			if (type == DROP_HEALTH) {
+				loadGraphic(heartDropSprite, false, false, 44, 40, false);
+				sprite = heartDropSprite;
+			} else if (type == DROP_LIGHT) {
 				loadGraphic(lightSprite, false, false, 48, 52, false);
 				sprite = lightSprite;
 			} else if (type == DROP_SPEED) {
@@ -154,6 +159,8 @@ package com.robocatapps.NGJ {
 					player.level.operation_table.add_to_body(this.to_body_part());
 					announce();
 				}	
+			} else if (this.type == DROP_HEALTH) {
+				player.setHealth(4);
 			} else {
 				new HUDSprite(sprite, player.playernumber, text_for_pickup(), player.level.gameState.textLayer, false);
 				
