@@ -8,7 +8,7 @@ package com.robocatapps.NGJ {
 		[Embed(source="font_subtext.ttf", fontFamily="Subtext", embedAsCFF="false")] public var fontSubtext:String;
 		
 		public function NGJ() {
-			super(1440, 900, MenuState, 0.75);
+			super(1440, 900, MenuState);
 			
 			FlxG.mouse.show();
 		}
