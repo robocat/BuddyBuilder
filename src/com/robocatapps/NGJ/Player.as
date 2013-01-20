@@ -85,6 +85,9 @@
 						level.bloodLayer.add(new Blood(npc.x, npc.y));
 					}
 					
+					// Flee
+					level.flock.flee(new FlxPoint(npc.x, npc.y), -Patient.RUN_VELOCITY, 300);
+					
 					level.enemyLayer.remove(npc);
 					delete level.flock.patients[level.flock.patients.indexOf(npc)];
 					
