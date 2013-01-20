@@ -28,11 +28,11 @@ package com.robocatapps.NGJ {
 			count++;
 			
 			if (toOpearationTable) {
-				if (count > 80) {
+				if (count > 40) {
 					var prog : Number = (Number)(count - 80.0) / 30.0;
 					txt.alpha = 1 - prog;
 					scale = new FlxPoint(2 - prog, 2 - prog);
-					x -= prog * 18 * (area == 0? 1: -1);
+					x -= prog * 18 * (area == 1? 1: -1);
 				}
 			} else {
 				if (count >= 70) alpha = 0;
