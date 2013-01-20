@@ -317,13 +317,13 @@
 			
 			if (spikeBallNoHit > 0) spikeBallNoHit--; else
 			for each (var spike : Spikeball in level.spikeballs) {
-				if (FlxCollision.pixelPerfectCheck(this, spike)) {
+				if (spike.speed == 0 && FlxCollision.pixelPerfectCheck(this, spike)) {
 					x -= xchange;
 					y -= ychange;
 					color = 0xfd0000;
 					setHealth(hp - 1);
 					FlxG.play(groundhit1);
-		//			FlxG.play(dochit);
+				//	FlxG.play(dochit);
 					spikeBallNoHit = 50;
 					
 					for (var i : int = 0; i < Math.random() * 5; i++) {
