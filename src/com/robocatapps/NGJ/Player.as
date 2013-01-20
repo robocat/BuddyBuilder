@@ -73,7 +73,7 @@
 				if (colCheck(colrect, new FlxRect(npc.x, npc.y, npc.width, npc.height))) {
 					var i : int = 0;
 					for (i = 0; i < Math.random() * 5; i++) {
-						level.backgroundLayer.add(new Blood(npc.x, npc.y));
+						level.backgroundLayer.add(new Blood(npc.x, npc.y, level.backgroundLayer));
 					}
 
 					var dead : Corpse = new Corpse(npc.x, npc.y);
@@ -86,7 +86,7 @@
 					level.corpseLayer.add(dead);
 					
 					for (i = 0; i < Math.random() * 5; i++) {
-						level.bloodLayer.add(new Blood(npc.x, npc.y));
+						level.bloodLayer.add(new Blood(npc.x, npc.y, level.bloodLayer));
 					}
 					
 					// Flee
