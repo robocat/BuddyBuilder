@@ -154,11 +154,6 @@ package com.robocatapps.NGJ {
 					this.gameOver(this.level1.player);
 				}	
 			}
-
-			if (FlxG.keys.justPressed("Y")) {
-//			if (Math.random() < 0.03) {
-				this.swapPlayers();
-			}
 		}
 		
 		private function gameOver(winner : Player) : void {

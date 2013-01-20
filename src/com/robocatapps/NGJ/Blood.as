@@ -1,6 +1,5 @@
 package com.robocatapps.NGJ {
-	import org.flixel.FlxPoint;
-	import org.flixel.FlxSprite;
+	import org.flixel.*;
 	
 	public class Blood extends FlxSprite {
 		[Embed(source="blood1.png")] private var bloodSprite1 : Class;
@@ -15,9 +14,12 @@ package com.robocatapps.NGJ {
 		[Embed(source="blood10.png")] private var bloodSprite10 : Class;
 		
 		private var speed : int = 10.0;
+		private var counter : int = 0;
+		private var scene : FlxGroup;
 		
-		public function Blood(x:uint, y:uint) : void {
+		public function Blood(x:uint, y:uint, scene:FlxGroup) : void {
 			super(x, y);
+			this.scene = scene;
 			var i : int = Math.random() * 10;
 			if (i == 0) loadGraphic(bloodSprite1);
 			if (i == 1) loadGraphic(bloodSprite2);
@@ -33,7 +35,16 @@ package com.robocatapps.NGJ {
 		}
 		
 		override public function update() : void {
+			counter++;
 			speed -= 0.1;
+			
+			if (counter > 300) {
+				alpha = 1.0 - (counter - 300) / 300;
+			}
+			
+			if (counter > 600) {
+				scene.remove(this);
+			}
 			
 			if (speed < 0.1) return;
 			
@@ -41,7 +52,7 @@ package com.robocatapps.NGJ {
 			y -= Math.cos(angle) * speed;
 			
 			var area : int = (x > 720? 1: 0);
-			x = (area == 0? x + width > 700? 700 - width: x < 200? 200: x: x + width > 1240? 1240 - width: x < 740? 740: x);
+			x = (area == 0? x + width > 660? 660 - width: x < 240? 240: x: x + width > 1200? 1200 - width: x < 780? 780: x);
 			y = (y + height > 840? 840 - height: y < 50? 50: y);
 		}
 	}
