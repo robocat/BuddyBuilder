@@ -354,6 +354,12 @@ package com.robocatapps.NGJ {
 					this.gameOver(this.level1.player);
 				}	
 			}
+
+			/*if (FlxG.keys.justPressed("Y"))
+			{
+				this.level0.switchToZombies();
+			}*/
+			
 		}
 		
 		public function gameOver(winner : Player) : void {

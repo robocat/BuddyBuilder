@@ -34,6 +34,7 @@ package com.robocatapps.NGJ {
 		[Embed(source="horde.mp3")] private var hordeSpeaker : Class;
 		[Embed(source="spikeball_drop.mp3")] private var spikeballSpeaker : Class;
 		[Embed(source="cannot_add_to_body.mp3")] private var bodyFailSpeaker : Class;
+		[Embed(source="swap.mp3")] private var swapSpeaker : Class;
 		
 		public static const DROP_HEALTH : String = "health";
 		public static const DROP_LIGHT : String = "light";
@@ -216,24 +217,31 @@ package com.robocatapps.NGJ {
 				}
 			} else if (this.type == DROP_HEALTH) {
 				player.setHealth(4);
+			} else if (this.type == DROP_ZOMBIE) {
+				var zopponent : Player = player.level.getOpponent();
+				zopponent.level.switchToZombies();
 			} else {
-				new HUDSprite(sprite, player.playernumber, text_for_pickup(), player.level.gameState.textLayer, false);
-				
 				var opponent : Player = player.level.getOpponent();
 				
 				if (type == DROP_LIGHT) {
+					new HUDSprite(sprite, player.level.gameState.getOpponnent(player).playernumber, text_for_pickup(), player.level.gameState.textLayer, false);
 					opponent.level.turnOffLights();
 					opponent.effects.push(this);
 				} else if (type == DROP_SWAP) {
+					new HUDSprite(sprite, player.playernumber, text_for_pickup(), player.level.gameState.textLayer, false);
+					new HUDSprite(sprite, player.level.gameState.getOpponnent(player).playernumber, text_for_pickup(), player.level.gameState.textLayer, false);
 					player.swapWithPlayer(player.level.getOpponent());
 				} else if (type == DROP_INVERTED) {
+					new HUDSprite(sprite, player.level.gameState.getOpponnent(player).playernumber, text_for_pickup(), player.level.gameState.textLayer, false);
 					opponent.invert_controls();
 					opponent.effects.push(this);
 				} else if (type == DROP_DEATH) {
+					new HUDSprite(sprite, player.level.gameState.getOpponnent(player).playernumber, text_for_pickup(), player.level.gameState.textLayer, false);
 					for each (var patient : Patient in opponent.level.flock.patients) {
 						opponent.killPatient(patient, false);
 					}
 				} else if (type == DROP_HORDE) {
+					new HUDSprite(sprite, player.level.gameState.getOpponnent(player).playernumber, text_for_pickup(), player.level.gameState.textLayer, false);
 					opponent.level.horde();
 				} else if(type == DROP_SPIKEBALL) {
 					for (var i : int = 0; i < 3; i++) {
@@ -255,6 +263,8 @@ package com.robocatapps.NGJ {
 					FlxG.play(hordeSpeaker);
 				} else if (type == DROP_SPIKEBALL) {
 					FlxG.play(spikeballSpeaker);
+				} else if (type == DROP_SWAP) {
+					FlxG.play(swapSpeaker);
 				}
 			}
 		}
