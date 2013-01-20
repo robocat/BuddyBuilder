@@ -89,21 +89,7 @@
 			}
 		}
 		
-		private function didSlash() : void {
-			FlxG.play(swoosh);
-			
-			var colrect : FlxRect = new FlxRect(x, y, width, height);
-			colrect.x += Math.sin(angle) * 32;
-			colrect.y -= Math.cos(angle) * 32;
-			
-			for each (var spikeb : Spikeball in level.spikeballs) {
-				if (colCheck(colrect, new FlxRect(spikeb.x, spikeb.y, spikeb.width, spikeb.height))) {
-					delete level.spikeballs[level.spikeballs.indexOf(spikeb)];
-					spikeb.remove();
-					FlxG.play(spikeRemove);
-				}
-			}
-			
+		private function slashPatients(colrect : FlxRect) : Boolean {
 			var didHit : Boolean = false;
 			for each (var npc : Patient in level.flock.patients) {
 				if (colCheck(colrect, new FlxRect(npc.x, npc.y, npc.width, npc.height))) {
@@ -141,6 +127,68 @@
 					didHit = true;
 				}
 			}
+			return didHit;
+		}
+		
+		private function slashZombies(colrect : FlxRect) : Boolean {
+			var didHit : Boolean = false;
+			for each (var npc : Zombie in level.zombieFlock.zombies) {
+				if (colCheck(colrect, new FlxRect(npc.x, npc.y, npc.width, npc.height))) {
+					var i : int = 0;
+					for (i = 0; i < Math.random() * 5; i++) {
+						level.backgroundLayer.add(new Blood(npc.x, npc.y, level.backgroundLayer));
+					}
+
+					var dead : Corpse = new Corpse(npc.x, npc.y);
+					dead.angle = Math.random() * 360;
+					dead.frame = Math.random() * 5;
+					
+					var area : int = (dead.x > 720? 1: 0);
+					dead.x = (area == 0? dead.x + dead.width > 660? 660 - dead.width: dead.x < 240? 240: dead.x: dead.x + dead.width > 1200? 1200 - dead.width: dead.x < 780? 780: dead.x);
+					dead.y = (dead.y + dead.height > 840? 840 - dead.height: dead.y < 50? 50: dead.y);
+					level.corpseLayer.add(dead);
+					
+					for (i = 0; i < Math.random() * 5; i++) {
+						level.bloodLayer.add(new Blood(npc.x, npc.y, level.bloodLayer));
+					}
+					
+					// Flee
+					level.zombieFlock.flee(new FlxPoint(npc.x, npc.y), -Patient.RUN_VELOCITY, 300);
+					
+					level.enemyLayer.remove(npc);
+					delete level.zombieFlock.zombies[level.zombieFlock.zombies.indexOf(npc)];
+					
+					if (Math.random() <= 0.5)
+						level.addDrop(dead.x, dead.y);
+					else if (Math.random() <= 0.1) {
+						var spike : Spikeball = new Spikeball(npc.x, npc.y, level.itemLayer);
+						level.spikeballs.push(spike);
+						level.itemLayer.add(spike);
+					}
+					didHit = true;
+				}
+			}
+			return didHit;
+		}
+		
+		private function didSlash() : void {
+			FlxG.play(swoosh);
+			
+			var colrect : FlxRect = new FlxRect(x, y, width, height);
+			colrect.x += Math.sin(angle) * 32;
+			colrect.y -= Math.cos(angle) * 32;
+			
+			for each (var spikeb : Spikeball in level.spikeballs) {
+				if (colCheck(colrect, new FlxRect(spikeb.x, spikeb.y, spikeb.width, spikeb.height))) {
+					delete level.spikeballs[level.spikeballs.indexOf(spikeb)];
+					spikeb.remove();
+					FlxG.play(spikeRemove);
+				}
+			}
+			
+			var didHitPatients : Boolean = this.slashPatients(colrect);
+			var didHitZombies : Boolean = this.slashZombies(colrect);
+			var didHit : Boolean = didHitPatients || didHitZombies;
 			
 			if(didHit) {
 				var r : int = Math.random() * 7;

@@ -143,6 +143,22 @@ package com.robocatapps.NGJ {
 			flash.color = 0xff0000;
 			flash.alpha = 0;
 			add(flash);
+			
+			
+/*			this.addPatient();
+			this.addPatient();
+			this.addPatient();
+			this.addPatient();
+			this.addPatient();
+			this.addPatient();*/
+			
+/*			this.addZombie();
+			this.addZombie();
+			this.addZombie();
+			this.addZombie();
+			this.addZombie();
+			this.addZombie();
+			this.addZombie();*/
 		}
 		
 		private function addObstacles():void {
