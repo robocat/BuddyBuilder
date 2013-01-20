@@ -234,8 +234,8 @@ package com.robocatapps.NGJ {
                     Math.sqrt( Math.pow(target.x - patient.x, 2) + Math.pow(target.y - patient.y, 2) )
                 );
 				
-				trace("distance");
-				trace(distance);
+//				trace("distance");
+//				trace(distance);
 
                 if (distance < max_distance) {
                     patient.velocity.x *= amount;
