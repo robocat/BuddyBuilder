@@ -248,7 +248,7 @@ package com.robocatapps.NGJ {
 					opponent.level.horde();
 				} else if(type == DROP_SPIKEBALL) {
 					for (var i : int = 0; i < 3; i++) {
-						var spike : Spikeball = new Spikeball(250 + Math.random() * 400 , 90 + Math.random() * 720, opponent.level.itemLayer);
+						var spike : Spikeball = new Spikeball(250 + Math.random() * 400 + (player.x < 720? 540: 0), 90 + Math.random() * 720, opponent.level.itemLayer);
 						opponent.level.spikeballs.push(spike);
 						opponent.level.itemLayer.add(spike);
 					}
