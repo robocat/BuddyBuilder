@@ -219,9 +219,9 @@ package com.robocatapps.NGJ {
 					this.levelLayer.remove(sprite0);
 			}
 			
-			for each (var text0 : FlxText in p0TimerSlots) {
-				if (text0 != null)
-					this.levelLayer.remove(text0);
+			for each (var ptext0 : FlxText in p0TimerSlots) {
+				if (ptext0 != null)
+					this.levelLayer.remove(ptext0);
 			}
 			
 			for each (var sprite1 : FlxSprite in p1EffectSlots) {
@@ -229,9 +229,9 @@ package com.robocatapps.NGJ {
 					this.levelLayer.remove(sprite1);
 			}
 			
-			for each (var text1 : FlxText in p1TimerSlots) {
-				if (text1 != null)
-					this.levelLayer.remove(text1);
+			for each (var ptext1 : FlxText in p1TimerSlots) {
+				if (ptext1 != null)
+					this.levelLayer.remove(ptext1);
 			}
 			
 			
