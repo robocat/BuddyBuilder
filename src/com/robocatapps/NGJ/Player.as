@@ -19,6 +19,7 @@
 		[Embed(source="spikehit.mp3")] private var spikeRemove : Class;
 		[Embed(source="doctor_hit.mp3")] private var dochit : Class;
 		[Embed(source="doctor_death.mp3")] private var docdeath : Class;
+		[Embed(source="zombie.mp3")] private var zombieHit : Class;
 		
 		public var level : Level;
 		
@@ -254,6 +255,7 @@
 					this.hpDropCounter = 0;
 					if(our_hp >= 0) {
 						this.setHealth(our_hp);
+						FlxG.play(zombieHit);						
 					}
 					
 				}
