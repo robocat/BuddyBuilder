@@ -79,6 +79,9 @@
 					var dead : Corpse = new Corpse(npc.x, npc.y);
 					dead.angle = Math.random() * 360;
 					dead.frame = Math.random() * 5;
+					var area : int = (dead.x > 720? 1: 0);
+					dead.x = (area == 0? dead.x + dead.width > 660? 660 - dead.width: dead.x < 240? 240: dead.x: dead.x + dead.width > 1200? 1200 - dead.width: dead.x < 780? 780: dead.x);
+					dead.y = (dead.y + dead.height > 840? 840 - dead.height: dead.y < 50? 50: dead.y);
 					level.enemyLayer.add(dead);
 					
 					for (i = 0; i < Math.random() * 5; i++) {
