@@ -262,8 +262,8 @@ package com.robocatapps.NGJ {
 		
 		public function collideObstacle(x : Number, y : Number) : Boolean {
 			for each (var obstacle : Obstacle in this.obstacles) {
-				if (x + width > obstacle.x && x < obstacle.x + obstacle.width
-					&& y + height > obstacle.y && y < obstacle.y + obstacle.height)
+				if (x + 80 > obstacle.x && x < obstacle.x + obstacle.width + 80
+					&& y + 80 > obstacle.y && y < obstacle.y + obstacle.height + 80)
 				{
 					return true;
 				}
@@ -272,16 +272,24 @@ package com.robocatapps.NGJ {
 			return false;
 		}
 		
+		
+		public function randomRange(max:Number, min:Number = 0):Number
+		{
+     		return Math.floor(Math.random() * (max - min)) + min;
+		}
+		
 		public function addPatient() : void {
 			var patient : Patient;
 			
-			var x : Number = origin.x + 10 + Math.random() * 400;
-			var y : Number = origin.y + 10 + Math.random() * 700;
+			var x : Number = randomRange(origin.x + 400, origin.x + 80);
+			var y : Number = randomRange(origin.y + 700, origin.y + 80);
 			
 			while (collideObstacle(x, y) == true) {
-				x = origin.x + 10 + Math.random() * 400;
-				y = origin.y + 10 + Math.random() * 700;
+				x = randomRange(origin.x + 400, origin.x + 80);
+				y = randomRange(origin.y + 700, origin.y + 80);
 			}
+			
+			trace("x,y", x, y);
 			
 			patient = new Patient(this, x, y);
 			flock.add_patient(patient);
