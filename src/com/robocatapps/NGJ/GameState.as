@@ -5,6 +5,7 @@ package com.robocatapps.NGJ {
 	public class GameState extends FlxState {
 		[Embed(source="bed.png")] private var bedSprite : Class;
 		[Embed(source="level_grid.png")] private var gridSprite : Class;
+		[Embed(source="holy_gloss.mp3")] private var music : Class;
 		
 		// STATE
 		public static const STATE_COUNTDOWN :uint = 1;
@@ -50,9 +51,26 @@ package com.robocatapps.NGJ {
 			
 			this.operation_table0 = new OperationTable(0, new FlxPoint(20, 106));
 			this.operation_table1 = new OperationTable(1, new FlxPoint(1261, 106));
+
+			var player0title : FlxText = new FlxText(20,39,180, "DOCTOR 1");
+			player0title.setFormat("Heading", 30, 0xffffffff, "left");
+			this.levelLayer.add(player0title);
+
+			var player1title : FlxText = new FlxText(1261,39,180, "DOCTOR 2");
+			player1title.setFormat("Heading", 30, 0xffffffff, "left");
+			this.levelLayer.add(player1title);
+
+			var player0name : FlxText = new FlxText(18,79,181, "Wozniacki");
+			player0name.setFormat("Subtext", 16, 0x3bd9d8ff, "left");
+			this.levelLayer.add(player0name);
+
+			var player1name : FlxText = new FlxText(1259,79,181, "Tsurenko");
+			player1name.setFormat("Subtext", 16, 0x1fc89aff, "left");
+			this.levelLayer.add(player1name);
+
 			
-			this.player0 = new Player(0);
-			this.player1 = new Player(1);
+			this.player0 = new Player(0, player0title, player0name);
+			this.player1 = new Player(1, player1title, player1name);
 			
 			this.level0 = new Level(this.player0, new FlxPoint(209, 50), this.operation_table0, this);
 			this.level1 = new Level(this.player1, new FlxPoint(739, 50), this.operation_table1, this);
@@ -83,26 +101,6 @@ package com.robocatapps.NGJ {
 			// HUD: Player
 
 			{
-				var txt0 : FlxText = new FlxText(20,39,180, "DOCTOR 1");
-				txt0.setFormat("Heading", 30, 0xffffffff, "left");
-				this.levelLayer.add(txt0);
-			}
-			{
-				var txt1 : FlxText = new FlxText(1261,39,180, "DOCTOR 2");
-				txt1.setFormat("Heading", 30, 0xffffffff, "left");
-				this.levelLayer.add(txt1);
-			}
-			{
-				var sub0 : FlxText = new FlxText(18,79,181, "Wozniacki");
-				sub0.setFormat("Subtext", 16, 0x3bd9d8ff, "left");
-				this.levelLayer.add(sub0);
-			}
-			{
-				var sub1 : FlxText = new FlxText(1259,79,181, "Tsurenko");
-				sub1.setFormat("Subtext", 16, 0x1fc89aff, "left");
-				this.levelLayer.add(sub1);
-			}
-			{
 				this.overlay = new FlxSprite(0, 0);
 				this.overlay.makeGraphic(FlxG.width, FlxG.height);
 				this.overlay.color = 0x000000;
@@ -119,6 +117,8 @@ package com.robocatapps.NGJ {
 			
 			
 			this.state = STATE_PLAYING;
+			
+			FlxG.play(music);
 		}
 		
 		override public function update() : void {
@@ -154,6 +154,11 @@ package com.robocatapps.NGJ {
 					this.gameOver(this.level1.player);
 				}	
 			}
+
+			if (FlxG.keys.justPressed("Y")) {
+//			if (Math.random() < 0.03) {
+				this.swapPlayers();
+			}
 		}
 		
 		private function gameOver(winner : Player) : void {
@@ -180,6 +185,10 @@ package com.robocatapps.NGJ {
 			} else {
 				return this.player0;
 			}
+		}
+		
+		public function swapPlayers() : void {
+			this.player0.swapWithPlayer(this.player1);			
 		}
 	}
 }

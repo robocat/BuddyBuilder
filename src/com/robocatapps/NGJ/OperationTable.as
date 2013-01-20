@@ -120,6 +120,10 @@ package com.robocatapps.NGJ {
 			this.add_to_body(LEFT_ARM);
 			this.add_to_body(RIGHT_LEG);*/
 		}
+		
+		public function get_body() : uint {
+			return this.bodyMask;
+		}
 
 		public function reset_body() : void {
 			this.bodyMask = NONE;
