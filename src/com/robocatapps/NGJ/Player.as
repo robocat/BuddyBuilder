@@ -91,24 +91,7 @@
 			}
 		}
 		
-		private function didSlash() : void {
-			FlxG.play(swoosh);
-			
-			var colrect : FlxRect = new FlxRect(x, y, width, height);
-			colrect.x += Math.sin(angle) * 32;
-			colrect.y -= Math.cos(angle) * 32;
-			
-			for each (var spikeb : Spikeball in level.spikeballs) {
-				if (colCheck(colrect, new FlxRect(spikeb.x, spikeb.y, spikeb.width, spikeb.height))) {
-					delete level.spikeballs[level.spikeballs.indexOf(spikeb)];
-					spikeb.remove();
-					FlxG.play(spikeRemove);
-				}
-			}
-			
-			var didHit : Boolean = false;
-			for each (var npc : Patient in level.flock.patients) {
-				if (colCheck(colrect, new FlxRect(npc.x, npc.y, npc.width, npc.height))) {
+		public function killPatient(npc : Patient, shouldDrop : Boolean) : void {
 					var i : int = 0;
 					for (i = 0; i < Math.random() * 5; i++) {
 						level.backgroundLayer.add(new Blood(npc.x, npc.y, level.backgroundLayer));
@@ -133,13 +116,35 @@
 					level.enemyLayer.remove(npc);
 					delete level.flock.patients[level.flock.patients.indexOf(npc)];
 					
-					if (Math.random() <= 0.5)
-						level.addDrop(dead.x, dead.y);
-					else if (Math.random() <= 0.1) {
+					if (Math.random() <= 0.5) {
+						if (shouldDrop)
+							level.addDrop(dead.x, dead.y);
+					} else if (Math.random() <= 0.1) {
 						var spike : Spikeball = new Spikeball(npc.x, npc.y, level.itemLayer);
 						level.spikeballs.push(spike);
 						level.itemLayer.add(spike);
 					}
+		}
+		
+		private function didSlash() : void {
+			FlxG.play(swoosh);
+			
+			var colrect : FlxRect = new FlxRect(x, y, width, height);
+			colrect.x += Math.sin(angle) * 32;
+			colrect.y -= Math.cos(angle) * 32;
+			
+			for each (var spikeb : Spikeball in level.spikeballs) {
+				if (colCheck(colrect, new FlxRect(spikeb.x, spikeb.y, spikeb.width, spikeb.height))) {
+					delete level.spikeballs[level.spikeballs.indexOf(spikeb)];
+					spikeb.remove();
+					FlxG.play(spikeRemove);
+				}
+			}
+			
+			var didHit : Boolean = false;
+			for each (var npc : Patient in level.flock.patients) {
+				if (colCheck(colrect, new FlxRect(npc.x, npc.y, npc.width, npc.height))) {
+					this.killPatient(npc, true);
 					didHit = true;
 				}
 			}
