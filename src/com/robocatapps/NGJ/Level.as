@@ -119,7 +119,7 @@ package com.robocatapps.NGJ {
 		}
 		
 		private function addObstacles():void {
-			this.obstacles.push(new Obstacle(this.origin.x + this.width/2 - 128/2, this.origin.y + height/2 - 64/2, Obstacle.SOFA));
+			this.obstacles.push(new Obstacle(this.origin.x + 40, this.origin.y + 320, Obstacle.SOFA));
 			
 			for each (var obstacle : Obstacle in this.obstacles) {
 				this.obstacleLayer.add(obstacle);
