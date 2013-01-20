@@ -217,7 +217,7 @@ package com.robocatapps.NGJ {
 			var count : uint = flock.patient_count();
 			
 			// Make sure to only spawn MAXPATIENTS at a time
-			if (Math.random() < 0.01 && count <= MAXPATIENTS) {
+			if (Math.random() < 0.01 && count <= MAXPATIENTS && gameState.getreadycountdown == 0) {
 				addPatient();
 				//addZombie();
 			}

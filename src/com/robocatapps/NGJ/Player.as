@@ -17,6 +17,7 @@
 		[Embed(source="patient_dead.png")] private var deadSprite : Class;
 		[Embed(source="swing.mp3")] private var swoosh : Class;
 		[Embed(source="spikehit.mp3")] private var spikeRemove : Class;
+	//	[Embed(source="doctor_hit.mp3")] private var dochit : Class;
 		
 		public var level : Level;
 		
@@ -183,11 +184,13 @@
 				keys1 = tmp;
 			}
 			
-			if ((keys1 && FlxG.keys.pressed("LEFT"))  || (keys0 && FlxG.keys.pressed("A")))		go_left = true;
-			if ((keys1 && FlxG.keys.pressed("RIGHT")) || (keys0 && FlxG.keys.pressed("D"))) 	go_right = true;
-			if ((keys1 && FlxG.keys.pressed("UP"))    || (keys0 && FlxG.keys.pressed("W")))		go_up = true;
-			if ((keys1 && FlxG.keys.pressed("DOWN"))  || (keys0 && FlxG.keys.pressed("S")))		go_down = true;
-			if ((keys0 && FlxG.keys.pressed("SPACE")) || (keys1 && FlxG.keys.pressed("ENTER")))	slash = true;
+			if (level.gameState.getreadycountdown == 0) {
+				if ((keys1 && FlxG.keys.pressed("LEFT"))  || (keys0 && FlxG.keys.pressed("A")))		go_left = true;
+				if ((keys1 && FlxG.keys.pressed("RIGHT")) || (keys0 && FlxG.keys.pressed("D"))) 	go_right = true;
+				if ((keys1 && FlxG.keys.pressed("UP"))    || (keys0 && FlxG.keys.pressed("W")))		go_up = true;
+				if ((keys1 && FlxG.keys.pressed("DOWN"))  || (keys0 && FlxG.keys.pressed("S")))		go_down = true;
+				if ((keys0 && FlxG.keys.pressed("SPACE")) || (keys1 && FlxG.keys.pressed("ENTER")))	slash = true;
+			}
 			
 			if (controls_inverted) {
 				var tempLeft : Boolean = go_left;
@@ -270,6 +273,7 @@
 					color = 0xfd0000;
 					setHealth(hp - 1);
 					FlxG.play(groundhit1);
+		//			FlxG.play(dochit);
 					spikeBallNoHit = 50;
 					
 					for (var i : int = 0; i < Math.random() * 5; i++) {

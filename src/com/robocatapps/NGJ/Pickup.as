@@ -27,6 +27,7 @@ package com.robocatapps.NGJ {
 		[Embed(source="bodypart.mp3")] private var bodypartSound : Class;
 		[Embed(source="darkness.mp3")] private var darknessSpeaker : Class;
 		[Embed(source="health pickup.mp3")] private var healthSpeaker : Class;
+		[Embed(source="body fail.mp3")] private var bodyfail : Class;
 		
 		public static const DROP_HEALTH : String = "health";
 		public static const DROP_LIGHT : String = "light";
@@ -188,7 +189,9 @@ package com.robocatapps.NGJ {
 					new HUDSprite(sprite, player.playernumber, text_for_pickup(), player.level.gameState.textLayer, true);
 					player.level.operation_table.add_to_body(this.to_body_part());
 					announce();
-				}	
+				} else {
+					FlxG.play(bodyfail);
+				}
 			} else if (this.type == DROP_HEALTH) {
 				player.setHealth(4);
 			} else {
