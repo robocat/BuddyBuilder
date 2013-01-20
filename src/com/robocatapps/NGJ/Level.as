@@ -40,6 +40,7 @@ package com.robocatapps.NGJ {
 		public var lightLayer : FlxGroup;
 		
 		public var flock:Flock;
+		public var zombieFlock:ZombieFlock;
 
 		
 		// Layout
@@ -59,6 +60,8 @@ package com.robocatapps.NGJ {
 		private var lightsOff : LightsOff = null;
 		
 		private var levelAppearCounter : uint = 0;
+		
+		public var flash : FlxSprite;
 		
 		public function Level(player: Player, origin : FlxPoint, operation_table : OperationTable, state : GameState):void {
 			this.pickups = new Array();
@@ -115,6 +118,7 @@ package com.robocatapps.NGJ {
 			this.playerLayer.add(this.player);
 			
 			flock = new Flock(enemyLayer, player);
+			zombieFlock = new ZombieFlock(enemyLayer, player);
 
 
 			if(this.player.playernumber == 0) {
@@ -133,6 +137,12 @@ package com.robocatapps.NGJ {
 			}
 			
 			this.levelAppearCounter = 0;
+			
+			flash = new FlxSprite(origin.x, origin.y);
+			flash.makeGraphic(500, 820);
+			flash.color = 0xff0000;
+			flash.alpha = 0;
+			add(flash);
 		}
 		
 		private function addObstacles():void {
@@ -194,20 +204,22 @@ package com.robocatapps.NGJ {
 			super.update();
 			
 			flock.update();
+			zombieFlock.update();
+			
+			if (flash.alpha > 0) {
+				flash.alpha -= 0.05;
+			} else flash.alpha = 0;
 			
 			if (this.gameState.state != GameState.STATE_PLAYING)
 				return;
 			
 			// Count how many patients we have
-			var count : uint = 0;
-			for each (var patient : Patient in flock.patients) {
-				if (patient != null)
-					count++;
-			}
+			var count : uint = flock.patient_count();
 			
 			// Make sure to only spawn MAXPATIENTS at a time
 			if (Math.random() < 0.01 && count <= MAXPATIENTS) {
 				addPatient();
+				//addZombie();
 			}
 			
 			// Throw away unused pickups
@@ -293,6 +305,21 @@ package com.robocatapps.NGJ {
 			
 			patient = new Patient(this, x, y);
 			flock.add_patient(patient);
+		}
+		
+		public function addZombie() : void {
+			var zombie : Zombie;
+			
+			var x : Number = origin.x + 10 + Math.random() * 400;
+			var y : Number = origin.y + 10 + Math.random() * 700;
+			
+			while (collideObstacle(x, y) == true) {
+				x = origin.x + 10 + Math.random() * 400;
+				y = origin.y + 10 + Math.random() * 700;
+			}
+			
+			zombie = new Zombie(this, x, y);
+			zombieFlock.add_zombie(zombie);
 		}
 		
 		public function addDrop(x : uint, y : uint) : void {

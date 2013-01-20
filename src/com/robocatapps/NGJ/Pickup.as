@@ -25,6 +25,8 @@ package com.robocatapps.NGJ {
 		[Embed(source="right leg.mp3")] private var rightlegSpeaker : Class;
 		[Embed(source="torso.mp3")] private var torsoSpeaker : Class;
 		[Embed(source="bodypart.mp3")] private var bodypartSound : Class;
+		[Embed(source="darkness.mp3")] private var darknessSpeaker : Class;
+		[Embed(source="health pickup.mp3")] private var healthSpeaker : Class;
 		
 		public static const DROP_HEALTH : String = "health";
 		public static const DROP_LIGHT : String = "light";
@@ -148,7 +150,8 @@ package com.robocatapps.NGJ {
 					this.type != DROP_SPEED &&
 					this.type != DROP_SWAP &&
 					this.type != DROP_ZOMBIE &&
-					this.type != DROP_INVERTED;
+					this.type != DROP_INVERTED &&
+					this.type != DROP_HEALTH;
 		}
 		
 		public function to_body_part() : uint {
@@ -198,6 +201,12 @@ package com.robocatapps.NGJ {
 					player.swapWithPlayer(player.level.getOpponent());
 				} else if (type == DROP_INVERTED) {
 					opponent.invert_controls();
+				}
+				
+				if (type == DROP_LIGHT) {
+					FlxG.play(darknessSpeaker);
+				} else if (type == DROP_HEALTH) {
+					FlxG.play(healthSpeaker);
 				}
 			}
 		}
