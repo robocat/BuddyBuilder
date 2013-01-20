@@ -49,6 +49,8 @@
 			trace(frame);
 			if (name == "slash" && frame == 8) {
 				slashing = false;
+			} else if (name == "slash" && frame == 4) {
+				didSlash();
 			}
 		}
 		
@@ -126,7 +128,6 @@
 				if (!slash_down) {
 					slashing = true;
 					play("slash");
-					didSlash();
 				}
 				slash_down = true;
 			} else slash_down = false;
