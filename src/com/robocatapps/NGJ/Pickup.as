@@ -294,6 +294,10 @@ package com.robocatapps.NGJ {
 			if(tick < 135) return 0.8;
 			if(tick < 170) return 1.0;
 			if(tick < 175) return 0.8;
+			if(tick > 176) {
+				
+				return 0;
+			}
 			return 1.0;
 		}
 		
