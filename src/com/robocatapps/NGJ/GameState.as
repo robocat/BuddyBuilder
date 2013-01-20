@@ -357,7 +357,8 @@ package com.robocatapps.NGJ {
 
 			/*if (FlxG.keys.justPressed("Y"))
 			{
-				this.level0.switchToZombies();
+				//this.level0.switchToZombies();
+				this.swapPlayers();
 			}*/
 			
 		}

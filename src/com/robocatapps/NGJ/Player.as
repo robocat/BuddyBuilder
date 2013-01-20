@@ -349,6 +349,11 @@
 			
 			controls_swapped = ! controls_swapped;
 			other_player.controls_swapped = ! other_player.controls_swapped;
+			
+			var our_hp : int = this.hp;
+			var other_hp : int = other_player.hp;
+			this.setHealth(other_hp);
+			other_player.setHealth(our_hp);
 		}
 		
 		public function invert_controls() : void {
