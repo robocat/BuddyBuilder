@@ -127,7 +127,40 @@ package com.robocatapps.NGJ {
 		}
 		
 		private function addObstacles():void {
-			this.obstacles.push(new Obstacle(this.origin.x + 40, this.origin.y + 320, Obstacle.SOFA));
+			var level : int = Math.random() * 2;
+			
+			if (level == 0) {
+				this.obstacles.push(new Obstacle(this.origin.x + 40, this.origin.y + 320, Obstacle.SOFA, 180));
+				this.obstacles.push(new Obstacle(this.origin.x + 150, this.origin.y + 325, Obstacle.TABLE, 0));
+				this.obstacles.push(new Obstacle(this.origin.x + 200, this.origin.y + 460, Obstacle.PLANT, 0));
+				this.obstacles.push(new Obstacle(this.origin.x + 430, this.origin.y + 40, Obstacle.PLANT, 0));
+				this.obstacles.push(new Obstacle(this.origin.x + 430, this.origin.y + 120, Obstacle.DESK, 0));
+				this.obstacles.push(new Obstacle(this.origin.x + 430, this.origin.y + 250, Obstacle.PLANT, 0));
+				this.obstacles.push(new Obstacle(this.origin.x + 440, this.origin.y + 580, Obstacle.STOOL, 0));
+				this.obstacles.push(new Obstacle(this.origin.x + 350, this.origin.y + 630, Obstacle.BLOOD_TABLE, 0));
+			} else if (level == 1) {
+				this.obstacles.push(new Obstacle(this.origin.x + 30, this.origin.y + 170, Obstacle.BLOOD_TABLE, 180));
+				this.obstacles.push(new Obstacle(this.origin.x + 30, this.origin.y + 250, Obstacle.BLOOD_TABLE, 180));
+				this.obstacles.push(new Obstacle(this.origin.x + 30, this.origin.y + 530, Obstacle.BLOOD_TABLE, 180));
+				this.obstacles.push(new Obstacle(this.origin.x + 30, this.origin.y + 600, Obstacle.BLOOD_TABLE, 180));
+				this.obstacles.push(new Obstacle(this.origin.x + 350, this.origin.y + 170, Obstacle.BLOOD_TABLE, 0));
+				this.obstacles.push(new Obstacle(this.origin.x + 350, this.origin.y + 250, Obstacle.BLOOD_TABLE, 0));
+				this.obstacles.push(new Obstacle(this.origin.x + 350, this.origin.y + 530, Obstacle.BLOOD_TABLE, 0));
+				this.obstacles.push(new Obstacle(this.origin.x + 350, this.origin.y + 600, Obstacle.BLOOD_TABLE, 0));
+			} else if (level == 2) {
+				this.obstacles.push(new Obstacle(this.origin.x + 200, this.origin.y + 130, Obstacle.DESK, 0));
+				this.obstacles.push(new Obstacle(this.origin.x + 200, this.origin.y + 280, Obstacle.DESK, 0));
+				this.obstacles.push(new Obstacle(this.origin.x + 200, this.origin.y + 430, Obstacle.DESK, 0));
+				this.obstacles.push(new Obstacle(this.origin.x + 280, this.origin.y + 130, Obstacle.DESK, 180));
+				this.obstacles.push(new Obstacle(this.origin.x + 280, this.origin.y + 280, Obstacle.DESK, 180));
+				this.obstacles.push(new Obstacle(this.origin.x + 280, this.origin.y + 430, Obstacle.DESK, 180));
+				this.obstacles.push(new Obstacle(this.origin.x + 170, this.origin.y + 145, Obstacle.STOOL, 0));
+				this.obstacles.push(new Obstacle(this.origin.x + 170, this.origin.y + 295, Obstacle.STOOL, 0));
+				this.obstacles.push(new Obstacle(this.origin.x + 170, this.origin.y + 445, Obstacle.STOOL, 0));
+				this.obstacles.push(new Obstacle(this.origin.x + 330, this.origin.y + 215, Obstacle.STOOL, 0));
+				this.obstacles.push(new Obstacle(this.origin.x + 330, this.origin.y + 365, Obstacle.STOOL, 0));
+				this.obstacles.push(new Obstacle(this.origin.x + 330, this.origin.y + 515, Obstacle.STOOL, 0));
+			}
 			
 			for each (var obstacle : Obstacle in this.obstacles) {
 				this.obstacleLayer.add(obstacle);
@@ -195,7 +228,7 @@ package com.robocatapps.NGJ {
 			//}
 
 			if (Math.random() < 0.01) {
-				this.lightsOff.visible = ! this.lightsOff.visible;
+			//	this.lightsOff.visible = ! this.lightsOff.visible;
 			}
 			if(this.lightsOff) {
 				var center : FlxPoint = new FlxPoint(this.player.x + 48, this.player.y + 48);
