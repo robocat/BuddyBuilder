@@ -252,8 +252,8 @@ package com.robocatapps.NGJ {
 						opponent.level.spikeballs.push(spike);
 						opponent.level.itemLayer.add(spike);
 					}
-						
 				} else if (type == DROP_SPEED) {
+					new HUDSprite(sprite, player.level.gameState.getOpponnent(player).playernumber, text_for_pickup(), player.level.gameState.textLayer, false);
 					opponent.speed = 30;
 					opponent.effects.push(this);
 				}
