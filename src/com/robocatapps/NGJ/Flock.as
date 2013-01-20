@@ -1,4 +1,5 @@
 package com.robocatapps.NGJ {
+	import org.flixel.plugin.photonstorm.*;
 	import org.flixel.*;
 	/**
 	 * @author willi
@@ -14,14 +15,18 @@ package com.robocatapps.NGJ {
 		
 		private var player_seek_strength:Number = 0.1;
 		
-		private var patient_size:Number = 80.0;
+		private var patient_size:Number = 100.0;
 		
 		private var patient_minimum_distance:Number = 30.0;
+		
+		private var previous_velocity : FlxPoint;
 		
 		
 		public function Flock(group:FlxGroup, player:Player):void {
             this.player = player;
             this.group = group;
+			
+			previous_velocity = new FlxPoint();
         }
 		
 		
@@ -41,10 +46,13 @@ package com.robocatapps.NGJ {
 //            if (player.velocity.x || player.velocity.y) {
 //                seek(new FlxPoint(player.x, player.y), player_seek_strength);
 //            }
+
+			flee(player.origin);
         }
 		
 		
 		private function movement(patient : Patient, vel_x : Number, vel_y : Number):void {
+			
 			if (Math.abs(vel_x) > Patient.STAND_VELOCITY && Math.abs(vel_y) > Patient.STAND_VELOCITY
 				&& Math.abs(vel_x) < Patient.RUN_VELOCITY && Math.abs(vel_y) < Patient.RUN_VELOCITY)
 			{
@@ -104,10 +112,19 @@ package com.robocatapps.NGJ {
 //				patient.velocity.x += ((patient.destination.x - patient.x) / 20) * FlxG.elapsed;
 //				patient.velocity.y += ((patient.destination.y - patient.y) / 20) * FlxG.elapsed;
 
+//				FlxVelocity.moveTowardsPoint(patient, patient.destination);
+				
+				
 				var vel_x : Number = patient.velocity.x + ((patient.destination.x - patient.x) / 20) * FlxG.elapsed;
 				var vel_y : Number = patient.velocity.y + ((patient.destination.y - patient.y) / 20) * FlxG.elapsed;
 				
-				movement(patient, vel_x, vel_y);
+				if (previous_velocity.x != vel_x && previous_velocity.y != vel_y)
+				{
+					movement(patient, vel_x, vel_y);
+					
+					previous_velocity.x = patient.velocity.x;
+					previous_velocity.y = patient.velocity.y;			
+				}
 			}
 			
         }
@@ -134,13 +151,23 @@ package com.robocatapps.NGJ {
                     }
                 }
 
-//                patient.velocity.x += x_adjustment / 2;
-//                patient.velocity.y += y_adjustment / 2;
-				
 				var vel_x : Number = patient.velocity.x + x_adjustment / 2;
 				var vel_y : Number = patient.velocity.y + y_adjustment / 2;
+
+				if (previous_velocity.x != vel_x && previous_velocity.y != vel_y)
+				{
+					patient.velocity.x = vel_x;
+                	patient.velocity.y = vel_y;
+					
+					previous_velocity.x = patient.velocity.x;
+					previous_velocity.y = patient.velocity.y;					
+				}
+                
 				
-				movement(patient, vel_x, vel_y);
+//				var vel_x : Number = patient.velocity.x + x_adjustment / 2;
+//				var vel_y : Number = patient.velocity.y + y_adjustment / 2;
+//				
+//				movement(patient, vel_x, vel_y);
             }
         }
 
@@ -160,13 +187,23 @@ package com.robocatapps.NGJ {
                 x_adjustment = x_adjustment / (patients.length - 1);
                 y_adjustment = y_adjustment / (patients.length - 1);
 
-//                patient.velocity.x += (x_adjustment - patient.velocity.x) / 8;
-//                patient.velocity.y += (y_adjustment - patient.velocity.y) / 8;
-                
+				
 				var vel_x : Number = patient.velocity.x + (x_adjustment - patient.velocity.x) / 8;
 				var vel_y : Number = patient.velocity.y + (y_adjustment - patient.velocity.y) / 8;
+
+				if (previous_velocity.x != vel_x && previous_velocity.y != vel_y)
+				{
+					patient.velocity.x = vel_x;
+                	patient.velocity.y = vel_y;
+					
+					previous_velocity.x = patient.velocity.x;
+					previous_velocity.y = patient.velocity.y;
+				}
 				
-				movement(patient, vel_x, vel_y);
+//				var vel_x : Number = patient.velocity.x + (x_adjustment - patient.velocity.x) / 8;
+//				var vel_y : Number = patient.velocity.y + (y_adjustment - patient.velocity.y) / 8;
+//				
+//				movement(patient, vel_x, vel_y);
             }
         }
 
@@ -178,15 +215,30 @@ package com.robocatapps.NGJ {
                 );
 
                 if (distance > max_distance) {
-//                    patient.velocity.x += ((target.x - patient.x) * amount) * FlxG.elapsed;
-//                    patient.velocity.y += ((target.y - patient.y) * amount) * FlxG.elapsed;
-					
-					var vel_x : Number = ((target.x - patient.x) * amount) * FlxG.elapsed;
-					var vel_y : Number = ((target.y - patient.y) * amount) * FlxG.elapsed;
-				
-					movement(patient, vel_x, vel_y);
+                    patient.velocity.x += ((target.x - patient.x) * amount) * FlxG.elapsed;
+                    patient.velocity.y += ((target.y - patient.y) * amount) * FlxG.elapsed;
                 }
             }
-        }	
+		}
+		
+		
+		public function flee(target:FlxPoint, amount:Number = -10, max_distance:uint = 100):void {
+            for each (var patient : Patient in patients) {
+                
+                var distance:Number = Math.abs(
+                    Math.sqrt( Math.pow(target.x - patient.x, 2) + Math.pow(target.y - patient.y, 2) )
+                );
+				
+				if (distance < 100) {
+					trace("distance");
+					trace(distance);
+				}
+
+                if (distance < max_distance) {
+                    patient.velocity.x *= amount;
+                    patient.velocity.y *= amount;
+                }
+            }
+		}
 	}
 }

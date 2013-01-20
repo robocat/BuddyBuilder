@@ -8,7 +8,6 @@ package com.robocatapps.NGJ {
 		[Embed(source="swap_pickup.png")] private var speedSprite : Class;
 		[Embed(source="zombie_pickup.png")] private var zombieSprite : Class;
 		
-		
 		[Embed(source="left_leg_drop.png")] private var leftLegSprite : Class;
 		[Embed(source="right_leg_drop.png")] private var rightLegSprite : Class;
 		[Embed(source="left_arm_drop.png")] private var leftArmSprite : Class;
