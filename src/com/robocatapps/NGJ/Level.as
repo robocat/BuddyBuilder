@@ -145,6 +145,22 @@ package com.robocatapps.NGJ {
 			flash.color = 0xff0000;
 			flash.alpha = 0;
 			add(flash);
+			
+			
+/*			this.addPatient();
+			this.addPatient();
+			this.addPatient();
+			this.addPatient();
+			this.addPatient();
+			this.addPatient();*/
+			
+/*			this.addZombie();
+			this.addZombie();
+			this.addZombie();
+			this.addZombie();
+			this.addZombie();
+			this.addZombie();
+			this.addZombie();*/
 		}
 		
 		private function addObstacles():void {
@@ -223,18 +239,20 @@ package com.robocatapps.NGJ {
 			var count : uint = flock.patient_count();
 			
 			// Make sure to only spawn MAXPATIENTS at a time
-			if (num_of_patients > MAXPATIENTS) {
-				if (count < num_of_patients) {
-					addPatient();
+			if (gameState.getreadycountdown == 0) {
+				if (num_of_patients > MAXPATIENTS) {
+					if (count < num_of_patients) {
+						addPatient();
+					}
+					else if (count == num_of_patients) {
+						num_of_patients = MAXPATIENTS;
+					}
 				}
-				else if (count == num_of_patients) {
-					num_of_patients = MAXPATIENTS;
-				}
-			}
-			else {
-				if (Math.random() < 0.01 && count <= num_of_patients) {
-					addPatient();
-					//addZombie();
+				else {
+					if (Math.random() < 0.01 && count <= num_of_patients) {
+						addPatient();
+						//addZombie();
+					}
 				}
 			}
 			
