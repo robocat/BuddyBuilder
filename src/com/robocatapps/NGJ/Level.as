@@ -130,7 +130,7 @@ package com.robocatapps.NGJ {
 		}
 		
 		private function addObstacles():void {
-			var level : int = Math.random() * 2;
+			var level : int = Math.random() * 3;
 			
 			if (level == 0) {
 				this.obstacles.push(new Obstacle(this.origin.x + 40, this.origin.y + 320, Obstacle.SOFA, 180));
@@ -150,7 +150,7 @@ package com.robocatapps.NGJ {
 				this.obstacles.push(new Obstacle(this.origin.x + 350, this.origin.y + 250, Obstacle.BLOOD_TABLE, 0));
 				this.obstacles.push(new Obstacle(this.origin.x + 350, this.origin.y + 530, Obstacle.BLOOD_TABLE, 0));
 				this.obstacles.push(new Obstacle(this.origin.x + 350, this.origin.y + 600, Obstacle.BLOOD_TABLE, 0));
-			} else if (level == 2) {
+			} else if (level == 2 || level == 3) {
 				this.obstacles.push(new Obstacle(this.origin.x + 200, this.origin.y + 130, Obstacle.DESK, 0));
 				this.obstacles.push(new Obstacle(this.origin.x + 200, this.origin.y + 280, Obstacle.DESK, 0));
 				this.obstacles.push(new Obstacle(this.origin.x + 200, this.origin.y + 430, Obstacle.DESK, 0));
@@ -239,9 +239,30 @@ package com.robocatapps.NGJ {
 			return gameState.getOpponnent(this.player);
 		}
 		
+		public function collideObstacle(x : Number, y : Number) : Boolean {
+			for each (var obstacle : Obstacle in this.obstacles) {
+				if (x + width > obstacle.x && x < obstacle.x + obstacle.width
+					&& y + height > obstacle.y && y < obstacle.y + obstacle.height)
+				{
+					return true;
+				}
+			}
+			
+			return false;
+		}
+		
 		public function addPatient() : void {
 			var patient : Patient;
-			patient = new Patient(this, origin.x + 10 + Math.random() * 400, origin.y + 10 + Math.random() * 700);
+			
+			var x : Number = origin.x + 10 + Math.random() * 400;
+			var y : Number = origin.y + 10 + Math.random() * 700;
+			
+			while (collideObstacle(x, y) == true) {
+				x = origin.x + 10 + Math.random() * 400;
+				y = origin.y + 10 + Math.random() * 700;
+			}
+			
+			patient = new Patient(this, x, y);
 			flock.add_patient(patient);
 		}
 		

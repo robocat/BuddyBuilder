@@ -6,6 +6,7 @@ package com.robocatapps.NGJ {
 		[Embed(source="bed.png")] private var bedSprite : Class;
 		[Embed(source="level_grid.png")] private var gridSprite : Class;
 		[Embed(source="holy_gloss.mp3")] private var music : Class;
+		[Embed(source="loop.mp3")] private var loop : Class;
 		
 		public static const PLAYER_NAMES : Array = ["Damm", "Wu", "Flarup", "Strandgaard", "Weyreuther", "Andersen", "Bruckhoff"];
 		
@@ -124,11 +125,15 @@ package com.robocatapps.NGJ {
 			
 			
 			this.state = STATE_PLAYING;
-			
-			FlxG.play(music);
 		}
 		
+		private var first : Boolean = true;
 		override public function update() : void {
+			if (first) {
+				first = false;
+				FlxG.play(loop);
+			}
+			
 			super.update();
 			
 //			flock.update();

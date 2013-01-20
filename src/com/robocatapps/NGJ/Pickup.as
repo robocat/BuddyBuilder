@@ -4,8 +4,8 @@ package com.robocatapps.NGJ {
 	public class Pickup extends FlxSprite {
 		
 		[Embed(source="light_pickup.png")] private var lightSprite : Class;
-		[Embed(source="speed_pickup.png")] private var swapSprite : Class;
-		[Embed(source="swap_pickup.png")] private var speedSprite : Class;
+		[Embed(source="speed_pickup.png")] private var speedSprite : Class;
+		[Embed(source="swap_pickup.png")] private var swapSprite : Class;
 		[Embed(source="zombie_pickup.png")] private var zombieSprite : Class;
 		
 		[Embed(source="left_leg_drop.png")] private var leftLegSprite : Class;
