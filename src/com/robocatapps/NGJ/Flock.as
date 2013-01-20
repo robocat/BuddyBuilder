@@ -29,6 +29,14 @@ package com.robocatapps.NGJ {
 			previous_velocity = new FlxPoint();
         }
 		
+		public function patient_count() : uint {
+			var count : uint = 0;
+			for each (var patient : Patient in this.patients) {
+				if (patient != null)
+					count++;
+			}
+			return count;
+		}
 		
 		public function add_patient(patient:Patient):void {
             // Create a clone of the object & destroy the original.
