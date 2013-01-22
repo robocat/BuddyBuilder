@@ -1,4 +1,5 @@
 package com.robocatapps.NGJ {
+	import mx.core.IFlexAsset;
 	import flash.geom.Rectangle;
 	import flash.display.StageDisplayState;
 	import org.flixel.*;

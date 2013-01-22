@@ -1,5 +1,3 @@
-bin
-bin/*
 *.DS_Store
 *.swf
 bin/NGJ.swf
