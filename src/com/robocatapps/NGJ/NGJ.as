@@ -1,8 +1,8 @@
 package com.robocatapps.NGJ {
-	import flash.display.StageDisplayState;
 	import org.flixel.*;
 	
 	[SWF(width="1440", height="900", backgroundColor="#000000")] //Set the size and color of the Flash file
+	[Frame(factoryClass="com.robocatapps.NGJ.Preloader")]
 
 	public class NGJ extends FlxGame {
 		[Embed(source="font_heading.ttf", fontFamily="Heading", embedAsCFF="false")] public var fontHeading:String;
