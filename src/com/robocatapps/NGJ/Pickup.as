@@ -38,6 +38,7 @@ package com.robocatapps.NGJ {
 		[Embed(source="zombies.mp3")] private var zombiesSpeaker : Class;
 		[Embed(source="body fail.mp3")] private var bodyfail : Class;
 		[Embed(source="speed.mp3")] private var speedSpeaker : Class;
+		[Embed(source="inverted.mp3")] private var invertedSpeaker : Class;
 		
 		public static const DROP_HEALTH : String = "health";
 		public static const DROP_LIGHT : String = "light";
@@ -225,6 +226,7 @@ package com.robocatapps.NGJ {
 				var zopponent : Player = player.level.getOpponent();
 				zopponent.level.switchToZombies();
 				zopponent.effects.push(this);
+				FlxG.play(zombiesSpeaker);
 			} else {
 				var opponent : Player = player.level.getOpponent();
 				
@@ -273,10 +275,10 @@ package com.robocatapps.NGJ {
 					FlxG.play(spikeballSpeaker);
 				} else if (type == DROP_SWAP) {
 					FlxG.play(swapSpeaker);
-				} else if (type == DROP_ZOMBIE) {
-					FlxG.play(zombiesSpeaker);
 				} else if (type == DROP_SPEED) {
 					FlxG.play(speedSpeaker);
+				} else if (type == DROP_INVERTED) {
+					FlxG.play(invertedSpeaker);
 				}
 			}
 		}

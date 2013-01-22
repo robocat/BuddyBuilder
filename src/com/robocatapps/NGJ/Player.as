@@ -76,6 +76,9 @@
 			var i : int;
 			var m : int = Math.random() * 50;
 			
+			var winner : Player;
+			var loser : Player;
+			
 			if (playernumber == 0) {
 				level.gameState.p1heart1.alpha = (health >= 1? 1: 0);
 				level.gameState.p1heart2.alpha = (health >= 2? 1: 0);
@@ -86,8 +89,8 @@
 				level.gameState.p1heart32.alpha = (health >= 7? 1: 0);
 				level.gameState.p1heart42.alpha = (health >= 8? 1: 0);
 				level.flash.alpha = 1;
-				var winner : Player = (controls_swapped? level.gameState.player0: level.gameState.player1);
-				var loser : Player = (controls_swapped? level.gameState.player1: level.gameState.player0);
+				winner = (controls_swapped? level.gameState.player0: level.gameState.player1);
+				loser = (controls_swapped? level.gameState.player1: level.gameState.player0);
 				if (health == 0) level.gameState.gameOver(winner);
 				if (health == 0) loser.alpha = 0;
 				if (health == 0) for (i = 0; i < m; i++) {
@@ -104,8 +107,8 @@
 				level.gameState.p2heart32.alpha = (health >= 7? 1: 0);
 				level.gameState.p2heart42.alpha = (health >= 8? 1: 0);
 				level.flash.alpha = 1;
-				var loser : Player = (controls_swapped? level.gameState.player0: level.gameState.player1);
-				var winner : Player = (controls_swapped? level.gameState.player1: level.gameState.player0);
+				loser = (controls_swapped? level.gameState.player0: level.gameState.player1);
+				winner = (controls_swapped? level.gameState.player1: level.gameState.player0);
 				if (health == 0) level.gameState.gameOver(winner);
 				if (health == 0) loser.alpha = 0;
 				if (health == 0) for (i = 0; i < m; i++) {
