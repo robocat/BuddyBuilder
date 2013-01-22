@@ -11,6 +11,9 @@ package com.robocatapps.NGJ {
 		[Embed(source="title_bg.png")] private var menubg : Class;
 		[Embed(source="title_loop.mp3")] private var loop : Class;
 		
+		private var tick : uint = 0;
+		private var overlay : FlxSprite;
+		
 		override public function create():void {
 			var bg : FlxSprite = new FlxSprite(0, 0);
 			bg.loadGraphic(menubg);
@@ -24,6 +27,12 @@ package com.robocatapps.NGJ {
 			
 			var fullscreenButton : FlxButton = new FlxButton(10, 10, "Fullscreen", toggle_fullscreen);
 			add(fullscreenButton);
+			
+			overlay = new FlxSprite(0, 0);
+			overlay.makeGraphic(FlxG.width, FlxG.height);
+			overlay.color = 0x000000;
+			overlay.alpha = .75;
+			add(overlay);
 		}
 		
 		private function toggle_fullscreen() : void {
@@ -41,7 +50,14 @@ package com.robocatapps.NGJ {
 				FlxG.music.stop();
 				FlxG.switchState(new GameState());
 			}
- 
+ 			
+			tick++;
+			
+			if (tick == 10) overlay.alpha = 0;
+			if (tick == 11) overlay.alpha = .5;
+			if (tick == 20) overlay.alpha = 0;
+			if (tick == 21) overlay.alpha = .5;
+			if (tick == 40) overlay.alpha = 0;
 		}
  
  
