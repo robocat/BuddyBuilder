@@ -358,7 +358,7 @@
 			y = (y < area.y? area.y: y > area.y + area.height - height? area.y + area.height - height: y);
 			
 			for each (var pickup : Pickup in level.pickups) {
-				if (FlxCollision.pixelPerfectCheck(this, pickup)) {
+				if (FlxCollision.pixelPerfectCheck(this, pickup) && pickup.speed == 0) {
 //					level.itemLayer.remove(pickup);
 					
 					pickup.apply();

@@ -83,7 +83,7 @@ package com.robocatapps.NGJ {
 		
 		public var timedOut : Boolean = false;
 		
-		private var speed : uint = 0;
+		public var speed : uint = 0;
 		private var area : uint = 0;
 		
 		public function Pickup(x:uint, y:uint, type:String, player : Player, speed:uint = 0, angle:int = 0) : void {

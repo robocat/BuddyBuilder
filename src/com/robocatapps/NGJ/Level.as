@@ -367,7 +367,7 @@ package com.robocatapps.NGJ {
 			if (item == null)
 				return;
 				
-			var drop : Pickup = new Pickup(x + Math.sin(player.angle) * 50, y - Math.cos(player.angle) * 50, item, player, Math.random() * 15 + 5, player.angle);
+			var drop : Pickup = new Pickup(x + Math.sin(player.angle) * 50, y - Math.cos(player.angle) * 50, item, player, Math.random() * 10 + 10, player.angle);
 			
 			var collision : Boolean = false;
 			for each (var obstacle : Obstacle in this.obstacles) {
