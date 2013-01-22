@@ -221,8 +221,10 @@ package com.robocatapps.NGJ {
 			} else if (this.type == DROP_HEALTH) {
 				player.setHealth(8);
 			} else if (this.type == DROP_ZOMBIE) {
+				new HUDSprite(sprite, player.level.gameState.getOpponnent(player).playernumber, text_for_pickup(), player.level.gameState.textLayer, false);
 				var zopponent : Player = player.level.getOpponent();
 				zopponent.level.switchToZombies();
+				zopponent.effects.push(this);
 			} else {
 				var opponent : Player = player.level.getOpponent();
 				
@@ -340,6 +342,11 @@ package com.robocatapps.NGJ {
 					opponent.revert_controls();
 				} else if (type == DROP_SPEED) {
 					opponent.speed = 3;
+				} else if (type == DROP_ZOMBIE) {
+					for each (var zombie : Zombie in opponent.level.zombieFlock.zombies) {
+						opponent.level.enemyLayer.remove(zombie);
+						delete opponent.level.zombieFlock.zombies[opponent.level.zombieFlock.zombies.indexOf(zombie)];
+					}
 				}
 					
 				this.state = STATE_EXPIRED;
