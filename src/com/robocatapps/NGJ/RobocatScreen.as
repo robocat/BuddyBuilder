@@ -70,7 +70,7 @@ package com.robocatapps.NGJ {
 				meowPlayed = true;
 			}
 			
-			if (tick == DURATION) {
+			if (tick >= DURATION) {
 				 FlxG.switchState(new MenuState());
 			}
 		}
