@@ -9,7 +9,7 @@ package com.robocatapps.NGJ {
 		[Embed(source="font_subtext.ttf", fontFamily="Subtext", embedAsCFF="false")] public var fontSubtext:String;
 		
 		public function NGJ() {
-			super(1440, 900, MenuState, 1);
+			super(1440, 900, RobocatScreen, 1);
 			
 			FlxG.mouse.show();
 		}
