@@ -151,7 +151,7 @@
 					level.enemyLayer.remove(npc);
 					delete level.flock.patients[level.flock.patients.indexOf(npc)];
 					
-					if (Math.random() <= 0.5) {
+					if (Math.random() <= 0.3) {
 						if (shouldDrop)
 							level.addDrop(dead.x, dead.y);
 					} else if (Math.random() <= 0.1) {
