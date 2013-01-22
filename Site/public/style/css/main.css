@@ -1,0 +1,117 @@
+/* line 3, ../sass/main.scss */
+body {
+  background: #000;
+  color: #929297;
+  font-family: 'Courier', monospace;
+}
+
+/* line 9, ../sass/main.scss */
+.wrapper {
+  margin: 0 auto;
+  width: 980px;
+}
+
+/* line 14, ../sass/main.scss */
+.menu {
+  margin-bottom: 20px;
+  width: 100%;
+}
+/* line 18, ../sass/main.scss */
+.menu ul {
+  float: right;
+}
+/* line 21, ../sass/main.scss */
+.menu ul li {
+  float: right;
+  margin-left: 20px;
+}
+/* line 27, ../sass/main.scss */
+.menu li.fork a {
+  padding-left: 35px;
+}
+/* line 30, ../sass/main.scss */
+.menu li.fork a .icon.fork {
+  background: url("/images/fork.png") top left no-repeat;
+  display: block;
+  height: 26px;
+  width: 23px;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+/* line 40, ../sass/main.scss */
+.menu li.fork a:hover .icon.fork {
+  background: url("/images/fork_hover.png") top left no-repeat;
+}
+/* line 45, ../sass/main.scss */
+.menu a {
+  background: #272727;
+  border: 3px solid #383838;
+  color: #929297;
+  display: block;
+  position: relative;
+  font-family: 'Courier', monospace;
+  font-weight: bold;
+  font-size: 1.1em;
+  line-height: 34px;
+  height: 34px;
+  padding: 0px 9px;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-shadow: 1px, 1px, 0px, 1px, #0a0a0a;
+}
+/* line 63, ../sass/main.scss */
+.menu a:hover {
+  color: #138172;
+  border-color: #006858;
+  background: #36e0e1;
+}
+
+/* line 71, ../sass/main.scss */
+.game {
+  width: 980px;
+  height: 613px;
+}
+
+/* line 76, ../sass/main.scss */
+.robocat {
+  background: url("/images/robocat.png") top left;
+  display: block;
+  float: left;
+  height: 98px;
+  margin-top: 15px;
+  width: 90px;
+}
+
+/* line 85, ../sass/main.scss */
+.bubble {
+  background: url("/images/bubble.png") top left;
+  float: right;
+  height: 118px;
+  width: 29px;
+}
+
+/* line 92, ../sass/main.scss */
+.description {
+  background: #202020;
+  float: right;
+  font-weight: bold;
+  margin-top: 25px;
+  padding: 23px 17px;
+  text-transform: uppercase;
+  width: 804px;
+}
+/* line 101, ../sass/main.scss */
+.description a {
+  color: #35e0e1;
+  text-decoration: none;
+}
+/* line 105, ../sass/main.scss */
+.description a:hover {
+  text-decoration: underline;
+}
+
+/* line 111, ../sass/main.scss */
+.clearboth {
+  clear: both;
+}

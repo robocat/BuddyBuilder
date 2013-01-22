@@ -1,0 +1,113 @@
+@import "compass/css3/text-shadow";
+
+body {
+	background: #000;
+	color: #929297;
+	font-family: 'Courier', monospace;
+}
+
+.wrapper {
+	margin: 0 auto;
+	width: 980px;
+}
+
+.menu {
+	margin-bottom: 20px;
+	width: 100%;
+
+	ul {
+		float: right;
+
+		li {
+			float: right;
+			margin-left: 20px;
+		}
+	}
+
+	li.fork a {
+		padding-left: 9px + 23px + 3px;
+
+		.icon.fork {
+			background: url('/images/fork.png') top left no-repeat;
+			display: block;
+			height: 26px;
+			width: 23px;
+			position: absolute;
+			top: 5px;
+			left: 5px;
+		}
+
+		&:hover .icon.fork {
+			background: url('/images/fork_hover.png') top left no-repeat;
+		}
+	}
+
+	a {
+		background: #272727;
+		border: 3px solid #383838;
+		color: #929297;
+		display: block;
+		position: relative;
+		font-family: 'Courier', monospace;
+		font-weight: bold;
+		font-size: 1.1em;
+		line-height: 34px;
+		height: 34px;
+		padding: 0px 9px;
+
+		text-decoration: none;
+		text-transform: uppercase;
+		@include text-shadow(1px, 1px, 0px, 1px, #0a0a0a);
+
+
+		&:hover {
+			color: #138172;
+			border-color: #006858;
+			background: #36e0e1;
+		}
+	}
+}
+
+.game {
+	width: 980px;
+	height: 613px;
+}
+
+.robocat {
+	background: url('/images/robocat.png') top left;
+	display:block;
+	float: left;
+	height: 98px;
+	margin-top: 15px;
+	width: 90px;
+}
+
+.bubble {
+	background: url('/images/bubble.png') top left;
+	float: right;
+	height: 118px;
+	width: 29px;
+}
+
+.description {
+	background: #202020;
+	float: right;
+	font-weight: bold;
+	margin-top: 25px;
+	padding: 23px 17px;
+	text-transform: uppercase;
+	width: 804px;
+
+	a {
+		color: #35e0e1;
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+.clearboth {
+	clear: both;
+}
