@@ -37,7 +37,7 @@ package com.robocatapps.NGJ {
 		
 		private function toggle_fullscreen() : void {
 			if (FlxG.stage.displayState == StageDisplayState.NORMAL) {
-				FlxG.stage.fullScreenSourceRect = new Rectangle(0, 0, 1440, 900);
+				FlxG.stage.fullScreenSourceRect = new Rectangle(0, 0, 980, 613);
 				FlxG.stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;
 			}
 			else FlxG.stage.displayState = StageDisplayState.NORMAL;

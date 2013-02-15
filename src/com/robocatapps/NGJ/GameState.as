@@ -407,6 +407,12 @@ package com.robocatapps.NGJ {
 					this.gameOver(this.level1.player);
 				}	
 			}
+			
+			if (this.state == GameState.STATE_GAMEOVER) {
+				if (FlxG.keys.pressed("Q")) {
+					FlxG.switchState(new MenuState());
+				}
+			}
 
 			/*if (FlxG.keys.justPressed("Y"))
 			{
