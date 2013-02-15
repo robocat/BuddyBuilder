@@ -15,3 +15,8 @@ Docs
 
 * Flixel documentation: http://flixel.org/docs/
 * Flixel powertools: http://www.photonstorm.com/flixel-power-tools
+
+License
+===
+
+This software is licensed under the Creative Commons 3.0 (BY-NC-SA). See the LICENSE file for more information.
